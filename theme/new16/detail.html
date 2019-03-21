@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- {{appid}} -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1,minimum-scale=1,user-scalable=0,width=device-width,initial-scale=1"/>
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/detail.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<!--头部-->
+<header>
+    <div class="site_title">
+        {{#if(detail.home_id)}}
+        <a href="../home/{{detail.home_select}}/{{detail.username}}" class="gohome"></a>
+        {{else}}
+        <a href="/{{detail.sitedir}}" class="gohome"></a>
+        {{/if}}
+        {{detail.sitename}}
+        <button type="button" onclick="show_kflist()">{{lang('客服',detail.language)}}
+            <i class="u-icon u-icon-detail-kefu" style="margin-left: 2px"></i>
+        </button>
+        <ul class="kf_list">
+            {{set(fblink=detail.fblink?detail.fblink:detail.User.fblink)}}
+            {{set(linelink=detail.linelink?detail.linelink:detail.User.linelink)}}
+            {{set(whatsapplink=detail.whatsapplink?detail.whatsapplink:detail.User.whatsapplink)}}
+            {{#if(fblink)}}
+            <li><a href="{{fblink}}">Facebook</a></li>
+            {{/if}}
+            {{#if(linelink)}}
+            <li><a href="{{linelink}}">Line</a></li>
+            {{/if}}
+            {{#if(whatsapplink)}}
+            <li><a href="{{whatsapplink}}">WhatsApp</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</header>
+<!--轮播图-->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {{#if(detail.head_video)}}
+        <div class="swiper-slide">{{{detail.head_video}}}</div>
+        {{/if}}
+        {{#each(detail.head_imgs)}}
+        <div class="swiper-slide"><img src="{{cdnbase+this}}"></div>
+        {{/each}}
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+<!--内容区域  s-->
+<div class="details">
+    <div class="promise">
+        <span>{{lang('正品行货，精致服务',detail.language)}}</span>
+        <span>{{lang('品质保航，购物无忧',detail.language)}}</span>
+    </div>
+    <div class="sale_price">
+        <ul class="num">
+            <li class="shop-two clearfix">
+                <span>{{lang('金额',detail.language)}}：</span>
+                <span class="addPrice fr">{{detail.money}}{{detail.price}}</span>
+            </li>
+            <li class="buy_now">
+                <button type="button" onclick="show_specwin()" >
+                    {{lang('立即购买',detail.language)}}
+                </button>
+            </li>
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+    <!--抢购剩余时间-->
+    <div class="time_wrapper">
+        <div class="sales">
+            <div>{{lang('已售出',detail.language)}}<span>{{detail.saleno}}</span>{{lang('件',detail.language)}}</div>
+        </div>
+        <div class="timeWrap" id="countdown" style="display:none;">
+            <span id="clock">{{lang('倒计时',detail.language)}}</span>
+            <span id="timer">
+                    <span id="day"></span>
+                    <span>{{lang('天',detail.language)}}</span>
+                    <span id="timeHour">07</span>
+                    <span class="">時</span>
+                    <span id="timeMin">54</span>
+                    <span class="">分</span>
+                    <span id="timeSec">13</span>
+                    <span class="">秒</span>
+                </span>
+        </div>
+    </div>
+    <!--商品图片展示及介绍-->
+    <div class="product_info">
+        <div class="title">
+            {{lang('详情',detail.language)}}
+            <span></span>
+        </div>
+        <div class="m-img">
+            {{{detail.GoodsContent.content}}}
+        </div>
+        <p class="toTopWrap">
+            <a class="top">TOP</a>
+        </p>
+    </div>
+    <!-- 底部部分 -->
+    <div class="footer" style="margin-top: 10px;">
+        <ul class="aboutUs">
+            <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+            <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+            <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+            <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+            <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+        </ul>
+        <div class="copyright">Copyright ©2018 All Rights Reserved</div>
+    </div>
+</div>
+<!--选择订单-->
+<div class="sure_order" id="specWin">
+    <div class="title_name">
+        <a class="back" onclick="hide_specwin();"></a>
+        <div>{{lang('订单信息',detail.language)}}</div>
+    </div>
+    <!--选择规格-->
+    <div class="spec" >
+        <div class="spec-content" style="bottom:0;">
+            <div class="head">
+                <!--选中图片展示区域-->
+                <div class="tab-info lf">
+                    <img id="selected-img" src="http://cdn.seezt.cc/uploadimages/{{detail.head_imgs[0]}}-101" alt="">
+                    <div class="tab-detail">
+                        <span>{{detail.sitename}}</span>
+                        <p id="goods_price">{{detail.money}} {{detail.price}}</p>
+                        <p class="spec_color" id="spec-goods">颜色</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="select-spec" id="product-spec">
+                <!--颜色-->
+                <div class="model">
+                    <div class="model-name">{{detail.option1_name}}</div>
+                    <div class="model-btn" id="spec_names">
+                        {{#each(detail.specs.name_list)}}
+                        <button onclick="select_specitem(this)" class="opt1" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{this.price}}">
+                            <span>{{this.name}}</span>
+                        </button>
+                        {{/each}}
+                    </div>
+                </div>
+                <!--规格-->
+                {{#if(detail.specs.option1_list.length>0)}}
+                <div class="model">
+                    <div class="model-name">{{detail.option2_name}}</div>
+                    <div class="model-btn option1" id="spec_option1">
+                        {{#each(detail.specs.option1_list)}}
+                        <button onclick="select_option1(this);" class="disable opt2" data-name="{{this.option1}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}">{{this.option1}}</button>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+                {{#if(detail.specs.option2_list.length>0)}}
+                <div class="model">
+                    <div class="model-name">{{detail.option3_name}}</div>
+                    <div class="model-btn option2" id="spec_option2">
+                        {{#each(detail.specs.option2_list)}}
+                        <button onclick="select_option2(this);" class="disable opt3" data-name="{{this.option2}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}">{{this.option2}}</button>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+
+                <div class="num">
+                    <div class="model-name">{{lang('数量',detail.language)}}</div>
+                    <p>
+                    <div onclick="decNum()" class="less z-dis">-</div>
+                    <input class="num_text" type="text" value="1" name="num" id="addnum">
+                    <div onclick="addNum()" class="more z-dis">+</div>
+                    </p>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+            <!--赠品区域-->
+            {{#if(detail.giftGoods)}}
+            <div style="padding:10px 0;font-size:14px;">{{lang('赠品区域',detail.language)}}</div>
+            <div class="select-spec" id="gifts">
+                <div class="gifts">
+                    {{#each(detail.giftGoods)}}
+                    <div class="gifts_item">
+                        <div style="border-bottom:1px dashed #ddd;padding:10px 0;"><strong>{{this.sitename}}</strong></div>
+                        <div class="model">
+                            <div class="model-name">*<span>1</span>{{lang('件',detail.language)}}{{this.option1_name}}</div>
+                            <div class="model-btn user-name" id="gift_names_{{xindex}}_1">
+                                {{#each(detail.giftGoodsSpecs[xindex].giftName_list)}}
+                                <button onclick="select_giftspec(this,0,1)" class="opt1" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{this.price}}">
+                                    <span>{{this.name}}</span>
+                                </button>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{#if(detail.giftGoodsSpecs[xindex].giftOption1_list.length>0)}}
+                        <div class="model">
+                            <div class="model-name">*<span>1</span>{{lang('件',detail.language)}}{{this.option2_name}}</div>
+                            <div class="model-btn option1" id="gift_option1_{{xindex}}_1">
+                                {{#each(detail.giftGoodsSpecs[xindex].giftOption1_list)}}
+                                <button onclick="select_giftoption1(this,0,1);" class="disable opt2" data-name="{{this.option1}}" data-sku="{{this.id}}"  data-price="{{this.price}}">{{this.option1}}</button>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{/if}}
+                        {{#if(detail.giftGoodsSpecs[xindex].giftOption2_list.length>0)}}
+                        <div class="model">
+                            <div class="model-name">*<span>1</span>{{lang('件',detail.language)}}{{this.option3_name}}</div>
+                            <div class="model-btn option2" id="gift_option2_{{xindex}}_1">
+                                {{#each(detail.giftGoodsSpecs[xindex].giftOption2_list)}}
+                                <button onclick="select_giftoption2(this,0,1);" class="disable opt3" data-name="{{this.option2}}" data-sku="{{this.id}}" data-price="{{this.price}}">{{this.option2}}</button>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+        </div>
+        <div class="fixbar">
+            <div class="addCart" onclick="add_cart(1)">
+                {{lang('加入购物车',detail.language)}}
+            </div>
+        </div>
+    </div>
+</div>
+<!--确认下单信息-->
+<div class="sure_order" id="cartWin">
+    <div class="header">
+        <div class="goback" onclick="hide_cartwin();">{{lang('返回首页',detail.language)}}</div>
+    </div>
+    <div class="description">
+        <div class="title_name">
+            <h1>{{lang('商品清单',detail.language)}}</h1>
+        </div>
+        <p>{{detail.order_prompt_info}}</p>
+        {{#if(detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円')}}
+        <div class="table_row">
+            <div class="form-group">
+                <div class="right flex">
+                    <select class="select" id="area" onchange="select_change(this, null)"></select>
+                </div>
+                <div class="left flex">
+                    <select class="select" id="city" onchange="select_change(this,'#area')"></select>
+                </div>
+            </div>
+            {{/if}}
+            {{#if(detail.money==='円')}}
+            <div class="table_row">
+                <div class="form-group">
+                    <div class="right flex">
+                        <input type="text" class="necessary  text-left" id="area" placeholder="{{lang('区县',detail.language)}}{{lang('必填',detail.language)}}">
+                    </div>
+                    <div class="left flex">
+                        <select class="select" id="city"></select>
+                    </div>
+                </div>
+                {{/if}}
+            <div class="table_row">
+                <!--<label><span>{{lang('地址',detail.language)}}</span></label>-->
+                <input type="text" class="necessary  text-left" id="clientaddress" placeholder="{{lang('地址',detail.language)}}{{lang('必填',detail.language)}}" required>
+            </div>
+            <div class="table_row">
+                <input type="text" class="necessary text-left" id="clientname" placeholder="{{lang('收货人',detail.language)}}{{lang('必填',detail.language)}}" required>
+            </div>
+            <div class="table_row {{(detail.money==='S$'||detail.money==='RM'||detail.money==='฿'||detail.money==='円')?'':'hide'}}">
+                <div class="input-infor">
+                    {{#if(detail.money==='RM'||detail.money==='฿')}}
+                    <select  class="select" id="clientzipcode" onchange="mark && changeCode()"></select>
+                    {{/if}}
+                    {{#if(detail.money==='S$'||detail.money==='円')}}
+                    <input type="tel" class="text-left contact" id="clientzipcode" placeholder="{{lang('邮编',detail.language)}}{{lang('必填',detail.language)}}" onchange="mark && changeCode()"/>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="table_row">
+                <div class="left flex">
+                    <input type="tel" class="necessary  text-left" id="clientphone" placeholder="{{lang('联系电话',detail.language)}}{{lang('必填',detail.language)}}" required>
+                </div>
+                <div class="right flex">
+                    <input type="email" placeholder="{{lang('邮箱',detail.language)}}" id="clientemail">
+                </div>
+            </div>
+            <div class="table_row">
+                <input type="text" placeholder="{{lang('其他要求请备注',detail.language)}}">
+            </div>
+            <div class="tab_sele">
+                <span>{{lang('货到付款',detail.language)}}</span>
+                <img src="/theme/{{detail.template}}/img/ok.png" class="pay_method">
+            </div>
+            <div class="table_row" id="pianyuan">
+                <label ></label>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="choiced_goods">
+        <div id="cart_list_body">
+        </div>
+    </div>
+    <div class="spec-price">
+        <ul>
+            <li>
+                <span id="yunName"></span>
+                <p class="fr" id="yunMoney">
+                </p>
+            </li>
+            <li>
+                <span class="fl">{{lang('合计',detail.language)}}</span>
+                <p class="fr" id="allprice">
+                    <span></span>
+                </p>
+            </li>
+            <li>
+                <span class="fl">{{lang('数量',detail.language)}}</span>
+                <p class="fr" id="allCount">
+                    <span></span>
+                </p>
+            </li>
+            <li id="many_discount" style="display:none;">
+                <span class="fl">{{lang('多件优惠',detail.language)}}</span>
+                <p class="fr" id="manyoff">
+                    <span></span>
+                </p>
+            </li>
+            <li id="saleoffprice_div" style="display:none;">
+                <span class="fl">{{lang('满减优惠',detail.language)}}</span>
+                <p class="fr" id="saleoffprice">
+                    <span></span>
+                </p>
+            </li>
+            <li id="moneyprice" style="display:none;">
+                <span class="fl">{{lang('价格满减',detail.language)}}</span>
+                <p class="fr" id="price_money">
+                    <span></span>
+                </p>
+            </li>
+            <li>
+                <span class="lf">{{lang('实付金额',detail.language)}}</span>
+                <p class="fr red" id="realprice">
+                    <span></span>
+                </p>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <button class="buy_now2" type="button" onclick="submit_order()" id="d1">
+        {{lang('立即购买',detail.language)}}
+    </button>
+    <div class="promise2">
+        <span>{{lang('正品行货，精致服务',detail.language)}}</span>
+        <span>{{lang('品质保航，购物无忧',detail.language)}}</span>
+    </div>
+</div>
+</div>
+<!--下单成功页-->
+<div class="order_successful_info" id="successWin">
+    <ul class="topInfo">
+        <li class="goBack2"><a href="javascript:void(0)" onclick="hide_successwin()">{{lang('返回首页',detail.language)}}</a> </li>
+        <li>
+            <button type="button" onclick="show_kflist()">{{lang('客服',detail.language)}}
+                <i class="u-icon u-icon-detail-kefu" style="margin-left: 2px"></i>
+            </button>
+            <ul class="kf_list">
+                {{set(fblink=detail.fblink?detail.fblink:detail.User.fblink)}}
+                {{set(linelink=detail.linelink?detail.linelink:detail.User.linelink)}}
+                {{set(whatsapplink=detail.whatsapplink?detail.whatsapplink:detail.User.whatsapplink)}}
+                {{#if(fblink)}}
+                <li><a href="{{fblink}}">Facebook</a></li>
+                {{/if}}
+                {{#if(linelink)}}
+                <li><a href="{{linelink}}">Line</a></li>
+                {{/if}}
+                {{#if(whatsapplink)}}
+                <li><a href="{{whatsapplink}}">WhatsApp</a></li>
+                {{/if}}
+            </ul>
+        </li>
+    </ul>
+    <div class="explain">
+        <h1>{{lang('下单成功！',detail.language)}}</h1>
+        <p>{{lang('1.我们采用专业配送！如果配送时您临时不在，请等待配送员打电话给您，改约收件时间即可。',detail.language)}}{{lang('2.在您收到货品后若有任何疑问，请FB、Line联络或者email联络我们，我们将立即为您处理哦！',detail.language)}}</p>
+    </div>
+    <div class="order_info">
+        <div class="fl info_left">
+            <div class="info_title">{{lang('实付金额',detail.language)}}</div>
+            <div class="info_detail" id="orderprice"></div>
+        </div>
+        <div class="fr info_right">
+            <div class="info_title">{{lang('订单号',detail.language)}}</div>
+            <div class="info_detail" id="orderid"></div>
+        </div>
+        <div class="fl info_left">
+            <div class="info_title">{{lang('收货人',detail.language)}}</div>
+            <div class="info_detail" id="order_clientname"></div>
+        </div>
+        <div class="fr info_right">
+            <div class="info_title">{{lang('联系电话',detail.language)}}</div>
+            <div class="info_detail" id="order_clientphone"></div>
+        </div>
+
+        <div class="all_row">
+            <div class="info_title" >{{lang('地址',detail.language)}}</div>
+            <div id="order_clientaddress"> </div>
+        </div>
+        <div class="line"></div>
+    </div>
+    <!--猜你喜欢-->
+    {{#if(detail.order_ads)}}
+    <div>
+        <div class="other">
+            {{lang('猜你喜欢',detail.language)}}
+        </div>
+        <div class="other-detail">
+            {{#each(detail.order_ads)}}
+            <div class="per-detail">
+                <a href="/{{this.sitedir}}">
+                    {{set (imgs = this.head_imgs.split(';'))}}
+                    <img src="{{imgs[0]?cdnbase+imgs[0]+'-300':''}}" alt="">
+                    <div class="other-name">{{this.sitename}}</div>
+                    <div class="other-price">{{this.money}} {{this.price}}</div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    {{/if}}
+    <div class="promise2">
+        <span>{{lang('正品行货，精致服务',detail.language)}}</span>
+        <span>{{lang('品质保航，购物无忧',detail.language)}}</span>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+<script>
+    var screenHeight = $(window).height();
+    window.onscroll = function(){
+        if ($(window).scrollTop()>=screenHeight) {
+            $('.top').show();
+        }else{
+            $('.top').hide();
+        }
+    };
+    $('.top').on('click',function(){
+        $('body,html').animate({scrollTop:0},500);
+    })
+</script>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/{{detail.languagecode}}/sdk.js#xfbml=1&version=v3.0';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+<script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    var appData = {
+        goods: {id: '{{detail.id}}',sourceid: '{{detail.source}}',name: '{{detail.name}}',userkey: '{{detail.userkey}}'},
+        selectProd: {name: '',price: '',img: '',option1: '', option2: '',sku: ""},
+        prods: [],
+        addnum: 1,
+        imgpath: '{{cdnbase}}',
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}",
+        apiserver:"{{apiserver}}",
+        chaport_id:"{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+        chaport_switch:"{{detail.chaport_switch}}",  is_domain:"{{detail.is_domain}}"
+    };
+    appData.giftGoodsIds={{{detail.giftGoodsIds?detail.giftGoodsIds:'[]'}}};
+    appData.gifts={{{detail.giftGoodsSpecsStr?detail.giftGoodsSpecsStr:'[]'}}};
+    appData.goods.specs={{{detail.GoodsSpecsStr?detail.GoodsSpecsStr:'[]'}}};
+    appData.goods.saleoff={{{detail.saleoff?detail.saleoff:'[]'}}};
+    appData.goods.manyoff={{{detail.manyoff?detail.manyoff:'[]'}}};
+    appData.goods.manyoff_new={{{detail.manyoff_new?detail.manyoff_new:'[]'}}};
+    appData.goods.priceoff={{{detail.priceoff?detail.priceoff:'[]'}}};
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var selectGiftStr='{{lang("请您先选择赠品",detail.language)}}';
+    var giftStr='{{lang("赠品",detail.language)}}';
+    var selectOos="{{lang('此商品缺货中，请选择其他商品',detail.language)}}";
+    var oos="{{lang('[缺货中]',detail.language)}}";
+    var remoteMess1="{{lang('此地区为快递无法送达区域，请选择其他区域收件',detail.language)}}";
+    var remoteMess2 = "{{lang('此地区为快递偏远地区，需由快递公司另外加收快递费送达，快递费：',detail.language)}}";
+    var messMoney = "{{lang('偏远快递费',detail.language)}}"
+</script>
+<script type="text/javascript">
+    if(appData.chaport_switch==="1"&&appData.chaport_id){
+        (function(w,d,v3){
+            w.chaportConfig = { appId:appData.chaport_id };
+            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    }
+</script>
+<script src="/js/cartmain.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/showpopup.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/spec.js"></script>
+<script src="/theme/{{detail.template}}/js/detail.js"></script>
+<script>
+    init_cart();
+    init_Select(appData.money,'','#city');
+    init_swiper();
+</script>
+<div style="display:none;">
+    {{{detail.GoodsCode.kfcode}}}
+    {{{detail.GoodsCode.tjcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.code}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.code}}}
+    {{/each}}
+</div>
+<script>
+    $(function () {
+        //详情图片的显示与隐藏
+        $(".product_info .title span").on('click',function(){
+            $('.m-img').fadeToggle();
+        });
+    })
+</script>
+</body>
+</html>

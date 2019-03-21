@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/buy.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+    <script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<div id="app" v-cloak>
+    <div id="buy" style="display:none;">
+        <div style="position:fixed; top:5px; z-index:12512; left:5px; text-align:center;">
+            <a @click="goback" style="height:36px;display:inline-block;cursor:pointer;">
+                <img border="0" style="width:25px;" :src="'/theme/'+detail.template+'/images/back.png'"/>
+                <span style="color:#ffffff;font-size: 15px;position: relative;top: -8px;left: -3px;vertical-align: middle;">{{lang('返回',detail.language)}}</span>
+            </a>
+        </div>
+        <div class="wforder">
+            <div class="wftitle" style="position:fixed; top:0; overflow:hidden; width:100%; margin:0 auto; z-index:12509; left:0;height: 36px;line-height: 36px;background-color: rgba(222, 35, 39, 1); text-align:center; ">{{lang('线上快速订购',detail.language)}}</div>
+            <div class="wfwrap" style="margin-top:36px;">
+                <div class="wfwrapbox" style="margin-bottom: 20px;">
+                    <div class="wfform-box">
+                        <div class="wfproimg" style="height: auto;">
+                            <p>
+                                <span style="font-size:18px;">[[detail.sitename]]</span>
+                                <br>
+                                <span style="font-size:13px;font-weight:100;color:#333;">{{lang('货到付款',detail.language)}},{{lang('免运费',detail.language)}},{{lang('7天无理由退货',detail.language)}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!---------- 产品套餐 ---------->
+                    <div class="wfform-box">
+                        <label class="wfform-label" style="width: 100%;max-width: 200px;text-align: left">{{lang('套餐选择',detail.language)}}</label>
+                        <div class="wfform-pro radio" id="radio">
+                        <span style="margin-bottom: 5px;" class="down" v-for="(item,index) of manyoff">
+                            <label style="display: inline-block;padding: 5px;border-radius: 3px;" :class="{borderred:active==item.salecount}" @click="selectName(item.salecount,item.giftcount)" class="bordergrey">[[item.name]]
+                            </label>
+                        </span>
+                        </div>
+                    </div>
+                    <!---------- 数量价格 ---------->
+                    <div class="wfform-box" v-show="flag2===0">
+                        <label class="wfform-label" style="width:68px;">{{lang('运费',detail.language)}}</label>
+                        <div class="wfform-opt wfnums">
+                            <strong style="float:left;">
+                                <em class="rmb">[[detail.money]]</em>
+                                <em id="showprice">0</em>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="wfform-box" v-show="flag2===1">
+                        <label class="wfform-label" style="width:68px;">{{lang('运费',detail.language)}}</label>
+                        <div class="wfform-opt wfnums">
+                            <strong style="float:left;">
+                                <em class="rmb">[[detail.money]]</em>
+                                <em id="showprice">[[extrapay]]</em>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="wfform-box">
+                        <label class="wfform-label" style="width:68px;">{{lang('价格',detail.language)}}</label>
+                        <div class="wfform-opt wfnums">
+                            <strong style="float:left;">
+                                <em class="rmb">[[detail.money]]</em>
+                                <em id="showprice">[[realPrice]]</em>
+                            </strong>
+                        </div>
+                    </div>
+                    <!---------- 数量价格 ---------->
+                </div>
+                <div class="wftitle" id="wfattr" >{{lang('商品属性(必填，需选择)',detail.language)}}</div>
+                <div id="product">
+                    <div class="container">
+                        <div id="product_0">
+                                <!--<div style="font-size: 1.3rem;margin-bottom: 10px;">[[detail.sitename]]</div>-->
+                                <!--商品-->
+                                <div id="product-spec">
+                                    <div v-for="(prod,index1) in prods"  class="wfwrapbox" style="margin-top: 10px;">
+                                        <div class="product_item">
+                                            <div class="spec_Title"><span>[[index1+1]]</span>{{lang('件',detail.language)}}[[detail.option1_name]]<i style="font-style:normal;margin-left:10px;" v-for="item in count_info" v-if="(index1+1)===item.count">[[prods.specname]]</i></div>
+                                            <div class="spec_List user-name">
+                                                <div class="spec_Item opt1" :class="{active1:prods[index1].specname===item.name&&(option1_show||item.inventory!==0),disable:!option1_show&&item.inventory===0}"  @click="(option1_show||item.inventory!==0)&&select_specitem_nocart(item,index1+1)"  v-for="(item,index) in detail.specs.name_list">
+                                                    <div  class="i">
+                                                        <img v-if="item.img" :src="item.img?cdnbase+item.img:''">
+                                                    </div>
+                                                    <span v-if="item.inventory==0&&!item.option1&&!item.option2" class="oos">[[item.option1]]{{lang('[缺货中]',detail.language)}}</span>
+                                                    <span v-else :class="{active2:prods[index1].specname===item.name}" :class="">[[item.name]]</span>
+                                                </div>
+                                            </div>
+                                            <!--一级规格-->
+                                            <div v-show="option1_show">
+                                                <div class="spec_Title"><span>[[index1+1]]</span>{{lang('件',detail.language)}}[[detail.option2_name]]</div>
+                                                <div class="spec_List option1">
+                                                    <button type="button" class="option_Item opt2" :class="{active1:check_option1_active(item,index1),disable:check_option1_disable(item,index1)||stockout1(item,index1+1)}" :disabled="check_option1_disable(item,index1)||stockout1(item,index1+1)" v-for="(item,index) in detail.specs.option1_list" @click="select_option1_nocart(item,index1+1);"> <span v-if="stockout1(item,index1+1)" class="oos">[[item.option1]]{{lang('[缺货中]',detail.language)}}</span>
+                                                        <span v-else>[[item.option1]]</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!--二级规格-->
+                                            <div v-show="option2_show">
+                                                <div class="spec_Title">*<span>[[index1+1]]</span>{{lang('件',detail.language)}}[[detail.option3_name]]</div>
+                                                <div class="spec_List option2 spec">
+                                                    <button type="button" class="option_Item opt3"  :class="{active1:check_option2_active(item,index1)&&stockout2(item,index1+1)==false,disable:check_option2_disable(item,index1)||stockout2(item,index1+1)}" :disabled="check_option2_disable(item,index1)||stockout2(item,index1+1)" v-for="(item,index) in detail.specs.option2_list"  @click="select_option2_nocart(item,index1+1);"><span v-if="stockout2(item,index1+1)" class="oos">[[item.option2]]{{lang('[缺货中]',detail.language)}}</span>
+                                                        <span v-else>[[item.option2]]</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--赠品规格选择-->
+                            <div id="gifts" v-if="giftLength" class="wfwrapbox" style="margin-top: 10px;">
+                                <div style="padding:10px 0;font-size:1.2rem;">{{lang('赠品区域',detail.language)}}</div>
+                                <div v-for="(num,index2) in giftLength" class="gifts">
+                                    <div style="font-size:1.2rem;margin-bottom:1.2rem;">{{lang('第',detail.language)}}<span>[[num]]</span>{{lang('件',detail.language)}}</div>
+                                    <div v-for="(gift,index1) in detail.giftGoods">
+                                        <div style="font-size:1rem;margin-bottom:1rem;">[[gift.sitename]]</div>
+                                        <div class="spec_Title">[[gift.option1_name]]</div>
+                                        <div class="spec_List user-name">
+                                            <div class="spec_Item opt1 ks" :class="{active1:giftSelect[index1][num-1].specname===item.name}"  @click="select_giftspec(item,index1,num)" v-for="(item,index) in detail.giftGoodsSpecs[index1].giftName_list">
+                                                <div  class="i">
+                                                    <img v-if="item.img" :src="item.img?cdnbase+item.img:''">
+                                                </div>
+                                                <span>[[item.name]]</span>
+                                            </div>
+                                        </div>
+                                        <!--一级规格-->
+                                        <div v-if="detail.giftGoodsSpecs[index1].giftOption1_list.length>0">
+                                            <div class="spec_Title">[[gift.option2_name]]</div>
+                                            <div class="spec_List option1 xh spec">
+                                                <div class="option_Item opt2" :class="{active1:check_giftOption1_active(item,index1,num),disable:check_giftOption1_disable(item,index1,num)}" :disabled="check_giftOption1_disable(item,index1,num)"  v-for="(item,index) in detail.giftGoodsSpecs[index1].giftOption1_list" @click="select_giftoption1(item,index1,num);">
+                                                    <span>[[item.option1]]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--二级规格-->
+                                        <div  v-if="detail.giftGoodsSpecs[index1].giftOption2_list.length>0">
+                                            <div class="spec_Title">[[gift.option3_name]]</div>
+                                            <div class="spec_List option2 spec">
+                                                <div class="option_Item opt3"  :class="{active1:check_giftOption2_active(item,index1,num),disable:check_giftOption2_disable(item,index1,num)}" :disabled="check_giftOption2_disable(item,index1,num)" v-for="(item,index) in detail.giftGoodsSpecs[index1].giftOption2_list" @click="select_giftoption2(item,index1,num);">
+                                                    <span>[[item.option2]]</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wfwrap">
+                <div class="wfwrapbox pt15">
+                    <!---------- 付款方式 ---------->
+                    <div class="wfform-box">
+                        <label class="wfform-label"><em style="color:red;">*</em>{{lang('付款方式',detail.language)}}</label>
+                        <div class="wfform-pro radio">
+                            <span class="auto">
+                                <input type="radio" checked="" name="wfpayment" id="wfpayment1" value="cod" class="input-radio">
+                                <label style="font-size: 17px;font-weight: bold;position: relative;top: -4px;" for="wfpayment1">{{lang('货到付款',detail.language)}}</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div id="moren"><div class="wfform-box">
+                        <label class="wfform-label"><em style="color:red;">*</em>{{lang('收货人',detail.language)}}</label>
+                        <div class="wfform-opt">
+                            <input type="text" id="clientname" placeholder="{{lang('收货人',detail.language)+lang('必填',detail.language)}}" class="input-text" v-model="clientinfo.clientname">
+                        </div>
+                    </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label"><em style="color:red;">*</em> {{lang('联系电话',detail.language)}}</label>
+                            <div class="wfform-opt">
+                                <input type="text" id="clientphone" placeholder="{{lang('联系电话',detail.language)+lang('必填',detail.language)}}" class="input-text" v-model="clientinfo.clientphone">
+                            </div>
+                        </div>
+                        <div class="wfform-box"  v-if="detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円'">
+                            <label class="wfform-label"><em style="color:red;">*</em>{{lang('城市',detail.language)}}</label>
+                            <div class="wfform-opt area">
+                                <span class="wfcity"><select class="select" id="city" v-model="city"
+                                                             @change="init_Select_City(detail.money,city,'area')">
+                                    <option :value="item" :data-id="item.id" v-for="item in cityData">[[item.name]]</option>
+                                </select></span>
+                                <span class="wfarea"><select class="select" id="area" v-model="area"
+                                                             @change="init_Select_City(detail.money,area,'code')">
+                                    <option :value="item" :data-id="item.id" v-for="item in areaData">[[item.name]]</option>
+                                </select></span>
+                            </div>
+
+                        </div>
+                        <div class="wfform-box" v-if="detail.money==='円'">
+                            <label class="wfform-label"><em style="color:red;">*</em>{{lang('城市',detail.language)}}</label>
+                            <div class="wfform-opt area">
+                                 <span class="wfcity">
+                                <select class="select" v-model="clientinfo.city">
+                                    <option :value="item.name" :data-id="item.id" v-for="item in cityData" >[[item.name]]</option>
+                                </select>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="wfform-box" v-if="detail.money==='円'">
+                            <label class="wfform-label"><em style="color:red;">*</em>{{lang('地区',detail.language)}}</label>
+                            <div  class="wfform-opt">
+                                <input type="text" class="input-text"  class="necessary  text-left" v-model="clientinfo.area"
+                                       placeholder="{{lang('必填',detail.language)}}" required>
+                            </div>
+
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label"><em style="color:red;">*</em> {{lang('地址',detail.language)}}</label>
+                            <div class="wfform-opt">
+                                <input type="text" placeholder="{{lang('地址',detail.language)+lang('必填',detail.language)}}" v-model="clientinfo.clientaddress" class="input-text" id="clientaddress">
+                            </div>
+                        </div>
+                        <div class="wfform-box"  v-if="detail.money==='S$'||detail.money==='RM'||detail.money==='฿'||detail.money==='円'">
+                            <label  class="wfform-label"><em style="color:red;">*</em>{{lang('邮编',detail.language)}}</label>
+                            <div class="wfform-opt area">
+                                  <span class="wfcity ">
+                                    <select  v-if="detail.money==='RM'||detail.money==='฿'" v-model="clientinfo.clientzipcode" class="select" id="clientzipcode" @change="mark && changeCode(detail.money);">
+                                        <option :value="item.displayName"  v-for="item in codeData">[[item.displayName]]</option>
+                                    </select>
+                                  </span>
+                                <input type="tel" class="input-text" v-if="detail.money==='S$'||detail.money==='円'" placeholder="{{lang('必填',detail.language)}}" v-model="clientinfo.clientzipcode" id="clientzipcode" @change="mark && changeCode(detail.money);"/>
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">{{lang('Email:',detail.language)}}</label>
+                            <div class="wfform-opt">
+                                <input type="text" placeholder="{{lang('E-Mail',detail.language)}}" id="clientemail"
+                                       v-model="clientinfo.clientemail" class="input-text">
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">{{lang('备注',detail.language)}}</label>
+                            <div class="wfform-opt">
+                                <textarea id="clientotherinfo" placeholder="{{lang('备注',detail.language)+':'+lang('其他要求请备注',detail.language)}}" class="textarea" v-model="clientinfo.clientotherinfo"></textarea>
+                            </div>
+                        </div>
+                        <div class="wfform-box" id="pianyuan">
+                            <label></label>
+                            <div></div>
+                        </div>
+                        <div v-if="flag2===1" style="text-align:center;">
+                            <input type="checkbox" value="1" id="remote" v-modal="check" checked="checked" @click="getValue()"  data-am-ucheck style="-webkit-appearance: checkbox;">
+                            <span style="color: #F86161;" >{{lang('此地区为快递偏远地区，需由快递公司另外加收快递费送达，快递费：',detail.language)}}<u>[[detail.money]][[extrapay]]</u></span><!--'//data1.cityMess.cityinfo.extrapay-->
+                        </div>
+                        <div v-if="flag2===0"  style="text-align:center;">
+                            <span style="color: #F86161;" >{{lang('此地区为快递无法送达区域，请选择其他区域收件',detail.language)}}</span><!--'//data1.cityMess.cityinfo.extrapay-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wftitle" style="box-shadow: 0 1px 2px 2px #E4E4E4;background-color: #FCF8E3;color: #C09853;padding: 10px 35px 10px 14px;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);border: 1px solid #fbeed5;border-radius: 5px;margin: 0px 10px 0px 10px;"> {{lang('最近订购信息',detail.language)}}</div>
+            <div class="wfwrap">
+                <div class="wfwrapbox">
+                    <div class="wffahuo" id="wffahuo">
+                        <ul id="purchaseInfo">
+                            <li v-for="item of purchaseInfo">
+                              <img style="width:25px;vertical-align: middle;" :src="'/'+item.img" alt="">
+                                <span>[[item.info]]</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="wfwrap" style="margin-bottom:50px;">
+                <div class="wfwrapbox">
+                    <div class="wfquery">
+                        <form>
+                            <input style="float:right;" type="text" v-model="expressinfo" placeholder="{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}" class="input-text">
+                            <button style="float:left;" class="wfbtn btn-o btn-que find-btn"><a :href="'/ordersearch/'+detail.sitedir+'?ordernum='+expressinfo">{{lang('查询',detail.language)}}</a></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div style="position: fixed;bottom: 0;left: 0;width: 100%;">
+                <div style="height: 50px;line-height: 50px;background: #333333;color:#fff;">
+                    <button id="wfsubmit">
+                        <span class="submit_order" @click="flag1 && submit_order_nocart()">{{lang('提交订单',detail.language)}}</span>
+                        <div class="manyoff">{{lang('已优惠',detail.language)}}[[detail.money]]<span>[[allPrice-realPrice]]</span></div>
+                        <div class="allprice"><span style="font-weight: bold;font-size: 16px;">{{lang('合计',detail.language)}}</span> [[detail.money]]
+                            <em id="showprice_total" v-show="flag2===1">[[realPrice+parseInt(extrapay)]]</em>
+                            <em id="showprice_total" v-show="flag2!==1">[[realPrice]]</em>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="success" >
+        <div class="head">
+            <!--<img :src="'/theme/'+detail.template+'/images/success.gif'">-->
+            <em class="ok">&nbsp;</em>
+            {{lang('下单成功，我们将尽快为您配送！',detail.language)}}
+        </div>
+        <div class="wfok">
+            <ul>
+                <li><span class="l">{{lang('订单号',detail.language)}}</span><span class="r">[[orderid]]</span></li>
+                <li><span class="l">{{lang('订单商品',detail.language)}}</span><span class="r">[[detail.sitename]]</span></li>
+                <li><span class="l">{{lang('数量',detail.language)}}/{{lang('价格',detail.language)}}</span><span class="r">[[number]] / [[orderprice]]</span></li>
+                <li><span class="l">{{lang('收货人',detail.language)}}</span><span class="r">[[order_clientname]]</span></li>
+                <li><span class="l">{{lang('联系电话',detail.language)}}</span><span class="r">[[order_clientphone]]</span></li>
+                <li><span class="l">{{lang('地址',detail.language)}}</span><span class="r">[[order_clientaddress]]</span></li>
+                <li><span class="l">{{lang('付款方式',detail.language)}}</span><span class="r">{{lang('货到付款',detail.language)}}</span></li>
+            </ul>
+        </div>
+        <div class="foot">
+            <p>
+                <a style="color:#BD0000;font-size:18px;" v-if="detail.home_id" :href="'../home/'+detail.home_select+'/'+detail.username">
+                    {{lang('继续浏览',detail.language)}}
+                </a>
+                <a style="color:#BD0000;font-size:18px;" v-else href="javascript:void(0)" onclick="location.href=localStorage.getItem('url')">
+                    {{lang('继续浏览',detail.language)}}
+                </a>
+            </p>
+        </div>
+</div>
+</div>
+<script>
+    var appData = {
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}'
+    };
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var orderError="{{lang('订单不存在',detail.language)}}";
+    var submitComment="{{lang('提交评论中',detail.language)}}";
+    var selectOos="{{lang('商品',detail.language)}}";
+    var selectOos1="{{lang('缺货中，请选择其他商品',detail.language)}}";
+    var oos="{{lang('[缺货中]',detail.language)}}";
+    var selectGiftStr='{{lang("请您先选择赠品",detail.language)}}';
+</script>
+<script src="/theme/{{detail.template}}/js/index.js"></script>
+<div style="display: none;">
+    {{{detail.GoodsCode.kfcode}}}
+    {{{detail.GoodsCode.tjcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.code}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.code}}}
+    {{/each}}
+</div>
+</body>
+</html>

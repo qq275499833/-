@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{page.title}}</title>
+    {{#if(detail.template)}}
+    <link href="/theme/{{detail.template}}/css/index.css" rel="stylesheet">
+    {{else}}
+    <link href="/theme/{{page.template}}/css/index.css" rel="stylesheet">
+    {{/if}}
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+</head>
+<body >
+    <header class="site-header" role="banner">
+        <div class="wrapper">
+            <div class="grid--full">
+                <div class="grid-item large--one-half">
+                    <div class="h1 header-logo">
+                        {{#if(detail.sitedir)}}
+                        <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" itemprop="url"><img src="{{page.cdnbase+(page.logo?page.logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}"></a>
+                        {{else}}
+                        <a href="../home/{{page.homeId}}/{{page.username}}" itemprop="url"><img src="{{page.cdnbase+(page.logo?page.logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}"></a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="nav-bar" role="navigation">
+        <div class="wrapper">
+            {{#if(detail.sitedir)}}
+            <ul class="site-nav" id="accessibleNav">
+                <li>
+                    <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" tabindex="1">{{lang('首页',detail.language)}}</a>
+                </li>
+                <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+                <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+                <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+                <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+                <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+                <li>
+                    <a href="/ordersearch/{{detail.sitedir}}">{{lang('查询订单信息',detail.language)}}</a>
+                </li>
+            </ul>
+            {{else}}
+            <ul class="site-nav">
+                <li>
+                    <a href="../home/{{page.username}}" tabindex="1">{{lang('首页',page.language)}}</a>
+                </li>
+                <li><a href="/about?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('关于我们',page.language)}}</a></li>
+                <li><a href="/contact?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('联系我们',page.language)}}</a></li>
+                <li><a href="/privacy?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('隐私协议',page.language)}}</a></li>
+                <li><a href="/terms?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('服务条例',page.language)}}</a></li>
+                <li><a href="/service?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('退换货政策',page.language)}}</a></li>
+            </ul>
+            {{/if}}
+        </div>
+    </nav>
+    <div id="mobileNavBar">
+        <div class="display-table-cell" id="mobile_menu">
+            <a class="menu-toggle mobileNavBar-link" ><span class="icon icon-hamburger"></span>Menu</a>
+        </div>
+    </div>
+    <main class="wrapper main-content" role="main">
+       {{{page.body}}}
+    </main>
+    <footer class="site-footer small--text-center" role="contentinfo">
+        <div class="wrapper">
+            <div class="grid">
+                <div class="grid-item medium--one-half large--three-twelfths">
+                    <h3>{{lang('快速链接',detail.language)}}</h3>
+                    {{#if(detail.sitedir)}}
+                    <ul>
+                        <li>
+                            <a href="/{{detail.sitedir}}" tabindex="1">{{lang('首页',detail.language)}}</a>
+                        </li>
+                        <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+                        <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+                        <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+                        <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+                        <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+                        <li>
+                            <a href="/ordersearch/{{detail.sitedir}}">{{lang('查询订单信息',detail.language)}}</a>
+                        </li>
+                    </ul>
+                    {{else}}
+                    <ul>
+                        <li>
+                            <a href="../home/{{page.username}}" tabindex="1">{{lang('首页',detail.language)}}</a>
+                        </li>
+                        <li><a href="/about?id=0&username={{page.username}}">{{lang('关于我们',detail.language)}}</a></li>
+                        <li><a href="/contact?id=0&username={{page.username}}">{{lang('联系我们',detail.language)}}</a></li>
+                        <li><a href="/privacy?id=0&username={{page.username}}">{{lang('隐私协议',detail.language)}}</a></li>
+                        <li><a href="/terms?id=0&username={{page.username}}">{{lang('服务条例',detail.language)}}</a></li>
+                        <li><a href="/service?id=0&username={{page.username}}">{{lang('退换货政策',detail.language)}}</a></li>
+                    </ul>
+                    {{/if}}
+                </div>
+                <div class="grid-item medium--one-half large--five-twelfths">
+                    <h3>{{lang('联系我们',detail.language)}}</h3>
+                    <p>
+                        <a href="http://{{detail.domain+'/'+detail.sitedir}}">http://{{detail.domain+':8087/'+detail.sitedir}}</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="qab_placeholder"></div>
+
+    </footer>
+    <a id="btn-top" href="javascript:window.scrollTo( 0, 0 );" style="display: block;">
+        <img src="/theme/{{detail.template}}/images/gotop.png" alt="" width="40px" height="40px">
+    </a>
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script>
+        $("#mobile_menu").click(function(){
+            $("body").toggleClass("show-nav");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{{detail.sitename}}</title>
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/swiper-3.4.2.min.css">
+    {{{detail.GoodsCode.ggcode}}}
+</head>
+<body>
+<!--头部导航-->
+<div id="mainIndex" class="holder2">
+    <!--<div class="navTop">-->
+        <!--<div class="navWrap">-->
+            <!--<img class="backBtn  lazy" data-original="/theme/{{detail.template}}/src/img/page1/back.png" alt="">-->
+            <!--<div class="navabox">-->
+                <!--<a class="nav_actived" href="">{{lang('商品',detail.language)}}</a>-->
+                <!--<a href="">{{lang('评价',detail.language)}}</a>-->
+                <!--<a href="">{{lang('详情',detail.language)}}</a>-->
+                <!--<div class="clearBoth"></div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--商品大图-->
+    <!--轮播图-->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {{#each(detail.head_imgs)}}
+            <div class="swiper-slide"><img src="http://cdn.seezt.cc/uploadimages/{{this}}"></div>
+            {{/each}}
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+    <div class="productPicBox">
+        <img class="lazy" data-original="http://cdn.seezt.cc/uploadimages/{{detail.head_imgs[0]}}" alt="">
+        <div class="priceBox">
+            <img class="traingle" src="/theme/{{detail.template}}/src/img/page1/traingle.png" alt="">
+            <div class="price">
+                <div class="discount">{{detail.money}}{{detail.price}}</div>
+                <div class="priceOld">
+                    <span>{{lang('优惠金额',detail.language)}}</span>
+                    <span class="saleNum">
+                    {{lang('已售出',detail.language)}}805{{lang('件',detail.language)}}
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--商品详情-->
+    <div class="sectionBody">
+        <div class="title">
+            <div class="holder2">
+                <p>{{detail.sitename}}</p>
+            </div>
+        </div>
+        <!--<img class="blockLine" src="/theme/{{detail.template}}/src/img/page1/blockline1.png" alt="">-->
+        <!--<div class="holder">-->
+            <!--<ul>-->
+                <!--<li class="infoList">-->
+                    <!--<span class="infoTitle">{{lang('服务',detail.language)}}</span>-->
+                    <!--<span class="infoText">极速退货 正品保证 极速退款</span>-->
+                    <!--<img src="/theme/{{detail.template}}/src/img/page1/arrow.png" class="arrow">-->
+                <!--</li>-->
+                <!--&lt;!&ndash;<li class="infoList">&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="infoTitle">规格</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="infoText">选择 颜色分类,尺码</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<img src="/theme/{{detail.template}}/src/img/page1/arrow.png" class="arrow">&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<span class="infotip">完善尺码</span>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                <!--<li class="infoList" onclick="showBuyBox()">-->
+                    <!--<span class="infoTitle">{{lang('参数',detail.language)}}</span>-->
+                    <!--<span class="infoText">{{lang('请您选择商品的颜色和规格',detail.language)}}</span>-->
+                    <!--<img src="/theme/{{detail.template}}/src/img/page1/arrow.png" class="arrow">-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    </div>
+    <div class="holder">
+        <div class="buyBar">
+            <div class="shopBtnBox">
+                <div class="shopBtn" onclick="$('.buyBox2').css('display','block');refresh_prod_ul();">
+                    <img src="/theme/{{detail.template}}/src/img/page1/cart.png" alt=""><br>
+                    <span>{{lang('购物车',detail.language)}}</span>
+                </div>
+                <div class="shopBtn kf" onclick="show_kflist();">
+                    <img src="/theme/{{detail.template}}/src/img/page1/service.png" alt=""><br>
+                    <span class="cus">{{lang('客服',detail.language)}}</span>
+                    <ul class="kf_list">
+                        <li><a href="{{detail.User.fblink}}">Facebook</a></li>
+                        <li><a href="{{detail.User.linelink}}">Line</a></li>
+                        <li><a href="{{detail.User.whatsapplink}}">WhatsApp</a></li>
+                    </ul>
+                </div>
+
+                <div class="clearBoth"></div>
+            </div>
+            <div class="buyNowBox">
+                <button class="addtocart" onclick="showBuyBox()"> {{lang('加入购物车',detail.language)}}</button>
+                <button class="buyNow" onclick="showBuyBox()">{{lang('立即购买',detail.language)}}</button>
+
+            </div>
+
+        </div>
+
+        <div class="clearBoth"></div>
+
+    </div>
+    <!--<div class="message">-->
+        <!--<div class="holder">-->
+            <!--<ul class="msgList">-->
+                <!--<li>-->
+                    <!--<div class="msgname">-->
+                        <!--<img src="/theme/{{detail.template}}/src/img/page1/circle1.png" alt="">-->
+                        <!--<span>头发和***正比</span>-->
+                    <!--</div>-->
+                    <!--<div class="msgText">-->
+                        <!--太喜欢了，颜色显肤色，面料柔软舒适，老顾客了！-->
+                    <!--</div>-->
+                    <!--<div class="goodsStyle">-->
+                        <!--2018-04-20 颜色分类：茶玫粉C18；尺码：170/88A/L-->
+                    <!--</div>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<div class="msgname">-->
+                        <!--<img src="/theme/{{detail.template}}/src/img/page1/circle1.png" alt="">-->
+                        <!--<span>头发和***正比</span>-->
+                    <!--</div>-->
+                    <!--<div class="msgText">-->
+                        <!--太喜欢了，颜色显肤色，面料柔软舒适，老顾客了！-->
+                    <!--</div>-->
+                    <!--<div class="goodsStyle">-->
+                        <!--2018-04-20 颜色分类：茶玫粉C18；尺码：170/88A/L-->
+                    <!--</div>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<a href="#" class="checkMore">查看更多评价</a>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<img src="/theme/{{detail.template}}/src/img/page1/blockline1.png" alt="" class="blockLine">-->
+    <div class="correlation clearfix">
+        {{#if(detail.body_ads)}}
+        <p> {{lang('猜你喜欢',detail.language)}}</p>
+        <ul class="clearfix">
+            {{#each(detail.body_ads)}}
+            <li>
+                <a href="/{{this.sitedir}}">
+                    {{set (imgs = this.head_imgs.split(';'))}}
+                    <img src="{{imgs[0]?'http://cdn.seezt.cc/uploadimages/'+imgs[0]+'-300':''}}" alt="">
+                    <h6>{{this.sitename}}</h6>
+                    <span>{{this.money}} {{this.price}}</span>
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+    </div>
+    <!-- 查询订单 -->
+    <div class="order-title">{{lang('查询订单信息',detail.language)}}</div>
+    <div class="goods-info">
+        <div class="am-form-group">
+            <input type="text" id="expressinfo" class="" placeholder="{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}">
+            <button class="find-btn" onclick="find_order()" type="button">
+                {{lang('查询',detail.language)}}
+            </button>
+        </div>
+        <ul id="find_result" class="comment_ul"></ul>
+    </div>
+    <div class="blockLine">
+        <div class="detail-imgs">
+            {{{detail.GoodsContent.content}}}
+        </div>
+
+        <!---->
+        <!--<img src="/theme/{{detail.template}}/src/img/page1/blockline.png">-->
+        <!--<span>{{lang('详情',detail.language)}}</span>-->
+        <!--<img src="/theme/{{detail.template}}/src/img/page1/blockline.png">-->
+        <!--</div>-->
+        <!--<div class="picsTitle">-->
+        <!--<p>COLORS</p>-->
+        <!--<p>多味色彩</p>-->
+        <!--</div>-->
+        <!--<div class="picsBox">-->
+        <!--&lt;!&ndash;<div class="holder">&ndash;&gt;-->
+        <!--<div class="picsWrap">-->
+        <!--&lt;!&ndash;<div class="picsBg"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="picsBg2"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="pics">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span>GET YOUR SHOPON</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<img src="/theme/{{detail.template}}/src/img/page1/picsa.png" alt="">-->
+        <!--</div>-->
+        <!---->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg1.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg2.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg3.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg4.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg6.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg7.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg8.png" alt="">-->
+        <!--<div class="textWrap">-->
+        <!--<p>价格说明</p>-->
+        <!--<span>划线价格</span>指商品的专柜价、吊牌价、正品零售价、厂商指导价或该商品的曾经展示过得销售价格等，<span>并非原价</span>，仅供参考。<br>-->
+        <!--<span>未划线价格：</span>指商品的<span>实时标价</span>，不因表述的差异改变性质。具体成交价格根据商品参加活动，或会员使用优惠券，积分等发生改变，最终以订单结算页价格为准。-->
+        <div class="clearBoth"></div>
+
+    </div>
+    <div class="clearBoth"></div>
+
+    <!--</div>-->
+
+</div>
+<!--规格页面-->
+<div class="buyBox disappear">
+    <div class="holder2 buyBoxSon">
+        <div class="buyView">
+            <img id="selected-img" src="http://cdn.seezt.cc/uploadimages/{{detail.head_imgs[0]}}-101" alt="">
+            <div class="moneyBox">
+                <p class="buyPrice"><span id="goods_price">{{detail.money}}{{detail.price}}</span>
+                    <img class="clearSpec" onclick="hideBuyBox()"
+                         src="/theme/{{detail.template}}/src/img/page2/clear.png" alt=""></p>
+                <p>
+                    <span class="spec" id="spec-goods"></span>
+                </p>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+        <div class="clearBoth"></div>
+        <div class="specSet">
+            <p>{{detail.option1_name}}</p>
+            <div class="setTabs name" id="spec_names">
+                {{#each(detail.specs.name_list)}}
+                <div class="tabs" onclick="select_specitem(this)" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{detail.money}}{{this.price}}">
+                    <img class="smimg" src="{{this.img?'http://cdn.seezt.cc/uploadimages/'+this.img+'-40':''}}" />
+                    {{this.name}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{#if(detail.specs.option1_list.length>0)}}
+        <div class="sizeBox">
+            <p>{{detail.option2_name}}</p>
+            <div class="setTabs option1" id="spec_option1">
+                {{#each(detail.specs.option1_list)}}
+                <div class="tabs disable"  data-name="{{this.option1}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}" onclick="select_option1(this)">{{this.option1}}</div>{{/each}}</div>
+        </div>
+        {{/if}}
+        {{#if(detail.specs.option2_list.length>0)}}
+        <div class="comboBox">
+            <p>{{detail.option3_name}}</p>
+            <div class="setTabs option2" id="spec_option2">
+                {{#each(detail.specs.option2_list)}}
+                <div class="tabs disable" data-name="{{this.option2}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}" onclick="select_option2(this)">{{this.option2}}</div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="buyNum">
+            <span>{{lang('数量',detail.language)}}</span>
+            <div>
+                <a onclick="(appData.addnum>1?appData.addnum-=1:appData.addnum = 1);$('#addnum').val(appData.addnum);checkStyle();"
+                   class="min_btn">-</a>
+                <!--<a href="#" id="addnum">2</a>-->
+                <input type="tel" onblur="proNumBlur(this)" style="float: left;" class="product_num" name="num" id="addnum" value="1"/>
+                <a onclick="appData.addnum+=1;$('#addnum').val(appData.addnum);checkStyle();" class="add_btn">+</a>
+
+            </div>
+
+        </div>
+        <div class="addtocartlg" onclick="addtocart(buyFlag)">{{lang('去买单',detail.language)}}</div>
+
+    </div>
+</div>
+<!--支付页面-->
+<div class="buyBox2 disappear" id="buybox2">
+    <div class="holder2">
+        <a class="back">
+            <img style="display: inline-block" src="/theme/{{detail.template}}/src/img/page1/arrow.png" onclick="back()"
+                 alt="">
+            <span>{{lang('订单商品',detail.language)}}</span>
+        </a>
+        <div class="productView" id="productView">
+        </div>
+    </div>
+    <div class="transformWrap">
+        <!--<div class="transform">-->
+            <!--<span>配送方式</span><a href="#">快递免邮 <img src="/theme/{{detail.template}}/src/img/page1/arrow.png" alt=""></a>-->
+        <!--</div>-->
+        <div class="transform">
+            <span>{{lang('数量',detail.language)}}</span><a style="color:#F25252;" id="allCount"><span>0000</span></a>
+        </div>
+        <div class="transform">
+            <span>{{lang('金额',detail.language)}}</span><a style="color:#F25252;" id="allprice"><span>0000</span></a>
+        </div>
+        <div class="transform" id="saleoffprice_div">
+            <span>{{lang('满减优惠',detail.language)}}</span><a style="color:#F25252;" id="saleoffprice"><span>0000</span></a>
+        </div>
+        <div class="transform">
+            <span>{{lang('实付金额',detail.language)}}</span><a style="color:#F25252;" id="realprice"><span>0000</span></a>
+        </div>
+    </div>
+    <div class="blockLine">
+    </div>
+    <div class="transformWrap">
+        <div class="clearBoth"></div>
+        <div class="holder2" style="border-bottom: 1px solid rgba(54,54,54,0.2);">
+            <table class="inputList">
+                <tr class="input input_user">
+                    <td>{{lang('收货人',detail.language)}}</td>
+                    <td><input id="clientname" type="text" placeholder="{{lang('必填',detail.language)}}"></td>
+                </tr>
+                <tr class="input input_phone">
+                    <td>{{lang('联系电话',detail.language)}}</td>
+                    <td><input id="clientphone" type="text" placeholder="{{lang('必填',detail.language)}}"></td>
+                </tr>
+                <tr class="input input_address {{(detail.money!=='￥'&&detail.money!=='S$')?'':'hide'}}">
+                    <td>{{lang('城市',detail.language)}}</td>
+                    <td>
+                        <select style="display:none;" class="select" id="province"></select>
+                        <select class="select" id="city"></select>
+                        <select class="select" id="area"></select>
+                    </td>
+                </tr>
+                <tr class="input input_address">
+                    <td>{{lang('地址',detail.language)}}</td>
+                    <td><input id="clientaddress" type="text" placeholder="{{lang('必填',detail.language)}}">
+                    </td>
+                </tr>
+                <tr class="input input_yb">
+                    <td>{{lang('邮编',detail.language)}}</td>
+                    <td><input type="text" id="clientzipcode" placeholder="{{lang('必填',detail.language)}}"></td>
+                </tr>
+                <tr class="input input_yb">
+                    <td>{{lang('E-Mail',detail.language)}}</td>
+                    <td><input type="text" id="clientemail"></td>
+                </tr>
+                <tr class="input input_msg">
+                    <td>{{lang('其他要求请备注',detail.language)}}</td>
+                    <td><input id="clientotherinfo" type="text"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="clearBoth"></div>
+    <a onclick="submit_order()" class="subBtn">{{lang('提交订单',detail.language)}}</a>
+</div>
+<!--支付成功页面-->
+<div class="buyBox3" id="buyBox3">
+    <div class="header"><img id="backBtn" onclick="back()" src="/theme/{{detail.template}}/src/img/page1/back.png"
+                             alt="">{{lang('下单成功',detail.language)}}
+    </div>
+    <div class="successtips">
+        <div class="paysuccess">
+            <span>√ </span>{{lang('下单成功，我们将尽快为您配送！',detail.language)}}
+        </div>
+        <p>{{lang('订单号',detail.language)}}：<span id="orderid"></span></p>
+        <p>{{lang('实付金额',detail.language)}}：<span id="orderprice"></span></p>
+        <p>{{lang('地址',detail.language)}}：<span id="order_clientaddress"></span></p>
+        <p>{{lang('联系电话',detail.language)}}：<span id="order_clientname"></span></p>
+    </div>
+</div>
+
+
+</body>
+<script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+<script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+<script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+<script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    var buyFlag = 0;
+    $('.buyNow').click(function () {
+        buyFlag = 1;
+    });
+    $('.addtocart').click(function () {
+        buyFlag = 0;
+    });
+    $('.infoList').click(function () {
+        buyFlag = 0;
+    });
+    var appData = {
+        goods: {id: '{{detail.id}}',sourceid: '{{detail.source}}',name: '{{detail.name}}',userkey: '{{detail.userkey}}'},
+        selectProd: {name: '',price: '',img: '',option1: '', option2: '',sku: "",number:1},
+        prods: [],
+        addnum: 1,
+        imgpath: 'http://cdn.seezt.cc/uploadimages/',
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}",
+        apiserver:"{{apiserver}}"
+    };
+    appData.goods.specs={{{detail.GoodsSpecsStr?detail.GoodsSpecsStr:'[]'}}};
+    appData.goods.saleoff={{{detail.saleoffStr?detail.saleoffStr:'[]'}}};
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var ordertimeStr = "{{lang('下单时间',detail.language)}}";
+    var orderidStr = "{{lang('订单号',detail.language)}}";
+    var ordernameStr = "{{lang('收货人',detail.language)}}";
+    var orderaddressStr = "{{lang('地　址',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var orderError="{{lang('订单不存在',detail.language)}}";
+</script>
+<script src="/theme/{{detail.template}}/js/main.js"></script>
+<script>
+    init_cart();
+    init_LocalSelect(appData.language);
+    init_swiper();
+</script>
+</html>

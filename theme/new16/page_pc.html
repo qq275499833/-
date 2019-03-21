@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{page.title}}</title>
+    {{#if(detail.template)}}
+    <link href="/theme/{{detail.template}}/css/detail.css" rel="stylesheet">
+    {{else}}
+    <link href="/theme/{{page.template}}/css/detail.css" rel="stylesheet">
+    {{/if}}
+    <style>
+        .title{
+            font-size: 15px;
+            font-weight: 700;
+            padding: 10px 20px;
+            color: #fff;
+            text-align: center;
+            background-color: #f86161;
+        }
+        .title > a{
+            float:left;
+        }
+        .title > a i {
+            padding: 4px 12px 3px 12px;
+            background-size: cover !important
+        }
+
+        .title > a i.back {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgEAYAAAAj6qa3AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAAASAAAAEgARslrPgAAAZRJREFUaN7tmDFrAkEUhG+jaCMSLUQsBMHSQrQXAnbW9oKNv0L0J2ghYidY+AsEIVaWgjZWgo2FkipKmqhxJ8XEgBFSZe8F3Wk+3lYzc9w+7hzHysrKyur/CwCAUEjah1DwapU8nW6+CAb0eMhWi/z4ICsVaX/mgmtoaJ+PQft98v2d58WitD/DwQMBBh4OyddXnudy0v7MBQcARKMMOp1y3mzIdFran+HgiQS5WLCA5ZJMJqX9GQ6ezZIvLww8mZCRiLQ/w8GfnsjdjoGfn8lgUNqfueBftzeD7/dkr3e+7aX9mQsOAIjFvtcYAKDZJJWS9vdTD3/fgAMH4TAHv5/zeKyUUkoB0oFdE594u00ej2S5LO3L5QKUIms1XKjR+K+vhOFCSiXycCC73Zu/FK+K0NDQ+TwL2G45j0acHx+l/blcRCrF4KsVOZ/zPB6X9udeEee1qaGhZzPO6zWZyUj7c6+I81ehhoYeDFjA2xtZKEj7c7kIr5fsdO7mh8hVERdrtF6/m19ivxdyR1vCysrKyg19AmZ2H0qd4Nk/AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTExLTE3VDAxOjQ1OjM4KzA4OjAwJMjpjwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0xMS0xN1QwMTo0NTozOCswODowMFWVUTMAAABMdEVYdHN2ZzpiYXNlLXVyaQBmaWxlOi8vL2hvbWUvYWRtaW4vaWNvbi1mb250L3RtcC9pY29uXzFiNHV5Y3hncjZtaG9seHIvYmFjay5zdmdV3GI5AAAAAElFTkSuQmCC) no-repeat center
+        }
+    </style>
+</head>
+<body>
+<section id="page-top" class="page_title">
+    <div class="title">
+        {{#if(detail.sitedir)}}
+        <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');"><i class="back"></i></a>
+        {{else}}
+        <a href="../home/{{page.homeId}}/{{page.username}}"><i class="back"></i></a>
+        {{/if}}
+        {{page.name}}
+    </div>
+    <div id="detail" style="margin-bottom:163px;">
+        <div>{{{page.body}}}</div>
+    </div>
+    <div class="main_footer" style="background: #fff;position:fixed;bottom:0;padding-bottom:20px;margin:0;width:100%;max-width:768px;">
+        {{#if(detail.sitedir)}}
+        <ul class="aboutUs">
+            <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+            <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+            <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+            <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+            <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+        </ul>
+        {{else}}
+        <ul class="aboutUs">
+            <li><a href="/about?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('关于我们',page.language)}}</a></li>
+            <li><a href="/contact?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('联系我们',page.language)}}</a></li>
+            <li><a href="/privacy?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('隐私协议',page.language)}}</a></li>
+            <li><a href="/terms?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('服务条例',page.language)}}</a></li>
+            <li><a href="/service?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('退换货政策',page.language)}}</a></li>
+        </ul>
+        {{/if}}
+        <div class="copyright">Copyright ©2018 All Rights Reserved</div>
+    </div>
+</section>
+</body>
+</html>

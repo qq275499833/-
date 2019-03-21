@@ -1,0 +1,8 @@
+{
+  "name": "SPAShop",
+  "script": "bin/production",
+  "merge_logs": true,
+  "log_date_format": "YYYY-MM-DD HH:mm Z",
+  "error_file": "err.log",
+  "out_file": "out.log"
+}

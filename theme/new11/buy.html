@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!-- {{appid}} -->
+<head>
+    <meta charset="UTF-8">
+    <title>{{detail.sitename}}</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/buy.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<button class="order-summary-toggle display-table order-summary-toggle--show bbhide" id="data-order-summary">
+    <div class="wrap">
+        <div class="order-summary-toggle__inner">
+            <div class="order-summary-toggle__icon-wrapper">
+                <svg width="20" height="19"  class="order-summary-toggle__icon">
+                    <path d="M17.178 13.088H5.453c-.454 0-.91-.364-.91-.818L3.727 1.818H0V0h4.544c.455 0 .91.364.91.818l.09 1.272h13.45c.274 0 .547.09.73.364.18.182.27.454.18.727l-1.817 9.18c-.09.455-.455.728-.91.728zM6.27 11.27h10.09l1.454-7.362H5.634l.637 7.362zm.092 7.715c1.004 0 1.818-.813 1.818-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817zm9.18 0c1.004 0 1.817-.813 1.817-1.817s-.814-1.818-1.818-1.818-1.818.814-1.818 1.818.814 1.817 1.818 1.817z"></path>
+                </svg>
+            </div>
+            <div class="order-summary-toggle__text order-summary-toggle__text--show">
+                <span>{{lang('显示订单详细',detail.language)}}</span>
+                <svg width="11" height="6" class="order-summary-toggle__dropdown" fill="#000"><path d="M.504 1.813l4.358 3.845.496.438.496-.438 4.642-4.096L9.504.438 4.862 4.534h.992L1.496.69.504 1.812z"></path></svg>
+            </div>
+            <div class="order-summary-toggle__text order-summary-toggle__text--hide">
+                <span>{{lang('隐藏订单详细',detail.language)}}</span>
+                <svg width="11" height="7" class="order-summary-toggle__dropdown" fill="#000"><path d="M6.138.876L5.642.438l-.496.438L.504 4.972l.992 1.124L6.138 2l-.496.436 3.862 3.408.992-1.122L6.138.876z"></path></svg>
+            </div>
+            <div class="order-summary-toggle__total-recap total-recap" data-order-summary-section="toggle-total-recap">
+                <span class="total-recap__final-price" data-checkout-payment-due-target="1997">
+                </span>
+            </div>
+        </div>
+    </div>
+</button>
+<div class="content">
+    <div class="wrap">
+        <!--右边商品内容-->
+        <div class="sidebar">
+            <div class="sidebar__content">
+                <div class="order-summary order-summary--is-collapsed" data-order-summary="">
+                    <h2 class="visually-hidden">Order summary</h2>
+
+                    <div class="order-summary__sections">
+                        <div class="order-summary__section order-summary__section--product-list">
+                            <div class="order-summary__section__content">
+                                <table class="product-table">
+                                    <caption class="visually-hidden">{{lang('購物車',detail.language)}}</caption>
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"><span class="visually-hidden">Product image</span></th>
+                                        <th scope="col"><span class="visually-hidden">Description</span></th>
+                                        <th scope="col"><span class="visually-hidden">Quantity</span></th>
+                                        <th scope="col"><span class="visually-hidden">Price</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody data-order-summary-section="line-items" id="order_goodslist">
+                                    </tbody>
+                                </table>
+
+                                <div class="order-summary__scroll-indicator">
+                                    Scroll for more items
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="12" viewBox="0 0 10 12">
+                                        <path d="M9.817 7.624l-4.375 4.2c-.245.235-.64.235-.884 0l-4.375-4.2c-.244-.234-.244-.614 0-.848.245-.235.64-.235.884 0L4.375 9.95V.6c0-.332.28-.6.625-.6s.625.268.625.6v9.35l3.308-3.174c.122-.117.282-.176.442-.176.16 0 .32.06.442.176.244.234.244.614 0 .848"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-summary__section order-summary__section--total-lines"
+                             data-order-summary-section="payment-lines" id="summary">
+                            <table class="total-line-table" aria-live="polite" aria-atomic="true">
+                                <caption class="visually-hidden">Cost summary</caption>
+                                <thead>
+                                <tr>
+                                    <th scope="col"><span class="visually-hidden">Description</span></th>
+                                    <th scope="col"><span class="visually-hidden">Price</span></th>
+                                </tr>
+                                </thead>
+                                <tbody class="total-line-table__tbody">
+                                <tr class="total-line total-line--subtotal">
+                                    <td class="total-line__name"> {{lang('数量',detail.language)}}</td>
+                                    <td class="total-line__price" id="allCount">
+                                          <span class="order-summary__emphasis" data-checkout-subtotal-price-target="1997">
+                                          </span>
+                                    </td>
+                                </tr>
+                                <tr class="total-line total-line--subtotal">
+                                    <td class="total-line__name"> <span id="yunName"></span></td>
+                                    <td class="total-line__price" id="">
+                                          <span class="order-summary__emphasis" data-checkout-subtotal-price-target="1997" id="yunMoney">
+                                          </span>
+                                    </td>
+                                </tr>
+                                <tr class="total-line total-line--subtotal">
+                                    <td class="total-line__name"> {{lang('价格',detail.language)}}</td>
+                                    <td class="total-line__price" id="allprice">
+                                          <span class="order-summary__emphasis" data-checkout-subtotal-price-target="1997">
+                                            HK$390
+                                          </span>
+                                    </td>
+                                </tr>
+                                <tr class="total-line total-line--shipping" id="many_discount" style="display:none;">
+                                    <td class="total-line__name"> {{lang('多件优惠',detail.language)}}</td>
+                                    <td class="total-line__price" id="manyoff">
+                                            <span class="order-summary__emphasis"
+                                                  data-checkout-total-shipping-target="0">
+                                                HK$0
+                                            </span>
+                                    </td>
+                                </tr>
+                                <tr class="total-line total-line--shipping" id="saleoffprice_div" style="display:none;">
+                                    <td class="total-line__name"> {{lang('满减优惠',detail.language)}}</td>
+                                    <td class="total-line__price" id="saleoffprice">
+                                            <span class="order-summary__emphasis"
+                                                  data-checkout-total-shipping-target="0">
+                                                HK$0
+                                            </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot class="total-line-table__footer">
+                                <tr class="total-line">
+                                    <td class="total-line__name payment-due-label">
+                                        <span class="payment-due-label__total"> {{lang('合计',detail.language)}}</span>
+                                    </td>
+                                    <td class="total-line__price payment-due"  id="realprice">
+                                        <span class="payment-due__price" data-checkout-payment-due-target="1997">
+                                            HK$90
+                                         </span>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--左边收货信息内容-->
+        <div class="main" role="main" id="address">
+            <div class="main__header">
+                <ul class="breadcrumb breadcrumb--center">
+                    <li class="breadcrumb__item breadcrumb__item--current">
+                        <span class="breadcrumb__text">{{lang('账单资讯',detail.language)}}</span>
+                    </li>
+                </ul>
+                <div data-alternative-payments="">
+                </div>
+            </div>
+            <div class="main__content">
+                <div class="step" data-step="contact_information">
+                    <form class="edit_checkout floating-labels">
+                        <div class="step__sections">
+
+                            <div class="section  section--contact-information">
+                                <div class="section__header">
+                                    <h2 class="section__title">
+                                        {{lang('配送资料',detail.language)}}
+                                    </h2>
+                                </div>
+
+                                <div class="section__content" data-section="customer-information">
+                                    <div class="field field--optional" data-address-field="first_name">
+                                        <div class="field__input-wrapper o-first_name">
+                                            <span style="padding:5px 0;color:#f86161;">{{detail.order_prompt_info}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="fieldset">
+
+                                        <div class="field field--optional field--half" data-address-field="first_name">
+                                            <div class="field__input-wrapper o-first_name">
+                                                <label class="field__label" for="clientname">{{lang('收货人',detail.language)}}</label>
+                                                <input placeholder="{{lang('收货人',detail.language)}}" class="field__input put"
+                                                       id="clientname" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="field field--required field--two-thirds" data-address-field="zip"
+                                             data-google-places="true">
+
+                                            <div class="field__input-wrapper o-phone"><label
+                                                    class="field__label"
+                                                    for="clientphone">{{lang('联系电话',detail.language)}}</label>
+                                                <input placeholder="{{lang('联系电话',detail.language)}}" class="field__input put"
+                                                       id="clientphone" type="tel">
+                                            </div>
+                                        </div>
+                                        {{#if(detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円')}}
+                                        <div data-address-field="country" class="field field--required  field--half">
+                                            <div class="field__input-wrapper field__input-wrapper--select  o-country">
+                                                <label class="field__label" for="area">{{lang('城市',detail.language)}}</label>
+                                                <select size="1" class="field__input field__input--select" id="city" onchange="select_change(this,'#area')"></select>
+
+                                            </div>
+                                        </div>
+                                        <div data-address-field="country" class="field field--required  field--half">
+                                            <div class="field__input-wrapper field__input-wrapper--select  o-country">
+                                                <label class="field__label" for="area">{{lang('区县',detail.language)}}</label>
+                                                <select size="1" class="field__input field__input--select" id="area" onchange="select_change(this, null)"></select>
+                                            </div>
+
+                                        </div>
+                                        {{/if}}
+                                        {{#if(detail.money==='円')}}
+                                        <div data-address-field="country" class="field field--required  field--half">
+                                            <div class="field__input-wrapper field__input-wrapper--select  o-country">
+                                                <label class="field__label" for="area">{{lang('城市',detail.language)}}</label>
+                                                <select size="1" class="field__input field__input--select" id="city"></select>
+
+                                            </div>
+                                        </div>
+                                        <div data-address-field="country" class="field field--required  field--half">
+                                            <div class="field__input-wrapper field__input-wrapper--select  o-country">
+                                                <label class="field__label" for="area">{{lang('区县',detail.language)}}</label>
+                                                <input placeholder="{{lang('区县',detail.language)}}" class="field__input put" id="area" type="text">
+                                            </div>
+                                        </div>
+                                        {{/if}}
+                                        <div class="field field--required" data-address-field="address1" data-google-places="true">
+                                            <div class="field__input-wrapper o-address"><label class="field__label" for="clientaddress">{{lang('地址',detail.language)}}</label>
+                                                <input placeholder="{{lang('地址',detail.language)}}" class="field__input put" id="clientaddress" type="text">
+                                            </div>
+                                        </div>
+                                        {{#if(detail.money==='S$'||detail.money==='RM'||detail.money==='฿'||detail.money==='円')}}
+                                        <div class="field field--require" data-address-field="zip" data-google-places="true">
+                                            <div class="field__input-wrapper o-zip"><label class="field__label"
+                                                    for="clientzipcode">{{lang('邮编',detail.language)}}</label>
+                                                {{#if(detail.money==='RM'||detail.money==='฿')}}
+                                                <select size="1" class="field__input field__input--select" id="clientzipcode" onchange="mark && changeCode()"></select>
+                                                {{/if}}
+                                                {{#if(detail.money==='S$'||detail.money==='円')}}
+                                                <input placeholder="{{lang('邮编',detail.language)}}" class="field__input field__input--zip put"
+                                                     id="clientzipcode" type="text" onchange="mark && changeCode()">
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                        {{/if}}
+                                        <div class="field field--required">
+                                            <div class="field__input-wrapper o-email">
+                                                <label class="field__label field__label--visible" for="clientemail">{{lang('E-Mail',detail.language)}}</label>
+                                                <input placeholder="{{lang('E-Mail',detail.language)}}" class="field__input put"  id="clientemail" value="" type="email">
+                                            </div>
+                                        </div>
+                                        <div data-address-field="city" data-google-places="true" class="field field--require">
+                                            <div class="field__input-wrapper o-remark">
+                                                <label class="field__label" for="clientotherinfo">{{lang('备注',detail.language)}}</label>
+                                                <textarea class="field__input put" placeholder="{{lang('备注',detail.language)}}" id="clientotherinfo"></textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="section section--payment-method" data-payment-method="">
+                                <div class="section__header">
+                                    <h2 class="section__title"> {{lang('支付方式',detail.language)}}</h2>
+                                </div>
+                                <div class="section__content">
+                                        <div class="col-xs-12 ng-untouched ng-pristine ng-invalid">
+                                            <ul class="bordered-ul with-hover">
+                                                <li>
+                                                    <label>
+                                                        <input class="radio" name="payment_type" type="radio" checked="checked">
+                                                        <span class="ch-custom-radio"></span>
+                                                        <span class="ch-custom-label">
+                                                            {{lang('货到付款',detail.language)}}
+                                                            <img class="img-responsive" src="/images/hdfk.jpg">
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                </div>
+
+                                <div id="partial-icon-symbols" data-tg-refresh="partial-icon-symbols" data-tg-refresh-always="true" style="display: none;">
+                                    <svg xmlns="http://www.w3.org/2000/svg"><symbol id="caret-down">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                            <path d="M0 3h10L5 8" fill-rule="nonzero"></path>
+                                        </svg></symbol>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="form-group" id="pianyuan">
+                                <label ></label>
+                                <div>
+                                </div>
+                            </div>
+                        <div class="step__footer" data-step-footer="">
+                            <button name="button" type="button" class="step__footer__continue-btn btn " onclick="submit_order()" id="d1">
+                                <span class="btn__content">{{lang('立即结算',detail.language)}}</span>
+                                <i class="btn__spinner icon icon--button-spinner"></i>
+                            </button>
+                            {{#if(detail.home_id)}}
+                            <a class="step__footer__previous-link" href="../home/{{detail.home_select}}/{{detail.username}}">
+                                <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip"
+                                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                    <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path>
+                                </svg>
+                                <span class="step__footer__previous-link-content">{{lang('首页',detail.language)}}</span>
+                            </a>
+                            {{else}}
+                            <a class="step__footer__previous-link" href="javascript:void(0)" onclick="location.href=localStorage.getItem('url')">
+                                <svg class="icon-svg icon-svg--color-accent icon-svg--size-10 previous-link__icon rtl-flip"
+                                     role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
+                                    <path d="M8 1L7 0 3 4 2 5l1 1 4 4 1-1-4-4"></path>
+                                </svg>
+                                <span class="step__footer__previous-link-content">{{lang('首页',detail.language)}}</span>
+                            </a>
+                            {{/if}}
+                        </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!--购买成功-->
+        <div class="main" role="main" id="success"  style="display:none;">
+            <div class="main__header">
+                <ul class="breadcrumb breadcrumb--center">
+                    <li class="breadcrumb__item breadcrumb__item--current">
+                        <span class="breadcrumb__text">{{lang('账单资讯',detail.language)}}</span>
+                    </li>
+                </ul>
+                <div data-alternative-payments="">
+                </div>
+            </div>
+            <div class="main__content">
+                <div class="step" data-step="payment_method">
+                    <form data-payment-form="" class="edit_checkout animate-floating-labels"
+                          accept-charset="UTF-8" method="post">
+                        <div class="step__sections">
+                            <div class="section">
+                                <div class="section__header os-header">
+                                    <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                         stroke="#000" stroke-width="2"
+                                         class="os-header__hanging-icon os-header__hanging-icon--animate checkmark">
+                                        <path class="checkmark__circle"
+                                              d="M25 49c13.255 0 24-10.745 24-24S38.255 1 25 1 1 11.745 1 25s10.745 24 24 24z"></path>
+                                        <path class="checkmark__check" d="M15 24.51l7.307 7.308L35.125 19"></path>
+                                    </svg>
+
+                                    <div class="os-header__heading">
+
+                                        <h2 class="os-header__title">
+                                            {{lang('下单成功',detail.language)}}
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section">
+                                <div class="content-box">
+                                    <div class="content-box__row">
+                                        <h2 class="os-step__title">{{lang('下单成功，我们将尽快为您配送！',detail.language)}}</h2>
+                                        <div class="os-step__special-description" style="display: none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="content-box">
+                                    <div class="content-box__row content-box__row--tight-spacing-vertical content-box__row--secondary">
+                                        <div class="review-block">
+                                            <div class="review-block__inner">
+                                                <div class="review-block__label">{{lang('订单号',detail.language)}}：</div>
+                                                <div class="review-block__content" id="orderid"></div>
+                                            </div>
+                                        </div>
+                                        <div class="review-block">
+                                            <div class="review-block__inner">
+                                                <div class="review-block__label">
+                                                {{lang('价格',detail.language)}}：
+                                                </div>
+                                                <div class="review-block__content" id="orderprice"></div>
+                                            </div>
+                                        </div>
+                                        <div class="review-block">
+                                            <div class="review-block__inner">
+                                                <div class="review-block__label">
+                                                    {{lang('收货人',detail.language)}}：
+                                                </div>
+                                                <div class="review-block__content" id="order_clientname"></div>
+                                            </div>
+                                        </div>
+                                        <div class="review-block">
+                                            <div class="review-block__inner">
+                                                <div class="review-block__label">
+                                                    {{lang('联系电话',detail.language)}}：
+                                                </div>
+                                                <div class="review-block__content" id="order_clientphone"></div>
+                                            </div>
+                                        </div>
+                                        <div class="review-block">
+                                            <div class="review-block__inner">
+                                                <div class="review-block__label"> {{lang('地址',detail.language)}}：</div>
+                                                <div class="review-block__content" id="order_clientaddress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step__footer">
+                            {{#if(detail.home_id)}}
+                            <a href="../home/{{detail.home_select}}/{{detail.username}}" class="step__footer__continue-btn btn">
+                                <span class="btn__content"> {{lang('首页',detail.language)}}</span>
+                                <i class="btn__spinner icon icon--button-spinner"></i>
+                            </a>
+                            {{else}}
+                            <a href="/{{detail.sitedir}}" class="step__footer__continue-btn btn">
+                                <span class="btn__content"> {{lang('首页',detail.language)}}</span>
+                                <i class="btn__spinner icon icon--button-spinner"></i>
+                            </a>
+                            {{/if}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--添加猜你喜欢-->
+            {{#if(detail.order_ads)}}
+            <div style="padding-top: 5px;padding-top: 5px;text-align: center;margin-left:-30px;">{{lang('猜你喜欢',detail.language)}}</div>
+            <ul id="like_goods_order_ul">
+                {{#each(detail.order_ads)}}
+                <li>
+                    <a href="/{{this.sitedir}}">
+                        {{set (imgs = this.head_imgs.split(';'))}}
+                        <div><img src="{{imgs[0]?cdnbase+imgs[0]+'-300':''}}"></div>
+                        <div class="site_price">{{this.money}}{{this.price}}<del>{{this.money}}{{this.oldprice}}</del></div>
+                        <div class="site_name">{{this.sitename}}</div>
+                    </a>
+                </li>
+                {{/each}}
+            </ul>
+            {{/if}}
+            <!--猜你喜欢结束-->
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+<script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+<script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    var appData = {
+        goods: {
+            id: '{{detail.id}}',
+            sourceid: '{{detail.source}}',
+            name: '{{detail.name}}',
+            userkey: '{{detail.userkey}}'
+        },
+        selectProd: {name: '', price: '', img: '', option1: '', option2: '', sku: ""},
+        prods: [],
+        addnum: 1,
+        imgpath: '{{cdnbase}}',
+        sitedir: '{{detail.sitedir}}',
+        redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}",
+        apiserver: "{{apiserver}}",
+        chaport_id:"{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+        chaport_switch:"{{detail.chaport_switch}}",  is_domain:"{{detail.is_domain}}"
+    };
+    appData.giftGoodsIds={{{detail.giftGoodsIds?detail.giftGoodsIds:'[]'}}};
+    appData.gifts={{{detail.giftGoodsSpecsStr?detail.giftGoodsSpecsStr:'[]'}}};
+    appData.goods.specs = {{{detail.GoodsSpecsStr ? detail.GoodsSpecsStr : '[]'}}};
+    appData.goods.saleoff = {{{detail.saleoff ? detail.saleoff : '[]'}}};
+    appData.goods.manyoff = {{{detail.manyoff ? detail.manyoff : '[]'}}};
+    appData.goods.manyoff_new = {{{detail.manyoff_new ? detail.manyoff_new : '[]'}}};
+    appData.goods.priceoff={{{detail.priceoff?detail.priceoff:'[]'}}};
+    var deleteStr = '{{lang("删除",detail.language)}}';
+    var selectStr = '{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent = "{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var giftStr='{{lang("赠品",detail.language)}}';
+    var remoteMess1="{{lang('此地区为快递无法送达区域，请选择其他区域收件',detail.language)}}";
+    var remoteMess2 = "{{lang('此地区为快递偏远地区，需由快递公司另外加收快递费送达，快递费：',detail.language)}}";
+    var messMoney = "{{lang('偏远快递费',detail.language)}}"
+</script>
+<script type="text/javascript">
+    if(appData.chaport_switch==="1"&&appData.chaport_id){
+        (function(w,d,v3){
+            w.chaportConfig = { appId:appData.chaport_id };
+            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    }
+</script>
+<script src="/js/common.js"></script>
+<script src="/js/showpopup.js"></script>
+<script src="/js/cart.js"></script>
+<script src="/js/spec.js"></script>
+<script src="/theme/{{detail.template}}/js/index.js"></script>
+<script>
+    init_cart();
+    init_Select(appData.money,'','#city');
+    order_list();
+    let date = new Date();
+    let d = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() ;
+    let time = Date.parse(d);
+    if(window.location.href.indexOf('?')>-1){
+        if(cart.getAllProduct().length===0){
+            window.location.href = "/" + appData.sitedir+"?"+time;
+        }
+    }else{
+        if( window.location.href==="http://"+window.location.host+"/buy/"+appData.sitedir){
+            if(cart.getAllProduct().length===0){
+                window.location.href = "/" + appData.sitedir;
+            }
+        }
+    }
+
+</script>
+<script>
+    var heightL = $("#success").height();
+    console.log(heightL);
+    $('.order-summary__sections').css('height',heightL);
+</script>
+</html>

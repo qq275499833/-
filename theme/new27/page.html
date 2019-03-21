@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<!-- {{appid}} -->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{page.title}}</title>
+	{{#if(detail.template)}}
+	<link href="/theme/{{detail.template}}/css/index.css" rel="stylesheet">
+	{{else}}
+	<link href="/theme/{{page.template}}/css/index.css" rel="stylesheet">
+	{{/if}}
+	<script src="/js/sentry.js"></script>
+	<script>
+		init_sentry('{{version}}','{{env}}','{{appid}}');
+	</script>
+</head>
+<body>
+<div class="navigation">
+	<div class="menu">
+		<i class="icon" onclick="lisphone()"></i>
+		<span onclick="lisphone()">Menu</span>
+	</div>
+	<ul class="list_pc">
+		<li><a v-if="detail.home_id" href="../home/{{detail.username}}">{{lang('首页',detail.language)}}</a></li>
+		<li><a href="/about/{{detail.sitedir}}?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+		<li><a href="/contact/{{detail.sitedir}}?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+		<li><a href="/privacy/{{detail.sitedir}}?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+		<li><a href="/terms/{{detail.sitedir}}?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+		<li><a href="/service/{{detail.sitedir}}?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+	</ul>
+	<ul class="list_phone">
+		<li><a v-if="detail.home_id" href="../home/{{detail.username}}">{{lang('首页',detail.language)}}</a></li>
+		<li><a href="/about/{{detail.sitedir}}?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+		<li><a href="/contact/{{detail.sitedir}}?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+		<li><a href="/privacy/{{detail.sitedir}}?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+		<li><a href="/terms/{{detail.sitedir}}?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+		<li><a href="/service/{{detail.sitedir}}?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+	</ul>
+
+</div>
+<header>
+	<div class="title site_title">
+		<a class="go_back" href="/{{detail.sitedir}}"><img src="/theme/new27/images/goback.png" alt=""></a>
+		{{#if(detail.sitedir)}}
+		<a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');"><i class="back"></i></a>
+		{{else}}
+		<a href="../home/{{page.homeId}}/{{page.username}}"><i class="back"></i></a>
+		{{/if}}
+		{{page.title}}
+	</div>
+</header>
+<div class="content">
+	<div class="main_swiper_wrap" style="margin-bottom:121px;">
+		{{{page.body}}}
+	</div>
+</div>
+
+<!--<div class="main_footer" style="background: #fff;margin:0;position:fixed;bottom:0px;width:100%;">-->
+<!--{{#if(detail.sitedir)}}-->
+<!--<ul class="footer_tabs">-->
+<!--<li><a href="/about/{{detail.sitedir}}?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>-->
+<!--<li><a href="/contact/{{detail.sitedir}}?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>-->
+<!--<li><a href="/privacy/{{detail.sitedir}}?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>-->
+<!--<li><a href="/terms/{{detail.sitedir}}?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>-->
+<!--<li><a href="/service/{{detail.sitedir}}?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>-->
+<!--</ul>-->
+<!--{{else}}-->
+<!--<ul class="footer_tabs">-->
+<!--<li><a href="/about?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('关于我们',page.language)}}</a></li>-->
+<!--<li><a href="/contact?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('联系我们',page.language)}}</a></li>-->
+<!--<li><a href="/privacy?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('隐私协议',page.language)}}</a></li>-->
+<!--<li><a href="/terms?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('服务条例',page.language)}}</a></li>-->
+<!--<li><a href="/service?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('退换货政策',page.language)}}</a></li>-->
+<!--</ul>-->
+<!--{{/if}}-->
+<!--</div>-->
+<script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+<script>
+	function lisphone(){
+		$(".list_phone").slideToggle();
+	}
+</script>
+</body>
+</html>

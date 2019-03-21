@@ -1,0 +1,105 @@
+.main_header .menu_div {
+    background: #e99f97;
+}
+@media (max-width:768px){
+    .main_header{
+        background: #e99f97;
+    }
+    .cart-box-fixed div {
+        background: #e99f97;
+    }
+}
+.goods_price {
+    color: #e99f97;
+}
+.sales{
+    color: #e99f97;
+}
+.details_panel_hd{
+    color: #e99f97;
+    border-bottom: 1px solid #e99f97;
+}
+.btn-danger {
+    color: #fff;
+    border-color: #e99f97;
+    background: #e99f97;
+}
+.btn-danger:active, .btn-danger:hover {
+    border-color: #e99f97;
+    background: #fff;
+    color: #e99f97;
+}
+.home_panel_hd {
+    color: #e99f97;
+    border-bottom-color: #e99f97;
+}
+.home_goods_buy_btn {
+    background: #e99f97;
+}
+.main_footer {
+    border-top: 3px solid #e99f97;
+}
+.footer_tabs li>a, .footer_tabs li>a:hover, .footer_tabs li>a:active {
+    color: #e99f97;
+}
+.details_pricebar .subleft.avil, .details_pricebar .subleft.soldout {
+    background: #e99f97;
+}
+.comment_title{
+    color: #e99f97;
+}
+hr {
+    border-top: 1px solid #e99f97;
+}
+.prod_Desc>.spec_price{
+    color: #e99f97;
+}
+.prod_Desc>.spec_price>.price{
+    color: #e99f97;
+}
+.spec_List>.spec_Item.active, .spec_List>.option_Item.active {
+    border: 1px solid #e99f97;
+    box-shadow: 0 0 8px #e99f97;
+}
+.spec_List>.spec_Item.active>span, .spec_List>.option_Item.active>span{
+    color: #e99f97;
+}
+.spec_List>.active>div.sticky{
+    border-top: 10px solid #e99f97;
+}
+.btn-warning {
+    color: #e99f97;
+    border-color: #e99f97;
+    background: #ffffff;
+}
+.btn-warning:active, .btn-warning:hover {
+    border-color: #e99f97;
+    background: #e99f97;
+    color: #fff;
+}
+.goods_info .title{
+    color: #e99f97;
+}
+.am-text-danger{
+    color: #e99f97;
+}
+.am-form input:focus, .am-form textarea:focus, .am-form select:focus{
+    border: 1px solid #e99f97;
+}
+#info-popup a.btn{
+    color: #e99f97;
+    border: 1px solid #e99f97;
+}
+#info-popup a.btn:hover{
+    background: #e99f97;
+}
+.kf_btn{
+    background: #e99f97;
+}
+/*首页*/
+div.spring-title{
+    background-color: #e99f97;
+}
+.price span{
+    color:#e99f97;
+}

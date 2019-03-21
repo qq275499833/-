@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- {{appid}} -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{home.sitename}}</title>
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{home.template}}/css/index_pc.css">
+    <link rel="stylesheet" href="/theme/{{home.template}}/css/theme.{{home.color}}.css">
+</head>
+<body>
+<!-- 导航 -->
+<div class="main_header">
+    <div class="logo_div">
+        <img src="{{cdnbase+(home.logo?home.logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}" alt="">
+    </div>
+    <div class="menu_div">
+        <ul id="tab_nav" class="header_tabs">
+            <li><a href="javascript:location.reload()">{{lang('首页',home.language)}}</a></li>
+            <li><a href="/about?id=0&username={{home.username}}&home={{home.id}}">{{lang('关于我们',home.language)}}</a></li>
+            <li><a href="/contact?id=0&username={{home.username}}&home={{home.id}}">{{lang('联系我们',home.language)}}</a></li>
+            <li><a href="/privacy?id=0&username={{home.username}}&home={{home.id}}">{{lang('隐私协议',home.language)}}</a></li>
+            <li><a href="/terms?id=0&username={{home.username}}&home={{home.id}}">{{lang('服务条例',home.language)}}</a></li>
+            <li><a href="/service?id=0&username={{home.username}}&home={{home.id}}">{{lang('退换货政策',home.language)}}</a></li>
+        </ul>
+    </div>
+</div>
+<div class="main_content">
+    <section style="margin-bottom:123px;">
+        <!-- banner -->
+        <div class="banner">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {{#each(home.heads)}}
+                    <div class="swiper-slide">
+                        <a href="/{{this.sitedir}}"><img src="{{cdnbase+this.img}}"></a>
+                    </div>
+                    {{/each}}
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+                <!-- 如果需要导航按钮 -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <!-- 春游必备 -->
+        {{#each(home.types)}}
+        <div class="spring">
+            <div class="spring-title">
+                <span class="lf">{{this.name}}</span>
+            </div>
+            <div class="spring-content">
+                {{#each(this.goods,"value","key")}}
+                <div class="lf per-spring">
+                    <a href="/{{value.sitedir}}">
+                        {{set (imgs = value.head_imgs.split(';'))}}
+                        <img src="{{imgs[0]?cdnbase+imgs[0]+'-300':''}}" alt="">
+                        <div class="goodName">{{value.sitename}}</div>
+                        <div class="price">
+                            <span>{{value.money}} {{value.price}}</span>
+                            <s>{{value.money}} {{value.oldprice}}</s>
+                        </div>
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/each}}
+    </section>
+
+</div>
+<div class="main_footer">
+    <ul class="footer_tabs">
+        <li><a href="/about?id=0&username={{home.username}}&home={{home.id}}">{{lang('关于我们',home.language)}}</a></li>
+        <li><a href="/contact?id=0&username={{home.username}}&home={{home.id}}">{{lang('联系我们',home.language)}}</a></li>
+        <li><a href="/privacy?id=0&username={{home.username}}&home={{home.id}}">{{lang('隐私协议',home.language)}}</a></li>
+        <li><a href="/terms?id=0&username={{home.username}}&home={{home.id}}">{{lang('服务条例',home.language)}}</a></li>
+        <li><a href="/service?id=0&username={{home.username}}&home={{home.id}}">{{lang('退换货政策',home.language)}}</a></li>
+    </ul>
+    <p>Copyright © 2018 All Rights Reserved.</p>
+</div>
+</body>
+<script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+<script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    new Swiper ('.swiper-container', {
+        loop: true,
+        // 如果需要分页器
+        pagination: '.swiper-pagination',
+        // 如果需要前进后退按钮
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev'
+    });
+</script>
+</html>

@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/bootstrap.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+    <script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="/js/jquery.pagination.js"></script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+
+<body>
+    <div id="app" v-cloak>
+
+        <div class="page modal-open"  id="page">
+            <div class="main_content">
+                <div id="home_slider">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div v-if="detail.head_video" class="swiper-slide" v-html="detail.head_video"></div>
+                            <div v-for="item in detail.head_imgs" class="swiper-slide"><img :src="cdnbase+item"></div>
+                        </div>
+                        <!-- 如果需要分页器 -->
+                        <div class="swiper-pagination"></div>
+                        <!-- 如果需要导航按钮 -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>  
+                </div>
+                
+                <!-- 限时抢购 -->
+                <div class="Count_down" v-if='isDown'>
+                    <div class="clockrun" style="margin: 10px 0">
+                        <span>{{lang('限时抢购',detail.language)}} [[d]]{{lang('日',detail.language)}}[[h]]{{lang('时',detail.language)}}[[m]]{{lang('分',detail.language)}}[[s]]{{lang('秒',detail.language)}}</span>
+                    </div>  
+                    
+                </div>
+                    <!--图片区域-->
+                    <div class="pohoto" v-html="detail.GoodsContent.content" id="introduce">
+                    </div>
+                </div>
+     
+                
+                <!--立即抢购页面-->
+                <div class="rush">
+                    <!--款式:design-->
+                    <div class="design" id="order">
+                        <div class="ev_content clear">
+                            <div class="pro_name text-center" style="padding-top: 10px">
+                                <h1>{{lang('精选',detail.language)}}{{lang('单品',detail.language)}}</h1>
+                                <div class="product_filter">
+                                    <button name="switch" class="btn col0" @click="switchCol(0)" :class="{'active_ok':col0}">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+                                            <rect x="30" y="29" class="st0" width="139" height="29"></rect>
+                                            <rect x="30" y="87" class="st0" width="139" height="29"></rect>
+                                            <rect x="30" y="145" class="st0" width="139" height="29"></rect>
+                                        </svg>
+                                    </button>
+                                    <button class="btn col1" name="switch" @click="switchCol(1)" :class="{'active_ok':col1}">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+                                            <rect x="27.5" y="27.5" class="st0" width="145" height="145"></rect>
+                                        </svg>
+                                    </button>
+                                    <button class="btn col2" name="switch" @click="switchCol(2)" :class="{'active_ok':col2}">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+                                            <rect x="29" y="34.2" class="st0" width="60.4" height="60.4"></rect>
+                                            <rect x="108" y="34.2" class="st0" width="60.4" height="60.4"></rect>
+                                            <rect x="29" y="109.2" class="st0" width="60.4" height="60.4"></rect>
+                                            <rect x="108" y="109.2" class="st0" width="60.4" height="60.4"></rect>
+                                        </svg>
+                                    </button>
+                                    <button class="btn col3" name="switch" @click="switchCol(3)" :class="{'active_ok':col3}">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+                                            <rect x="22" y="29.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="80" y="29.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="138" y="29.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="22" y="82.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="80" y="82.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="138" y="82.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="22" y="134.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="80" y="134.2" class="st0" width="40.8" height="40.8"></rect>
+                                            <rect x="138" y="134.2" class="st0" width="40.8" height="40.8"></rect>
+                                        </svg>
+                                    </button>
+                                    <button class="btn col4" name="switch" @click="switchCol(4)" :class="{'active_ok':col4}">
+                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+                                            <rect x="23" y="29.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="65" y="29.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="106" y="29.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="148" y="29.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="24" y="68.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="66" y="68.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="107" y="68.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="149" y="68.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="24.1" y="106.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="66.1" y="106.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="107.1" y="106.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="149.1" y="106.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="24.1" y="142.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="66.1" y="142.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="107.1" y="142.2" class="st0" width="27.8" height="27.8"></rect>
+                                            <rect x="149.1" y="142.2" class="st0" width="27.8" height="27.8"></rect>
+                                            </svg>
+                                    </button>
+
+
+                                </div>
+
+                                <!-- 选购模块 -->
+                                <div class="product-row row " :class="{'pro_name_list':col0,'colum':col1||col2||col3||col4,'pro_name_row':col1}">
+                                    <!-- 单品 -->
+                                    <div :class="{'col-12':col0||col1,'col-6':col2,'col-4':col3,'col-3':col4}">
+                                        <div class="product row flex-row-reverse">
+                                            <div class="col-3">
+                                                <!-- <img src="" alt="" style="display:none;"> -->
+                                            </div>
+                                            <div class="col-md-9 align-self-start">
+                                                <!-- 单品 -->
+                                                <div class="actions row flex-row-reverse">
+                                                    <div class="action-content" :style="heightObj">
+                                                        <h3>[[detail.sitename]]</h3>
+                                                        <div class="price">
+                                                            <span class="old-price">
+                                                                {{lang('原价:',detail.language)}}
+                                                                <del class="del-price">[[detail.oldprice]]</del>
+                                                            </span>
+                                                            <span class="sale text-danger">{{lang('现在特价只要',detail.language)}}[[detail.price]]</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="action align-self-start">
+                                                        <button type="button" class="btn btn-rounded btn-block btn-primary btn-rouder" @click="viewProduct(0,0)">
+                                                            <i class="far icon-gouwuchekong iconfont m-r-5"></i>
+                                                                    {{lang('选购',detail.language)}}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 套餐 -->
+                                    <div :class="{'col-12':col0||col1,'col-6':col2,'col-4':col3,'col-3':col4}"  v-for="(many,index) of manyoff_arr">
+                                        <div class="product row flex-row-reverse">
+                                            <div class="col-3">
+                                                <!-- <img src="" alt="" style="display:none;"> -->
+                                            </div>
+                                            <div class="col-md-9 align-self-start">
+                                                <div class="actions row flex-row-reverse">
+                                                    <div class="action-content" :style="heightObj">
+                                                        <h3>[[many.name]]</h3>
+                                                        <div class="price">
+                                                            <!-- <span class="old-price">
+                                                                {{lang('原价:',detail.language)}}
+                                                                <del class="del-price">[[detail.oldprice]]</del>
+                                                            </span> -->
+                                                            <span class="sale text-danger">{{lang('现在特价只要',detail.language)}}[[many.price1]]</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="action align-self-start">
+                                                        <button type="button" class="btn btn-rounded btn-block btn-primary btn-rouder" @click="viewProduct(index+1,many)">
+                                                            <i class="far icon-gouwuchekong iconfont m-r-5"></i>
+                                                                {{lang('选购',detail.language)}}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                    
+                                            </div>
+                                        </div>
+                                    </div>
+    
+    
+                                </div>
+
+                                
+                                    <!--选购模态框-->
+                                <div class="shop_model modal view"  id="viewProduct">
+                                    <div class="choose_buy_bounced choose_buy_bounced1">
+                                        <button type="button" class="btn btn-circle btn-close" @click="viewNone">X</button>
+                                        <!-- 单品选购窗口 -->
+                                        <div class="modal-center" v-show="viewNum==0">
+                                            <div class="content-scroll" style="height: auto;">
+                                                <div class="modal-content-product">
+                                                    <!-- 商品 -->
+                                                    <div class="product-content"  v-for="(prod,index1) in prods">
+                                                        <img v-if="prod.img" :src="prod.img?cdnbase+prod.img:''"  class="lazyloaded product-img">
+                                                        <h3>[[detail.sitename]]</h3>
+                                                        <div class="price-wrip">
+                                                            <div class="price">
+                                                                <span class="old-price">
+                                                                    {{lang('原价:',detail.language)}}
+                                                                    <del class="del-price">[[detail.money]][[detail.oldprice]]</del>
+                                                                </span>
+                                                                <span class="sale text-danger">{{lang('现在特价只要',detail.language)}}[[detail.money]][[prod.price]]</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="variations">
+                                                            <div class="variation variation1">
+                                                                <div class="variation-title">[[detail.option1_name]]</div>
+                                                                <div class="variation-tags">
+                                                                    <button class="btn"  :class="{active:prods[index1].specname===item.name&&(option1_show||item.inventory!==0),disable:!option1_show&&item.inventory===0}"
+                                                                    @click="(option1_show||item.inventory!==0)&&select_specitem_nocart(item,index1+1)"
+                                                                    v-for="(item,index) in detail.specs.name_list">
+                                                                        <i class="far fa-check iconfont icon-right"></i>
+                                                                        <span v-if="item.inventory==0&&!item.option1&&!item.option2" class="oos">[[item.option1]]{{lang('[缺货中]',detail.language)}}</span>
+                                                                        <span v-else>[[item.name]]</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            <!--一级规格-->
+
+                                                        <div  v-show="option1_show" class="variations">
+                                                            <div class="variation variation1">
+                                                                <div class="variation-title">
+                                                                    [[detail.option2_name]]
+                                                                </div>
+                                                                <div class="variation-tags">
+                                                                    <button class="btn option_Item" :class="{active:check_option1_active(item,index1),disable:check_option1_disable(item,index1)||stockout1(item,index1+1)}"
+                                                                    :disabled="check_option1_disable(item,index1)||stockout1(item,index1+1)"
+                                                                    v-for="(item,index) in detail.specs.option1_list"
+                                                                    @click="select_option1_nocart(item,index1+1);">
+                                                                        <i class="far fa-check iconfont icon-right"></i>
+                                                                        <span v-if="stockout1(item,index1+1)" class="oos">
+                                                                            [[item.option1]]{{lang('[缺货中]',detail.language)}}
+                                                                        </span>
+                                                                        <span v-else>[[item.option1]]</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                            <!--二级规格-->
+                                                        <div  v-show="option2_show" class="variations">
+                                                            <div class="variation variation1">
+                                                                <div class="variation-title">
+                                                                    [[detail.option3_name]]
+                                                                </div>
+                                                                <div class="variation-tags">
+                                                                    <button class="btn option_Item"  :class="{active:check_option2_active(item,index1)&&stockout2(item,index1+1)==false,disable:check_option2_disable(item,index1)||stockout2(item,index1+1)}"
+                                                                    :disabled="check_option2_disable(item,index1)||stockout2(item,index1+1)"
+                                                                    v-for="(item,index) in detail.specs.option2_list"
+                                                                    @click="select_option2_nocart(item,index1+1);">
+                                                                        <i class="far fa-check iconfont icon-right"></i>
+                                                                        <span v-if="stockout2(item,index1+1)" class="oos">
+                                                                            [[item.option1]]{{lang('[缺货中]',detail.language)}}
+                                                                        </span>
+                                                                        <span v-else>[[item.option2]]</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="quantity">
+                                                            <div class="input-group">
+                                                                <div class="input-group-btn">
+                                                                    <button class="btn" type="button" @click="xgDecNum">-</button>
+                                                                </div>
+                                                                <input type="text" class="form-control text-center" v-model="productNumber" >
+                                                                <div class="input-group-btn">
+                                                                    <button class="btn" type="button" @click="xgAddNum">+</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                        <!-- 赠品 -->
+                                                        <!-- <div id="gifts" v-if="giftLength">
+                                                            <div class="sep"></div>
+                                                            <h3 class="gifts-title">{{lang('赠品区域',detail.language)}}</h3>
+                                                            <div v-for="(num,index2) in giftLength">
+                                                                
+                                                                <div  v-for="(gift,index1) in detail.giftGoods">
+                                                                    <div class="goods-x">{{lang('第',detail.language)}}<span>[[index1+1]]</span>{{lang('件赠品',detail.language)}}
+                                                                    </div>
+
+                                                                    <div class="spec_Title">
+                                                                        [[gift.sitename]]
+                                                                    </div>
+                                                                    <div class="spec_List user-name">
+                                                                        <div class="variation-title">
+                                                                            [[gift.option1_name]]
+                                                                        </div>
+                                                                        <div class="spec_Item opt1 ks" :class="{active1:giftSelect[index1][num-1].specname===item.name}" @click="select_giftspec(item,index1,num)"  v-for="(item,index) in detail.giftGoodsSpecs[index1].giftName_list">
+                                                                            <div class="sticky"></div>
+                                                                            <div >
+                                                                                <img v-if="item.img" :src="item.img?cdnbase+item.img:''"/>
+                                                                            </div>
+                                                                            <span :class="{active2:giftSelect[index1][num-1].specname===item.name}" >[[item.name]]</span>
+                                                                        </div>
+                                                                    </div> -->
+                                                                    <!--赠品一级规格-->
+                                                                    <!-- <div v-if="detail.giftGoodsSpecs[index1].giftOption1_list.length>0">
+                                                                        <div class="variation-title">[[gift.option2_name]]</div>
+                                                                        <div class="variation-tags">
+                                                                            <button class="btn option_Item opt2" :class="{active:check_giftOption1_active(item,index1,num),disable:check_giftOption1_disable(item,index1,num)}" :disabled="check_giftOption1_disable(item,index1,num)"  v-for="(item,index) in detail.giftGoodsSpecs[index1].giftOption1_list"  @click="select_giftoption1(item,index1,num);">
+                                                                                <i class="far fa-check iconfont icon-right"></i>
+                                                                                <span>[[item.option1]]</span>
+                                                                            </button>
+                                                                            
+                                                                        </div>
+                                                                    </div> -->
+                                                                    <!--赠品二级规格-->
+                                                                    <!-- <div v-if="detail.giftGoodsSpecs[index1].giftOption2_list.length>0">
+                                                                        <div class="variation-title">[[gift.option3_name]]</div>
+                                                                        <div class="variation-tags">
+                                                                            <button class="btn option_Item opt3" :class="{active:check_giftOption2_active(item,index1,num),disable:check_giftOption2_disable(item,index1,num)}"  v-for="(item,index) in detail.giftGoodsSpecs[index1].giftOption2_list" :disabled="check_giftOption2_disable(item,index1,num)" @click="select_giftoption2(item,index1,num);">
+                                                                                <i class="far fa-check iconfont icon-right"></i>
+                                                                                <span>[[item.option2]]</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                    
+                                                        </div> -->
+
+                                                        <div class="row subtotal">
+                                                            <div class="col-7">
+                                                                <div class="clearfix modal-total" >
+                                                                    <div class="pull-left">
+                                                                        <div class="text">{{lang('小计',detail.language)}}</div>
+                                                                    </div>
+                                                                    <div class="pull-right">
+                                                                        <div class="bold font-montserrat">
+                                                                            <small class="currency">[[detail.money]]</small>
+                                                                            <span>[[productNumber*prod.price]]</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <button type="button" class="btn btn-rounded btn-lg btn-primary btn-block" @click="add_cart(0)">{{lang('加入购物车',detail.language)}}</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                  
+                                        </div>
+
+
+                                        
+                                        <!-- 套餐选购窗口 -->
+                                        <div class="modal-center" v-show="viewNum!==0">
+                                            <div class="content-scroll" style="height: auto;">
+                                                <div class="modal-content-product">
+                                                    <!-- 商品 -->
+                                                    <div class="product-content">
+                                                        <div  v-for="(many,index1) in manyoff_arr">
+                                                            <!-- <img v-if="prod.img" :src="prod.img?cdnbase+prod.img:''"  class="lazyloaded product-img"> -->
+                                                            <h3 v-if="viewNum===index1+1">[[many.name]]   套餐</h3>
+                                                            <div class="price-wrip"  v-if="viewNum===index1+1">
+                                                                <div class="price">
+                                                                    <!-- <span class="old-price">
+                                                                        {{lang('原价:',detail.language)}}
+                                                                        <del class="del-price">[[detail.money]][[detail.oldprice]]</del>
+                                                                    </span> -->
+                                                                    <span class="sale text-danger">{{lang('现在特价只要',detail.language)}}[[detail.money]][[many.price1]]</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div v-for="(prod,index1) in prods">
+                                                            <img v-if="prod.img" :src="prod.img?cdnbase+prod.img:''"  class="lazyloaded product-img">
+                                                            <div class="variations">
+                                                                <div class="variation variation1">
+                                                                    <div class="variation-title">[[detail.option1_name]]</div>
+                                                                    <div class="variation-tags">
+                                                                        <button class="btn"  :class="{active:prods[index1].specname===item.name&&(option1_show||item.inventory!==0),disable:!option1_show&&item.inventory===0}"
+                                                                        @click="(option1_show||item.inventory!==0)&&select_specitem_nocart(item,index1+1)"
+                                                                        v-for="(item,index) in detail.specs.name_list">
+                                                                            <i class="far fa-check iconfont icon-right"></i>
+                                                                            <span v-if="item.inventory==0&&!item.option1&&!item.option2" class="oos">[[item.option1]]{{lang('[缺货中]',detail.language)}}</span>
+                                                                            <span v-else>[[item.name]]</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                <!--一级规格-->
+        
+                                                            <div  v-show="option1_show" class="variations">
+                                                                <div class="variation variation1">
+                                                                    <div class="variation-title">
+                                                                        [[detail.option2_name]]
+                                                                    </div>
+                                                                    <div class="variation-tags">
+                                                                        <button class="btn option_Item" :class="{active:check_option1_active(item,index1),disable:check_option1_disable(item,index1)||stockout1(item,index1+1)}"
+                                                                        :disabled="check_option1_disable(item,index1)||stockout1(item,index1+1)"
+                                                                        v-for="(item,index) in detail.specs.option1_list"
+                                                                        @click="select_option1_nocart(item,index1+1);">
+                                                                            <i class="far fa-check iconfont icon-right"></i>
+                                                                            <span v-if="stockout1(item,index1+1)" class="oos">
+                                                                                [[item.option1]]{{lang('[缺货中]',detail.language)}}
+                                                                            </span>
+                                                                            <span v-else>[[item.option1]]</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+    
+                                                                <!--二级规格-->
+                                                            <div  v-show="option2_show" class="variations">
+                                                                <div class="variation variation1">
+                                                                    <div class="variation-title">
+                                                                        [[detail.option3_name]]
+                                                                    </div>
+                                                                    <div class="variation-tags">
+                                                                        <button class="btn option_Item"  :class="{active:check_option2_active(item,index1)&&stockout2(item,index1+1)==false,disable:check_option2_disable(item,index1)||stockout2(item,index1+1)}"
+                                                                        :disabled="check_option2_disable(item,index1)||stockout2(item,index1+1)"
+                                                                        v-for="(item,index) in detail.specs.option2_list"
+                                                                        @click="select_option2_nocart(item,index1+1);">
+                                                                            <i class="far fa-check iconfont icon-right"></i>
+                                                                            <span v-if="stockout2(item,index1+1)" class="oos">
+                                                                                [[item.option1]]{{lang('[缺货中]',detail.language)}}
+                                                                            </span>
+                                                                            <span v-else>[[item.option2]]</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- <div class="quantity">
+                                                            <div class="input-group">
+                                                                <div class="input-group-btn">
+                                                                    <button class="btn" type="button" @click="xgDecNum">-</button>
+                                                                </div>
+                                                                <input type="text" class="form-control text-center" v-model="productNumber" >
+                                                                <div class="input-group-btn">
+                                                                    <button class="btn" type="button" @click="xgAddNum">+</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        -->
+                                                            
+                                                        <!-- 赠品 -->
+                                                        <div id="gifts" v-if="current_manyoff.gift_specs">
+                                                            <div class="sep"></div>
+                                                            <h3 class="gifts-title">{{lang('赠品区域',detail.language)}} 赠品</h3>
+                                                            
+                                                            <div v-for="(num,index2) in current_manyoff.gift_count">                                   
+                                                                <div>
+                                                                    <div class="goods-x">{{lang('第',detail.language)}}<span>[[num]]</span>{{lang('件赠品',detail.language)}}</div>
+                                                                    
+                                                                    <div v-for="(gift,index1) in current_manyoff.gift_specs">
+                                                                        
+                                                                        <div class="spec_Title">
+                                                                            [[gift.sitename]]
+                                                                        </div>
+                                                                        <div class="spec_List user-name">
+                                                                            <div class="variation-title">
+                                                                                [[gift.option1_name]]
+                                                                            </div>
+                                                                            <div class="spec_Item opt1 ks"  v-for="(item,index) in gift.name_list" :class="{active1:gift_select[index1][index2].specname===item.name}"  @click="select_specitem(item,index2,index1)">
+                                                                                <div class="sticky"></div>
+                                                                                <div >
+                                                                                    <img v-if="item.img" :src="item.img?cdnbase+item.img:''"/>
+                                                                                </div>
+                                                                                <span :class="{active2:gift_select[index1][index2].specname===item.name}" >[[item.name]]</span>
+                                                                            </div>
+                                                                        </div>
+                                                                            <!--赠品一级规格-->
+                                                                        <div >
+                                                                            <div class="variation-title">[[gift.option2_name]]</div>
+                                                                            <div class="variation-tags">
+                                                                                <button class="btn option_Item opt2" :class="{active:gift_select[index1][index2].option1===item,disable:isdisable(item,index2,index1,'1')}"  v-for="(item,index) in gift.option1_key_list"  @click="select_option(item,index2,index1,'1')" :disabled="isdisable(item,index2,index1,'1')">
+                                                                                    <i class="far fa-check iconfont icon-right"></i>
+                                                                                    <span>[[item]]</span>
+                                                                                </button>
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                            <!--赠品二级规格-->
+                                                                        <div>
+                                                                            <div class="variation-title">[[gift.option3_name]]</div>
+                                                                            <div class="variation-tags">
+                                                                                <button class="btn option_Item opt3" :class="{active:gift_select[index1][index2].option2===item,disable:isdisable(item,index2,index1,'2')}"    v-for="(item,index) in gift.option2_key_list"  @click="select_option(item,index2,index1,'2')" :disabled="isdisable(item,index2,index1,'2')">
+                                                                                    <i class="far fa-check iconfont icon-right"></i>
+                                                                                    <span>[[item]]</span>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                        
+                                                        </div>
+    
+                                                        
+                                                    </div>
+                                                    <div class="row subtotal">
+                                                        <div class="col-7">
+                                                            <div class="clearfix modal-total" >
+                                                                <div class="pull-left">
+                                                                    <div class="text">{{lang('小计',detail.language)}}</div>
+                                                                </div>
+                                                                <div class="pull-right">
+                                                                    <div class="bold font-montserrat">
+                                                                        <small class="currency">[[detail.money]]</small>
+                                                                        <span>[[current_manyoff.price1]]</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-5">
+                                                            <button type="button" class="btn btn-rounded btn-lg btn-primary btn-block" @click="add_cart()">{{lang('加入购物车',detail.language)}}</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div></div> -->
+    
+                                                </div>
+                                            </div>
+                                      
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="sep"></div>
+ 
+                            </div>
+
+
+                            <!-- 购物车模块-->
+                            <div class="cart">
+                                <h1 class="text-center">{{lang('目前已经选购',detail.language)}}</h1>
+                                <div class="card card-default">
+                                    <div class="cart-content">
+                                        <div class="cart-item cart-empty" v-show="arr.length==0">
+                                            {{lang('目前尚无选购产品，请（点选上方产品）选购',detail.language)}}
+                                        </div>
+                                        <div class="cart-item clearfix"  v-for="(item3,index) in arr">
+                                           
+                                            
+                                            <div class="item-content clearfix" v-for="(item4,index2) in item3.sort">
+                                                <div class="item-tool">
+                                                    <button type="button" class="btn btn-default btn-circle" @click="removeCartItem(index)">
+                                                        X
+                                                    </button>
+                                                </div>
+                                                <div class="item-img">  
+                                                    <img class="img-thumbnail lazyloaded" v-if="item4.img" :src="item4.img?cdnbase+item4.img:''"  class="lazyloaded product-img img-thumbnail">
+                                                </div>
+                                                <div class="detail">
+                                                    <h4>
+                                                        <span>[[item4.specname]]</span>
+                                                        <span v-if="item3.option1!=''">-[[item4.option1]]</span>
+                                                        <span v-if="item3.option2!=''">-[[item4.option2]]</span>
+                                                    </h4>
+                                                    <div class="meta" v-show="!item3.gift">
+                                                        <span class="each-price">
+                                                            <small class="currency">[[detail.money]]</small> 
+                                                            <span class="amount">[[item3.price]]</span>
+                                                        </span> * <span class="text-danger num">[[item4.number]]</span>
+                                                    </div>
+                                                    <div class="meta" v-show="item3.gift">
+                                                        <!-- <span class="each-price">
+                                                            <small class="currency">[[detail.money]]</small> 
+                                                            <span class="amount">[[item3.price]]</span>
+                                                        </span> *  -->
+                                                        <span class="text-danger num">{{lang('数量：',detail.language)}}[[item4.number]]</span>
+                                                    </div>
+                                                    <div class="quantity" v-show="!item3.gift">
+                                                        <div class="input-group">
+                                                            <div class="input-group-btn">
+                                                                <button class="btn" type="button" @click="decNum(index)">-</button>
+                                                            </div>
+                                                            <input type="text" class="form-control text-center" v-model="item4.number" min="1" >
+                                                            <div class="input-group-btn">
+                                                                <button class="btn" type="button" @click="addNum(index)">+</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="price" v-if="!item3.gift">
+                                                    <small class="currency">[[detail.money]]</small> 
+                                                    <span class="amount">[[item4.number*item4.price]]</span>
+                                                </div>
+                                                <div class="price" v-if="item3.gift">
+                                                    <!-- <small class="currency">[[detail.money]]</small> 
+                                                    <span class="amount">[[item3.number*item3.price]]</span> -->
+                                                    <span class="amount">{{lang('套餐',detail.language)}}</span>
+                                                </div>
+                                            </div>
+                                            <!-- 购物车赠品 -->
+                                            <div v-for="(item1,index) in arr[index].gift" class="aa">
+                                                <div class="item-tool">{{lang('赠品',detail.language)}}</div>
+                                                <div class="item-img">  
+                                                    <img class="img-thumbnail lazyloaded" v-if="item1.img" :src="item1.img?cdnbase+item1.img:''"  class="lazyloaded product-img img-thumbnail">
+                                                </div>
+
+                                                <div class="item-content clearfix">
+                                                    <div class="detail">
+                                                        <h4>
+                                                            <span>[[item1.specname]]</span>
+                                                            <span v-if="item3.option1!=''">-[[item1.option1]]</span>
+                                                            <span v-if="item3.option2!=''">-[[item1.option2]]</span>
+                                                        </h4>
+                                                        <div class="meta">
+                                                            <span class="text-danger num">{{lang('数量：',detail.language)}}[[item1.number]]</span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="cart-total">
+                                    {{lang('小计',detail.language)}}
+                                    <span class="price">
+                                        <small class="currency">[[detail.money]]</small> 
+                                        <span class="amount">[[realPrice+parseInt(extrapay)]]</span>
+                                    </span>
+                                </div>
+                                <div class="sep"></div>
+
+                            </div>
+                         
+                            <!-- 结账 -->
+                            <div class="checkout">
+                                <h1 class="checkout_h1">{{lang('结账',detail.language)}}</h1>
+
+                                <form novalidate="novalidate" class="checkout_form">
+                                    <div class="from_group">
+                                        <a :href="fblink" class="btn_login btn">
+                                            <i class="icon-facebook iconfont f-i"></i>
+                                            {{lang('快速登入',detail.language)}}
+                                        </a>
+                                    </div>
+
+                                    <div class="from_group from_group_div required">
+                                        <label>{{lang('运送方式',detail.language)}}</label> 
+                                        <div class="radio radio_success">
+                                            <input type="radio"  checked>
+                                            <label v-if="flag2!==1">{{lang('送货上门（免运费）',detail.language)}}</label>
+                                            <label v-if="flag2===1">{{lang('不包邮',detail.language)}}[[detail.money]][[extrapay]]</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="from_group from_group_div required">
+                                        <label>{{lang('付款方式',detail.language)}}</label>
+                                        <div class="radio radio_success">
+                                            <input type="radio"  checked>
+                                            <label>{{lang('取货时付款',detail.language)}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="from_group section_total subtotal1">
+                                        {{lang('总计',detail.language)}}
+                                        <span class="price">
+                                            <small class="currency">[[detail.money]]</small>
+                                            <span class="amount">[[realPrice+parseInt(extrapay)]]</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="from_group from_group_div required" :class="{'focused':isFocused1,'has_error':hasErr1}" >
+                                        <label>
+                                            {{lang('收件人',detail.language)}}
+                                            <span class="help">{{lang('请填写姓名',detail.language)}}</span>
+                                        </label>
+                                        <input type="text" class="from_control" name="firstname"  @focus="myFocus1" @blur="myBlur1" v-model='clientinfo.clientname' v-on:input='inputName' v-model="clientinfo.clientname" id="clientname">
+                                    </div>
+                                    <label id="firstname-error" class="error" for="firstname" v-if="isHasErr1">{{lang('必填',detail.language)}}</label>
+
+                                    <div class="from_group from_group_div required" :class="{'focused':isFocused2,'has_error':hasErr2}">
+                                        <label>
+                                            {{lang('联络电话',detail.language)}}
+                                            <span class="help"></span>
+                                        </label>
+                                        <div class="input_group">
+                                            <div class="input_group_addon countImg">
+                                                <img src="/theme/new39/images/taiwan.png">
+                                            </div>
+                                            <input type="number" class="from_control" name="telephone" id="clientphone"  @focus="myFocus2" @blur="myBlur2" v-model='clientinfo.clientphone' v-on:input='inputPhone'>
+                                        </div>
+                                    </div>   
+                                    <label id="telephone-error" class="error" for="telephone" v-if="isHasErr2">{{lang('必填',detail.language)}}</label>
+
+                                    <div class="address_type">
+                                        <div class="address"  v-if="detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円'">
+                                            <div class="row form_sm" >
+                                                <div class="col">
+                                                    <div class="from_group from_group_div select_icon required city" :class="{'focused':isFocused3,'has_error':hasErr3}"  >
+                                                        <label>{{lang('城市',detail.language)}}</label>
+                                                        <select class="select" id="city"  v-model="city" @change="init_Select_City(detail.money,city,'area')"   autocomplete="off">
+                                                            <option disabled selected="selected">{{lang('请选择',detail.language)}}</option>
+                                                            <option :value="item" :data-id="item.id" v-for="item in cityData">[[item.name]]</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                                
+                                                <div class="col">
+                                                    <div class="from_group from_group_div required">
+                                                        <label>{{lang('区域',detail.language)}}</label>
+                                                        <select class="select" id="area" v-model="area" @change="init_Select_City(detail.money, area,'code')">
+                                                            <option disabled selected>{{lang('请先选择县市',detail.language)}}</option>
+                                                            <option :value="item" :data-id="item.id" v-for="item in areaData">[[item.name]]</option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+
+
+                                        <div class="address" v-if="detail.money==='円'">
+                                            <div class="row form_sm" >
+                                                <div class="col">
+                                                    <div class="from_group from_group_div select_icon required city" :class="{'focused':isFocused3,'has_error':hasErr3}"  >
+                                                        <label>{{lang('城市',detail.language)}}</label>
+                                                        <select class="select" id="city"   v-model="clientinfo.city" @change="init_Select_City(detail.money,city,'area')"   autocomplete="off">
+                                                            <option disabled selected="selected">{{lang('请选择',detail.language)}}</option>
+                                                            <option :value="item" :data-id="item.id" v-for="item in cityData">[[item.name]]</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <div class="col">
+                                                    <div class="from_group from_group_div required">
+                                                        <label>{{lang('区域',detail.language)}}</label>
+                                                        <select class="select" id="area" v-model="clientinfo.area" @change="init_Select_City(detail.money, area,'code')">
+                                                            <option disabled selected>{{lang('请先选择县市',detail.language)}}</option>
+                                                            <option :value="item" :data-id="item.id" v-for="item in areaData">[[item.name]]</option>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+
+                                    <div class="from_group from_group_div required" :class="{'focused':isFocused5,'has_error':hasErr5}" >
+                                        <label>
+                                            {{lang('街道地址',detail.language)}}
+                                            <span class="help">{{lang('不用重复输入县市',detail.language)}}</span>
+                                        </label>
+                                        <input type="text" class="from_control" name="clientaddress"  @focus="myFocus5" @blur="myBlur5" v-model="clientinfo.clientaddress" v-on:input='inputSite'>
+                                    </div>
+                                    <label id="clientaddress-error" class="error" for="clientaddress" v-if="isHasErr5">{{lang('必填',detail.language)}}</label>
+
+                                    <!-- <div class="from_group from_group_div">
+                                        <label>
+                                            {{lang('性别',detail.language)}}
+                                            <span class="help">{{lang('如何称呼？',detail.language)}}</span>
+                                        </label>
+                                        <div class="radio radio_success">
+                                            <input type="radio" value='0' v-model='sexRadio' id='sex-none'>
+                                            <label for="sex-none">{{lang('无',detail.language)}}</label>
+                                            <input type="radio" value='1' v-model='sexRadio' id='sex-man'>
+                                            <label for="sex-man">{{lang('先生',detail.language)}}</label>
+                                            <input type="radio" value='2' v-model='sexRadio' id='sex-women'>
+                                            <label for="sex-women">{{lang('小姐',detail.language)}}</label>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="from_group from_group_div" :class="{'focused':isFocused6}">
+                                        <label>
+                                            {{lang('Email',detail.language)}}
+                                            <span class="help">{{lang('建议填写为Yahoo以外的信箱',detail.language)}}</span>
+                                        </label>
+                                        <input type="text"  name="email" class="from_control"  @focus="myFocus6" @blur="myBlur6" v-model="clientinfo.clientemail" id="clientemail">
+                                    </div>
+                                     
+                                    <div class="from_group from_group_div" :class="{'focused':isFocused7}">
+                                        <label>
+                                            {{lang('备注',detail.language)}}
+                                            <span class="help">{{lang('有什么特殊需求可以写在这里吆',detail.language)}}</span>
+                                        </label>
+                                        <textarea class="from_control" name="notes" placeholder="{{lang('(若无则可以不填写)',detail.language)}}"  @focus="myFocus7" @blur="myBlur7" v-model="clientinfo.clientotherinfo" id="clientotherinfo"></textarea>
+                                    </div> 
+
+                                    <div class="order_submit">
+                                        <button type='button' class="btn_buy btn-rouder btn-lg" @click="flag1 && submit_order_nocart()">{{lang('送出',detail.language)}}</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    <!--直接购买-->
+                    <div class="buy_fixed" id="buyFixed">
+                        <button  class="buy_btn" @click="scorll_Buy()">
+                            <div class="text">
+                                {{lang('直接',detail.language)}}
+                                <br>
+                                {{lang('购买',detail.language)}}
+                            </div>
+                        </button>
+                        <!-- <div class="add-to-cart-flag active">{{lang('已加到购物车',detail.language)}}</div> -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+         <!-- 订单完成模态框 -->
+         <div class="order-model modal view"   id="orderForm">
+            <div class="section-order">
+                <div class="order-header input-section">
+                    <div class="icon icon-success svg">
+                        <svg version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="-446 242.6 76.4 77" style="enable-background:new -446 242.6 76.4 77;" xml:space="preserve">
+                            <circle class="line1" cx="-408" cy="281" r="35"></circle>
+                            <path class="line2" d="M-425.7,283.8l9.9,9.9l25.4-25.4"></path>
+                        </svg>
+                    </div>
+                    <h3>{{lang('已收到您的订单信息',detail.language)}}</h3>
+                    <h1>{{lang('订单编号：',detail.language)}}[[orderid]]</h1>
+                    <p class="text-danger">{{lang('请拍照或存储网址以便日后查询。',detail.language)}}</p>
+                </div>
+
+                <div class="order-cart input-section">
+                    <div class="card card-default">
+                        <div class="cart-content">
+                            <div class="cart-item clearfix" v-for="(item4,index) in arr">
+                                <!-- <div v-for="(item,index1) in item4.sort"> -->
+                                    
+                                    <div class="item-content clearfix full" v-for="(item,index1) in item4.sort">
+                                        <div class="item-img">
+                                            <img class="img-thumbnail lazyloaded"  v-if="item.img" :src="item.img?cdnbase+item.img:''">
+                                        </div>
+                                        <div class="detail">
+                                            <h4>
+                                                <span>[[item.specname]]</span>
+                                                <span v-if="item4.option1!=''">-[[item.option1]]</span>
+                                                <span v-if="item4.option2!=''">-[[item.option2]]</span> 
+                                                <span class="text-complete"></span>
+                                            </h4>
+                                            <div class="meta">
+                                                <span class="each-price">
+                                                    <small class="currency">[[detail.money]]</small> 
+                                                    <span class="amount">[[item.price]]</span>
+                                                </span> * <span class="text-danger num">[[item.number]]</span>
+                                            </div>
+                                        </div>
+                                        <div class="price">
+                                            <small class="currency">[[detail.money]]</small> 
+                                            [[item.number*item.price]]
+                                        </div>
+                                    </div>
+
+                                <!-- </div> -->
+ 
+                                <div v-for="(item1,index) in arr[index].gift" class="aa">
+                                    <div class="item-img">
+                                        <div class="item-tool2">{{lang('赠品',detail.language)}}</div>  
+                                        <img class="img-thumbnail lazyloaded gif-2" v-if="item1.img" :src="item1.img?cdnbase+item1.img:''"  class="lazyloaded product-img img-thumbnail">
+                                    </div>
+
+                                    <div class="item-content clearfix">
+                                        <div class="detail">
+                                            <h4>
+                                                <span>[[item1.specname]]</span>
+                                                <span v-if="item4.option1!=''">-[[item1.option1]]</span>
+                                                <span v-if="item4.option2!=''">-[[item1.option2]]</span>
+                                            </h4>
+                                            <div class="meta">
+                                                <span class="text-danger num">{{lang('数量：',detail.language)}}[[item4.number]]</span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            <div class="cart-total">
+                                <ul class="list-unstyled list-cart-discount">
+                                    <li><span class="text">{{lang('小计：',detail.language)}}</span><small class="currency">[[detail.money]]</small>[[realPrice]]</li>
+                                    <li><span class="text">{{lang('运费：',detail.language)}}</span><small class="currency">[[detail.money]]</small>[[parseInt(extrapay)]]</li>
+                                </ul>
+                                {{lang('总计：',detail.language)}}
+                                <span class="amount"><small class="currency">[[detail.money]]</small>[[realPrice+parseInt(extrapay)]]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="order-info input-section">
+                    <div class="card card-default">
+                        <div class="card-block">
+                            <h3><i class="far fa-user iconfont icon-wode"></i>{{lang('收件信息',detail.language)}}</h3>
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('收件人',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td">[[clientinfo.clientname]]</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('联系电话',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td">
+                                            <img src="/theme/new39/images/taiwan.png" class="countryImg">[[clientinfo.clientphone]]</div>
+                                    </div>
+                                </div>
+                               
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('付款方式',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td" >
+                                            {{lang('货到付款',detail.language)}}<span class="badge badge-circle badge-circle-4">{{lang('货到付款',detail.language)}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('运送方式',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td" v-if="flag2!==1">{{lang('宅配上门（免运费）',detail.language)}}
+                                            <!-- <span class="badge badge-circle">{{lang('等待出货',detail.language)}}</span> -->
+                                        </div>
+                                        <div class="td" v-if="flag2===1">{{lang('宅配上门（不包邮）',detail.language)}}
+                                            <!-- <span class="badge badge-circle">{{lang('等待出货',detail.language)}}</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('运送至地址',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td">[[order_clientaddress]]</div>
+                                    </div>
+                                </div>
+                               
+                                <div class="row" v-if="clientinfo.clientemail!=''">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('Email',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td">[[clientinfo.clientemail]]</div>
+                                    </div>
+                                </div>
+                                <div class="row" v-if="clientinfo.clientotherinfo!=''">
+                                    <div class="col-sm-3">
+                                        <div class="th">{{lang('备注',detail.language)}}</div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="td">[[clientinfo.clientotherinfo]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="order-timeline input-section">
+                    <div class="timeline-container">
+                        <section class="timeline">
+
+                            <div class="timeline-block"  v-if="clientinfo.clientemail!=''">
+                                <div class="timeline-point small"></div>
+                                    <div class="timeline-content">
+                                    <div class="card  social-card share full-width">
+                                        <div class="card-header clearfix">
+                                            <h5>{{lang('Email发送',detail.language)}}</h5>
+                                        </div>
+                                        <div class="card-description clearfix">{{lang('（自动）',detail.language)}}
+                                            <br><span>{{lang('已发送订单Email。',detail.language)}}</span>
+                                            <br><span>{{lang('您可使用Email内链接查询订单状态。',detail.language)}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-date">
+                                        <small class="hint-text"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="timeline-block">
+                                <div class="timeline-point small"></div>
+                                <div class="timeline-content">
+                                    <div class="card  social-card share full-width">
+                                        <div class="card-header clearfix">
+                                            <h5>{{lang('订单成立',detail.language)}}</h5>
+                                        </div>
+                                        <div class="card-description clearfix">{{lang('已完成订购。',detail.language)}}
+                                            <br><span>{{lang('付款方式：取货时付款',detail.language)}}</span>
+                                            <br><span v-if="flag2!==1">{{lang('配送方式：宅配上门（免运费）',detail.language)}}</span>
+                                            <span v-if="flag2===1">{{lang('配送方式：宅配上门（不包邮）',detail.language)}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="event-date">
+                                        <small class="hint-text"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                        </section>
+                    </div>
+                </div>
+
+
+                <div class="back-shop input-section">
+                    <a class="btn btn-rounded btn-lg btn-primary btn-block a-color" @click="closeOrder">
+                        <i class="far fa-store m-r-5 iconfont icon-011shangdian"></i>
+                        {{lang('返回商店',detail.language)}}
+                    </a>
+                </div>
+
+                
+
+
+
+            </div>
+        </div>
+
+        
+       
+
+    </div>
+    <script>
+        var appData = {
+            sitedir: '{{detail.sitedir}}',
+            redirect_sitedir: '{{detail.redirect_sitedir}}',
+            language: '{{detail.language}}',
+            chaport_id: "{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+            chaport_switch: "{{detail.chaport_switch}}",
+            is_domain: "{{detail.is_domain}}"
+        };
+        var deleteStr = '{{lang("删除",detail.language)}}';
+        var selectStr = '{{lang("请您先选择商品",detail.language)}}';
+        var confirmContent = "{{lang('请选择去下单还是继续浏览',detail.language)}}";
+        var btn1 = "{{lang('立即结算',detail.language)}}";
+        var btn2 = "{{lang('继续浏览',detail.language)}}";
+        var findbtnStr = "{{lang('查询',detail.language)}}";
+        var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+        var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+        var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+        var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+        var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+        var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+        var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+        var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+        var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+        var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+        var findbtnStr = "{{lang('查询',detail.language)}}";
+        var orderError = "{{lang('订单不存在',detail.language)}}";
+        var submitComment = "{{lang('提交评论中',detail.language)}}";
+        var selectOos = "{{lang('商品',detail.language)}}";
+        var selectOos1 = "{{lang('缺货中，请选择其他商品',detail.language)}}";
+        var oos = "{{lang('[缺货中]',detail.language)}}";
+        var selectGiftStr = '{{lang("请您先选择赠品",detail.language)}}';
+        var addcart = '{{lang("加入购物车成功",detail.language)}}';
+        var deleteCartPr = '{{lang("删除商品成功",detail.language)}}';
+        var cartNo = '{{lang("购物车还没有选择商品",detail.language)}}';
+        var remote = "{{lang('此地区为快递偏远地区,需由快递公司另外加收快递费送达',detail.language)}}";
+    </script>
+    <script type="text/javascript">
+        if (appData.chaport_switch === "1" && appData.chaport_id) {
+            (function (w, d, v3) {
+                w.chaportConfig = {
+                    appId: appData.chaport_id
+                };
+                if (w.chaport) return;
+                v3 = w.chaport = {};
+                v3._q = [];
+                v3._l = {};
+                v3.q = function () {
+                    v3._q.push(arguments)
+                };
+                v3.on = function (e, fn) {
+                    if (!v3._l[e]) v3._l[e] = [];
+                    v3._l[e].push(fn)
+                };
+                var s = d.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'https://app.chaport.com/javascripts/insert.js';
+                var ss = d.getElementsByTagName('script')[0];
+                ss.parentNode.insertBefore(s, ss)
+            })(window, document);
+        }
+        
+        //立即抢购
+        function scorll_Buy(ele, speed){
+            var ele=".rush"
+	        if(!speed) speed = 600;
+	        if(!ele){
+		        $("html,body").animate({scrollTop:0},speed);
+	        }else{
+		        if(ele.length>0) $("html,body").animate({scrollTop:$(ele).offset().top},speed);
+	        }
+	        return false;
+        };
+        
+
+    </script>
+   
+    <script src="/theme/{{detail.template}}/js/index.js"></script>
+    <script src="/theme/{{detail.template}}/js/showpopup.js"></script>
+
+
+</body>
+
+</html>

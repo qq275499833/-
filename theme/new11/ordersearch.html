@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{detail.sitename}}</title>
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <!--<script src="/js/common.js"></script>-->
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+</head>
+<body>
+<header class="site-header" role="banner">
+    <div class="wrapper">
+        <div class="grid--full">
+            <div class="grid-item large--one-half">
+                <div class="h1 header-logo">
+                    <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" itemprop="url"><img src="{{cdnbase+(logo?logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="nav-bar" role="navigation">
+    <div class="wrapper">
+
+        <ul class="site-nav" id="accessibleNav">
+            <li>
+                <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" tabindex="1">{{lang('首页',detail.language)}}</a>
+            </li>
+            <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+            <li><a href="/contact}?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+            <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+            <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+            <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+            <li>
+                <a href="/ordersearch/{{detail.sitedir}}">{{lang('查询订单信息',detail.language)}}</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="mobileNavBar">
+    <div class="display-table-cell" id="mobile_menu">
+        <a class="menu-toggle mobileNavBar-link" ><span class="icon icon-hamburger"></span>Menu</a>
+    </div>
+</div>
+<main class="wrapper main-content" role="main">
+
+    <div class="main">
+        <div class="layout">
+            <div class="order-title">{{lang('查询订单信息',detail.language)}}</div>
+            <div class="goods-info">
+                <div class="am-form-group">
+                    <input type="text" id="expressinfo" class="" placeholder="{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}">
+                    <button class="find-btn" onclick="find_order()" type="button">
+                        {{lang('查询',detail.language)}}
+                    </button>
+                </div>
+                <ul id="find_result" class="comment_ul"></ul>
+            </div>
+        </div>
+        <div class="ajax_result" style="display: none"></div>
+    </div></main>
+<footer class="site-footer small--text-center" role="contentinfo">
+    <div class="wrapper">
+        <div class="grid">
+            <div class="grid-item medium--one-half large--three-twelfths">
+                <h3>{{lang('快速链接',detail.language)}}</h3>
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" tabindex="1">{{lang('首页',detail.language)}}</a>
+                    </li>
+                    <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+                    <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+                    <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+                    <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+                    <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+                    <li>
+                        <a href="/ordersearch/{{detail.sitedir}}">{{lang('查询订单信息',detail.language)}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="grid-item medium--one-half large--five-twelfths">
+                <h3>{{lang('联系我们',detail.language)}}</h3>
+                <p>
+                    <a href="http://{{detail.domain+':8087/'+detail.sitedir}}">http://{{detail.domain+':8087/'+detail.sitedir}}</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="qab_placeholder"></div>
+
+</footer>
+<a id="btn-top" href="javascript:window.scrollTo( 0, 0 );" style="display: block;">
+    <img src="/theme/{{detail.template}}/images/gotop.png" alt="" width="40px" height="40px">
+</a>
+<script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+<script>
+    var appData = {
+        goods: {id: '{{detail.id}}',sourceid: '{{detail.source}}',name: '{{detail.name}}',userkey: '{{detail.userkey}}'},
+        selectProd: {name: '',price: '',img: '',option1: '', option2: '',sku: ""},
+        prods: [],
+        addnum: 1,
+        imgpath: '{{cdnbase}}',
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}",
+        apiserver:"{{apiserver}}"
+    };
+    appData.goods.specs={{{detail.GoodsSpecsStr?detail.GoodsSpecsStr:'[]'}}};
+    appData.goods.saleoff={{{detail.saleoff?detail.saleoff:'[]'}}};
+    appData.goods.manyoff={{{detail.manyoff?detail.manyoff:'[]'}}};
+    appData.goods.manyoff_new={{{detail.manyoff_new?detail.manyoff_new:'[]'}}};
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var ordertimeStr = "{{lang('下单时间',detail.language)}}";
+    var orderidStr = "{{lang('订单号',detail.language)}}";
+    var ordernameStr = "{{lang('收货人',detail.language)}}";
+    var orderaddressStr = "{{lang('地　址',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var orderError="{{lang('订单不存在',detail.language)}}";
+    $("#mobile_menu").click(function(){
+        $("body").toggleClass("show-nav");
+    });
+</script>
+</body>
+</html>

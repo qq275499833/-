@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- {{appid}} -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <title>第一页</title>
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/swiper-3.4.2.min.css">
+</head>
+<body>
+<!--头部导航-->
+<div id="mainIndex" class="holder2">
+    <div class="navTop">
+        <div class="navWrap">
+            <img class="backBtn  lazy" data-original="/theme/{{detail.template}}/src/img/page1/back.png" alt="">
+            <div class="navabox">
+                <a class="nav_actived" href="">{{lang('商品',detail.language)}}</a>
+                <a href="">{{lang('评价',detail.language)}}</a>
+                <a href="">{{lang('详情',detail.language)}}</a>
+                <div class="clearBoth"></div>
+
+            </div>
+        </div>
+    </div>
+    <!--商品大图-->
+    <div class="productPicBox">
+        <img class="lazy" data-original="http://cdn.seezt.cc/uploadimages/{{detail.head_imgs[0]}}" alt="">
+        <div class="priceBox">
+            <img class="traingle" src="/theme/{{detail.template}}/src/img/page1/traingle.png" alt="">
+            <div class="price">
+                <div class="discount">{{detail.money}}{{detail.price}}</div>
+                <div class="priceOld">
+                    <span>{{lang('优惠金额',detail.language)}}</span>
+                    <span class="saleNum">
+                    {{lang('已售出',detail.language)}}205
+
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--商品详情-->
+    <div class="sectionBody">
+        <div class="title">
+            <div class="holder2">
+                <p>{{detail.sitename}}</p>
+                <div class="descBox">
+                    <span>月销768笔</span>
+                    <!--<span>广东</span>-->
+                </div>
+            </div>
+        </div>
+        <!--<img class="blockLine" src="/theme/{{detail.template}}/src/img/page1/blockline1.png" alt="">-->
+        <!--<div class="holder">-->
+            <!--<ul>-->
+                <!--<li class="infoList">-->
+                    <!--<span class="infoTitle">{{lang('服务',detail.language)}}</span>-->
+                    <!--<span class="infoText">极速退货 正品保证 极速退款</span>-->
+                    <!--<img src="/theme/{{detail.template}}/src/img/page1/arrow.png" class="arrow">-->
+                <!--</li>-->
+                <!--&lt;!&ndash;<li class="infoList">&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="infoTitle">规格</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="infoText">选择 颜色分类,尺码</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<img src="/theme/{{detail.template}}/src/img/page1/arrow.png" class="arrow">&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<span class="infotip">完善尺码</span>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                <!--<li class="infoList" onclick="showBuyBox()">-->
+                    <!--<span class="infoTitle">{{lang('参数',detail.language)}}</span>-->
+                    <!--<span class="infoText">{{lang('请您选择商品的颜色和规格',detail.language)}}</span>-->
+                    <!--<img src="/theme/{{detail.template}}/src/img/page1/arrow.png" class="arrow">-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    </div>
+    <div class="holder">
+        <div class="buyBar">
+            <div class="shopBtnBox">
+                <a class="shopBtn" onclick="$('.buyBox2').css('display','block');refresh_prod_ul();">
+                    <img src="/theme/{{detail.template}}/src/img/page1/cart.png" alt=""><br>
+                    <span>
+           {{lang('购物车',detail.language)}}
+        </span>
+                </a>
+                <a class="shopBtn">
+                    <img src="/theme/{{detail.template}}/src/img/page1/service.png" alt=""><br>
+                    <span class="cus">
+            {{lang('客服',detail.language)}}
+        </span>
+                </a>
+                <div class="clearBoth"></div>
+            </div>
+            <div class="buyNowBox">
+                <btn class="addtocart" onclick="showBuyBox()"> {{lang('加入购物车',detail.language)}}</btn>
+                <btn class="buyNow" onclick="showBuyBox()">{{lang('立即购买',detail.language)}}</btn>
+
+            </div>
+
+        </div>
+
+        <div class="clearBoth"></div>
+
+    </div>
+    <div class="message">
+        <div class="holder">
+            <ul class="msgList">
+                <li>
+                    <div class="msgname">
+                        <img src="/theme/{{detail.template}}/src/img/page1/circle1.png" alt="">
+                        <span>头发和***正比</span>
+                    </div>
+                    <div class="msgText">
+                        太喜欢了，颜色显肤色，面料柔软舒适，老顾客了！
+                    </div>
+                    <div class="goodsStyle">
+                        2018-04-20 颜色分类：茶玫粉C18；尺码：170/88A/L
+                    </div>
+                </li>
+                <li>
+                    <div class="msgname">
+                        <img src="/theme/{{detail.template}}/src/img/page1/circle1.png" alt="">
+                        <span>头发和***正比</span>
+                    </div>
+                    <div class="msgText">
+                        太喜欢了，颜色显肤色，面料柔软舒适，老顾客了！
+                    </div>
+                    <div class="goodsStyle">
+                        2018-04-20 颜色分类：茶玫粉C18；尺码：170/88A/L
+                    </div>
+                </li>
+            </ul>
+            <a href="#" class="checkMore">查看更多评价</a>
+        </div>
+    </div>
+    <img src="/theme/{{detail.template}}/src/img/page1/blockline1.png" alt="" class="blockLine">
+    <div class="holder">
+        <p class="pushAb">{{lang('猜你喜欢',detail.language)}}</p>
+        <div class="pushBox">
+            <div class="swiper-container swiper-container-horizontal">
+                <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+                    <div class="swiper-slide swiper-slide-active" style="width: 340px; margin-right: 30px;"><img
+                            src="/theme/{{detail.template}}/src/img/page1/picslg2.png"
+                            alt="">
+                        <p class="goodsTitle">{{detail.sitename}}</p>
+                        <p class="goodsPrice">{{detail.money}} {{detail.price}}</p>
+                    </div>
+                    <div class="swiper-slide swiper-slide-next" style="width: 340px; margin-right: 30px;"><img
+                            src="/theme/{{detail.template}}/src/img/page1/picslg2.png"
+                            alt="">
+                        <p class="goodsTitle">{{detail.sitename}}</p>
+                        <p class="goodsPrice">{{detail.money}} {{detail.price}}</p>
+                    </div>
+                    <div class="swiper-slide" style="width: 340px; margin-right: 30px;"><img
+                            src="/theme/{{detail.template}}/src/img/page1/picslg2.png"
+                            alt="">
+
+                        <p class="goodsTitle">{{detail.sitename}}</p>
+                        <p class="goodsPrice">{{detail.money}} {{detail.price}}</p>
+                    </div>
+                    <div class="swiper-slide" style="width: 340px; margin-right: 30px;"><img
+                            src="/theme/{{detail.template}}/src/img/page1/picslg2.png"
+                            alt="">
+                        <p class="goodsTitle">{{detail.sitename}}</p>
+                        <p class="goodsPrice">{{detail.money}}{{detail.price}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="blockLine">
+
+        <div class="detail-imgs">
+            {{{detail.GoodsContent.content}}}
+        </div>
+
+        <!---->
+        <!--<img src="/theme/{{detail.template}}/src/img/page1/blockline.png">-->
+        <!--<span>{{lang('详情',detail.language)}}</span>-->
+        <!--<img src="/theme/{{detail.template}}/src/img/page1/blockline.png">-->
+        <!--</div>-->
+        <!--<div class="picsTitle">-->
+        <!--<p>COLORS</p>-->
+        <!--<p>多味色彩</p>-->
+        <!--</div>-->
+        <!--<div class="picsBox">-->
+        <!--&lt;!&ndash;<div class="holder">&ndash;&gt;-->
+        <!--<div class="picsWrap">-->
+        <!--&lt;!&ndash;<div class="picsBg"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="picsBg2"></div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="pics">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span>GET YOUR SHOPON</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<img src="/theme/{{detail.template}}/src/img/page1/picsa.png" alt="">-->
+        <!--</div>-->
+        <!---->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg1.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg2.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg3.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg4.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg6.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg7.png" alt="">-->
+        <!--<img class="picslg lazy" data-original="/theme/{{detail.template}}/src/img/page1/picslg8.png" alt="">-->
+        <!--<div class="textWrap">-->
+        <!--<p>价格说明</p>-->
+        <!--<span>划线价格</span>指商品的专柜价、吊牌价、正品零售价、厂商指导价或该商品的曾经展示过得销售价格等，<span>并非原价</span>，仅供参考。<br>-->
+        <!--<span>未划线价格：</span>指商品的<span>实时标价</span>，不因表述的差异改变性质。具体成交价格根据商品参加活动，或会员使用优惠券，积分等发生改变，最终以订单结算页价格为准。-->
+        <div class="clearBoth"></div>
+
+    </div>
+    <div class="clearBoth"></div>
+
+    <!--</div>-->
+
+</div>
+<!--规格页面-->
+<div class="buyBox disappear">
+    <div class="holder2 buyBoxSon">
+        <div class="buyView">
+            <img id="selected-img" src="http://cdn.seezt.cc/uploadimages/{{detail.head_imgs[0]}}-101" alt="">
+            <div class="moneyBox">
+                <p class="buyPrice"><span id="goods_price">{{detail.money}}{{detail.price}}</span>
+                    <img class="clearSpec" onclick="hideBuyBox()"
+                         src="/theme/{{detail.template}}/src/img/page2/clear.png" alt=""></p>
+                <p>
+
+                    <span class="spec" id="spec-goods"></span>
+                </p>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+        <div class="clearBoth"></div>
+        <div class="specSet">
+            <p>{{detail.option1_name}}</p>
+            <div class="setTabs name" id="spec_names">
+                {{#each(detail.specs.name_list)}}
+                <div class="tabs" onclick="select_specitem(this)" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{detail.money}}{{this.price}}">
+                    <img class="smimg" src="{{this.img?'http://cdn.seezt.cc/uploadimages/'+this.img+'-40':''}}" />
+
+                    {{this.name}}
+                </div>
+                {{/each}}
+                <!--<div class="tabs" onclick="select_specitem(this)" data-name="鮮豔紅"-->
+                <!--data-img="/theme/{{detail.template}}/src/img/page1/picslg1.png">-->
+                <!--鮮豔紅-->
+                <!--</div>-->
+                <!--<div class="tabs" onclick="select_specitem(this)" data-name="冷酷藍"-->
+                <!--data-img="/theme/{{detail.template}}/src/img/page1/picslg3.png">冷酷藍-->
+                <!--</div>-->
+                <!--<div class="tabs" onclick="select_specitem(this)" data-name="進氣軟管+渦輪"-->
+                <!--data-img="/theme/{{detail.template}}/src/img/page1/picslg4.png">進氣軟管+渦輪-->
+                <!--</div>-->
+            </div>
+        </div>
+        {{#if(detail.specs.option1_list.length>0)}}
+        <div class="sizeBox">
+            <p>{{detail.option2_name}}</p>
+            <div class="setTabs option1" id="spec_option1">
+                {{#each(detail.specs.option1_list)}}
+                <div class="tabs disable"  data-name="{{this.option1}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}" onclick="select_option1(this)">{{this.option1}}</div>{{/each}}</div>
+        </div>
+        {{/if}}
+        {{#if(detail.specs.option2_list.length>0)}}
+        <div class="comboBox">
+            <p>{{detail.option3_name}}</p>
+            <div class="setTabs option2" id="spec_option2">
+                {{#each(detail.specs.option2_list)}}
+                <div class="tabs disable" data-name="{{this.option2}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}" onclick="select_option2(this)">{{this.option2}}</div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="buyNum">
+            <span>{{lang('数量',detail.language)}}</span>
+            <div>
+                <a onclick="(appData.addnum>1?appData.addnum-=1:appData.addnum = 1);$('#addnum').val(appData.addnum);checkStyle();"
+                   class="min_btn">-</a>
+                <!--<a href="#" id="addnum">2</a>-->
+                <input type="text" onblur="proNumBlur(this)" style="float: left;" class="product_num" name="num"
+                       id="addnum" value="1">
+                <a onclick="appData.addnum+=1;$('#addnum').val(appData.addnum);checkStyle();" class="add_btn">+</a>
+
+            </div>
+
+        </div>
+        <div class="addtocartlg" onclick="addtocart(buyFlag)">{{lang('去买单',detail.language)}}</div>
+
+    </div>
+</div>
+<!--支付页面-->
+<div class="buyBox2 disappear" id="buybox2">
+    <div class="holder2">
+        <a class="back">
+            <img style="display: inline-block" src="/theme/{{detail.template}}/src/img/page1/arrow.png" onclick="back()"
+                 alt="">
+            <span>{{lang('订单商品',detail.language)}}</span>
+        </a>
+        <div class="productView" id="productView">
+        </div>
+    </div>
+    <div class="transformWrap">
+        <!--<div class="transform">-->
+            <!--<span>配送方式</span><a href="#">快递免邮 <img src="/theme/{{detail.template}}/src/img/page1/arrow.png" alt=""></a>-->
+        <!--</div>-->
+        <div class="transform">
+            <span>{{lang('合计',detail.language)}}</span><a style="color:#F25252;" id="allprice"><span>0000</span></a>
+        </div>
+        <div class="transform">
+            <span>{{lang('数量',detail.language)}}</span><a style="color:#F25252;" id="allCount"><span>0000</span></a>
+        </div>
+        <div class="transform">
+            <span>{{lang('实付金额',detail.language)}}</span><a style="color:#F25252;" id="realprice"><span>0000</span></a>
+        </div>
+    </div>
+    <div class="blockLine">
+    </div>
+    <div class="transformWrap">
+        <div class="clearBoth"></div>
+        <div class="holder2" style="border-bottom: 1px solid rgba(54,54,54,0.2);">
+            <table class="inputList">
+                <tr class="input input_user">
+                    <td>{{lang('收货人',detail.language)}}</td>
+                    <td><input id="clientname" type="text" placeholder="{{lang('必填',detail.language)}}"></td>
+                </tr>
+                <tr class="input input_phone">
+                    <td>{{lang('联系电话',detail.language)}}</td>
+                    <td><input id="clientphone" type="text" placeholder="{{lang('必填',detail.language)}}"></td>
+                </tr>
+                <tr class="input input_yb">
+                    <td>{{lang('邮编',detail.language)}}</td>
+                    <td><input type="text" id="zipcode" placeholder="{{lang('必填',detail.language)}}"></td>
+                </tr>
+                <tr class="input input_address">
+                    <td>{{lang('地址',detail.language)}}</td>
+                    <td><input id="clientaddress" type="text" placeholder="{{lang('必填',detail.language)}}">
+                    </td>
+                </tr>
+                <tr class="input input_msg">
+                    <td>{{lang('其他要求请备注',detail.language)}}</td>
+                    <td><input id="clientotherinfo" type="text"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="clearBoth"></div>
+    <a onclick="judgeInput()" class="subBtn">{{lang('提交订单',detail.language)}}</a>
+</div>
+<!--支付成功页面-->
+<div class="buyBox3" id="buyBox3">
+    <div class="header"><img id="backBtn" onclick="back()" src="/theme/{{detail.template}}/src/img/page1/back.png"
+                             alt="">{{lang('下单成功',detail.language)}}
+    </div>
+    <div class="successtips">
+
+    </div>
+    <div class="likeBox">
+        <p class="likeTitle">{{lang('猜你喜欢',detail.language)}}</p>
+        <div class="theylike">
+            <!--<div class="imgPos"><img src="/theme/{{detail.template}}/src/img/page1/picslg1.png" alt="">-->
+            <!--<p class="theylikeinfo">露肩|夏季流行-->
+            <!--￥230</p>-->
+            <!--</div>-->
+            <!--<div class="imgPos"><img src="/theme/{{detail.template}}/src/img/page1/picslg1.png" alt="">-->
+            <!--<p class="theylikeinfo">露肩|夏季流行-->
+            <!--￥230</p>-->
+            <!--</div>-->
+            <!--<div class="imgPos"><img src="/theme/{{detail.template}}/src/img/page1/picslg1.png" alt="">-->
+            <!--<p class="theylikeinfo">露肩|夏季流行-->
+            <!--￥230</p>-->
+            <!--</div>-->
+            <!--<div class="imgPos"><img src="/theme/{{detail.template}}/src/img/page1/picslg1.png" alt="">-->
+            <!--<p class="theylikeinfo">露肩|夏季流行-->
+            <!--￥230</p>-->
+            <!--</div>-->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {{#each(detail.head_imgs)}}
+                    <div class="swiper-slide"><img src="http://cdn.seezt.cc/uploadimages/{{this}}"></div>
+                    {{/each}}
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+                <!-- 如果需要导航按钮 -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+<script src="http://static.seezt.cc/shop/js/layer/layer.js"></script>
+<script src="http://static.seezt.cc/shop/js/area.and.cart.js"></script>
+<script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    var nowprice;
+    var successBox = $('.successtips');
+    var buyFlag = 0;
+    $('.buyNow').click(function () {
+        buyFlag = 1;
+    });
+    $('.addtocart').click(function () {
+        buyFlag = 0;
+    });
+    $('.infoList').click(function () {
+        buyFlag = 0;
+    });
+    // var mySwiper = new Swiper('.swiper-container', {
+    //     direction: 'horizontal',
+    //     loop: true,
+    //
+    // });
+    function init_LocalSelect(lang) {
+        var language = lang;
+        if (appData.language === 'tw') {
+            opt0 = ["國家/地區", "城市", "區縣"];
+        } else if (appData.language === 'hk') {
+            opt0 = ["國家/地區", "城市", "區縣"];
+        } else if (appData.language === 'my') {
+            opt0 = ["國家/地區", "城市", "区县"];
+        } else if (appData.language === 'cn') {
+            opt0 = ["國家/地區", "城市", "区县"];
+        } else if (appData.language === 'sg') {
+            opt0 = ["國家/地區", "城市", "区县"];
+        } else if (appData.language === 'en') {
+            opt0 = ["國家/地區", "province", "city"];
+        }else if (appData.language === 'th') {
+            opt0 = ["國家/地區", "province", "city"];
+        }
+        if (appData.money === 'RM') {
+            language='my';
+        }
+        try{showarea('clientzipcode');preselect(language);}catch(ex){}
+    }
+    function init_swiper() {
+        new Swiper ('.swiper-container', {
+            loop: true,
+            // 如果需要分页器
+            pagination: '.swiper-pagination',
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+    }
+    function init_cart() {
+        cart.name = appData.sitedir;
+        cart.getFromCache();
+        cart.showTotalNum();
+    }
+
+    function back() {
+        $(".buyBox").css("display", 'none');
+        $(".buyBox2").css("display", 'none');
+        $(".buyBox3").css("display", 'none');
+    };
+
+    function judgeInput() {
+        nowprice = $('#allprice').text();
+        if ($('#clientname').val() == '') {
+            return tools.showMsg("{{lang('请输入收货人姓名',detail.language)}}", 4);
+        } else if ($('#clientphone').val() == '') {
+            return tools.showMsg("{{lang('请填写正确的电话号码',detail.language)}}", 4);
+        } else if ($('#zipcode').val() == '') {
+            return tools.showMsg("{{lang('请填写邮编',detail.language)}}", 4);
+        } else if ($('#clientaddress').val() == '') {
+            return tools.showMsg("{{lang('请填写收货地址',detail.language)}}", 4);
+        } else {
+            $('#buyBox3').css('display', 'block');
+            // console.log(1);
+            var nowDate = new Date();
+            successBox.empty();
+            successBox.append('<div class="paysuccess"><span>√ </span>{{lang('下单成功，我们将尽快为您配送！',detail.language)}}</div>' +
+                '<p>{{lang('实付金额',detail.language)}}：' + nowprice + '元</p>' +
+                '<p>{{lang('下单时间',detail.language)}}：' + nowDate + '</p>' +
+                '<p>{{lang('地址',detail.language)}}：' + $('#clientaddress').val() + '</p>' +
+                '<p>{{lang('收货人',detail.language)}}：' + $('#clientname').val() + '</p>' +
+                '<p>{{lang('联系电话',detail.language)}}：' + $('#clientphone').val() + '</p>');
+        }
+    }
+    var appData = {
+        goods: {
+            id: '{{detail.id}}',
+            sourceid: '{{detail.source}}',
+            name: '{{detail.name}}',
+            userkey: '{{detail.userkey}}'
+        },
+        selectProd: {name: '', price: '', img: '', option1: '', option2: '', sku: ""},
+        prods: [],
+        addnum: 1,
+        imgpath: 'http://cdn.seezt.cc/uploadimages/',
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}"
+    };
+    appData.goods.specs={{{detail.GoodsSpecsStr?detail.GoodsSpecsStr:'[]'}}};
+    appData.goods.saleoff={{{detail.saleoffStr?detail.saleoffStr:'[]'}}};
+
+    try {
+        showarea();
+        preselect(language);
+    } catch (ex) {
+    }
+
+    function showBuyBox() {
+        $(".buyBox").css("display", 'block');
+    };
+
+    function hideBuyBox() {
+        $(".buyBox").css("display", 'none');
+    };
+</script>
+<script src="/theme/{{detail.template}}/js/main.js"></script>
+<script>
+    init_cart();
+    init_LocalSelect(appData.language);
+    init_swiper();
+</script>
+</html>

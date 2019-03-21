@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{page.title}}</title>
+    {{#if(detail.template)}}
+    <link href="/theme/{{detail.template}}/css/index.css" rel="stylesheet">
+    {{else}}
+    <link href="/theme/{{page.template}}/css/index.css" rel="stylesheet">
+    {{/if}}
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+</head>
+<body>
+<div class="header">
+    <div class="site_title">
+        {{#if(detail.sitedir)}}
+        <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');"><i class="back"></i></a>
+        {{else}}
+        <a href="../home/{{page.homeId}}/{{page.username}}"><i class="back"></i></a>
+        {{/if}}
+        {{page.title}}
+    </div>
+</div>
+
+<div class="section" style="margin-top:60px;margin-bottom:143px;">
+    {{{page.body}}}
+</div>
+<div class="main_footer" style="background: #fff;position:fixed;bottom:0;margin:0;">
+    {{#if(detail.sitedir)}}
+    <ul class="footer_tabs">
+        <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+        <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+        <li><a href="/privac?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+        <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+        <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+    </ul>
+    {{else}}
+    <ul class="footer_tabs">
+        <li><a href="/about?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('关于我们',page.language)}}</a></li>
+        <li><a href="/contact?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('联系我们',page.language)}}</a></li>
+        <li><a href="/privacy?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('隐私协议',page.language)}}</a></li>
+        <li><a href="/terms?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('服务条例',page.language)}}</a></li>
+        <li><a href="/service?id=0&username={{page.username}}&home={{page.homeId}}">{{lang('退换货政策',page.language)}}</a></li>
+    </ul>
+    {{/if}}
+</div>
+</body>
+</html>

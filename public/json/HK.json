@@ -1,0 +1,121 @@
+[
+  {
+    "id": "10",
+    "name": "香港島",
+    "nameLocal": "",
+    "parentId": "111",
+    "displayName": "香港島"
+  },
+  {
+    "id": "74",
+    "name": "中西區",
+    "nameLocal": "",
+    "parentId": "10",
+    "displayName": "香港島"
+  },
+  {
+    "id": "25",
+    "name": "灣仔區",
+    "nameLocal": "",
+    "parentId": "10",
+    "displayName": "香港島"
+  },
+  {
+    "id": "52",
+    "name": "東區",
+    "nameLocal": "",
+    "parentId": "10",
+    "displayName": "香港島"
+  },
+  {
+    "id": "19",
+    "name": "南區",
+    "nameLocal": "",
+    "parentId": "10",
+    "displayName": "香港島"
+  },
+  {
+    "id": "21",
+    "name": "九龍半島",
+    "nameLocal": "",
+    "parentId": "111",
+    "displayName": "九龍半島"
+  },
+  {
+    "id": "10",
+    "name": "九龍城區",
+    "nameLocal": "",
+    "parentId": "21",
+    "displayName": "九龍半島"
+  },
+  {
+    "id": "17",
+    "name": "觀塘區",
+    "nameLocal": "",
+    "parentId":"21" ,
+    "displayName": "九龍半島"
+  },
+  {
+    "id": "20",
+    "name": "深水埗區",
+    "nameLocal": "",
+    "parentId": "21",
+    "displayName": "九龍半島"
+  },
+  {
+    "id": "39",
+    "name": "黃大仙區",
+    "nameLocal": "",
+    "parentId": "21",
+    "displayName": "九龍半島"
+  },
+  {
+    "id": "36",
+    "name": "油尖旺區",
+    "nameLocal": "",
+    "parentId": "21",
+    "displayName": "九龍半島"
+  },
+  {
+    "id": "44",
+    "name": "新界",
+    "nameLocal": "",
+    "parentId": "111",
+    "displayName": "新界"
+  },
+  {
+    "id": "22",
+    "name": "西區",
+    "nameLocal": "",
+    "parentId": "44",
+    "displayName": "新界"
+  },
+  {
+    "id": "14",
+    "name": "北區",
+    "nameLocal": "",
+    "parentId": "44",
+    "displayName": "新界"
+  },
+  {
+    "id": "14",
+    "name": "東區",
+    "nameLocal": "",
+    "parentId": "44",
+    "displayName": "新界"
+  },
+  {
+    "id": "66",
+    "name": "離島",
+    "nameLocal": "",
+    "parentId": "111",
+    "displayName": "離島"
+  },
+  {
+    "id": "79",
+    "name": "離島",
+    "nameLocal": "",
+    "parentId": "66",
+    "displayName": "離島"
+  }
+]

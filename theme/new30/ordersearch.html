@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/buy.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+</head>
+<body style="background-color: #fff">
+<div id="app" v-cloak>
+    <div class="content">
+        <div class="header"><a class="goback" href="javascript:history.go(-1)"><span></span>返回</a></div>
+        <h2 class="title">訂單查詢</h2>
+        <div class="prompt">請輸入手機號碼</div>
+        <div class="from flexbox">
+            <input class="inquiry_mob flex" type="text" v-model="expressinfo"  placeholder="請輸入手機號碼" style="border: 1px solid #eee;">
+            <button id="go" @click="javascript:window.location.href='/ordersearch/'+detail.sitedir+'?ordernum='+expressinfo"></button>
+        </div>
+        <ul id="find_result" class="comment_ul">
+            <li v-if="orders.length>0" style="position: relative;border-bottom: none;" @click="close_orderinfo()">
+                <span class="closeBtn" style="top:-2px;"></span>
+            </li>
+            <li class="am-padding-xs am-text-sm" v-for="item in orders">
+                <div>{{lang('下单时间',detail.language)}} ：<span>[[item.ordertime]]</span></div>
+                <div>{{lang('订单号',detail.language)}} ：<span>[[item.orderid]]</span><span class="am-fr am-text-danger">[[item.orderstate]]</span></div>
+                <div>{{lang('收货人',detail.language)}} ：<span>[[item.clientname]] ([[item.clientphone]])</span></div>
+                <div>{{lang('地　址',detail.language)}} ：<span>[[item.clientaddress]]</span></div>
+                <div class="am-padding-xs" v-for="goods in item.OrderGoods">
+                    <div>[[goods.goodsname]] [[goods.specname]] [[goods.option1]] [[goods.option2]] X [[goods.number]]</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    var appData = {
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}'
+    };
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var orderError="{{lang('订单不存在',detail.language)}}";
+    var submitComment="{{lang('提交评论中',detail.language)}}";
+    var selectOos="{{lang('商品',detail.language)}}";
+    var selectOos1="{{lang('缺货中，请选择其他商品',detail.language)}}";
+    var oos="{{lang('[缺货中]',detail.language)}}"
+</script>
+<script src="/theme/{{detail.template}}/js/index.js"></script>
+</body>
+</html>

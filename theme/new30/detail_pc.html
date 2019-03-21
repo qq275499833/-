@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+    <script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<div id="app" v-cloak>
+    <div class="header">
+        <h1>[[detail.sitename]]</h1>
+    </div>
+    <div class="img_wrap">
+        <h2>{{lang('商品图片',detail.language)}}</h2>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div v-if="detail.head_video" class="swiper-slide" v-html="detail.head_video"></div>
+                <div v-for="item in detail.head_imgs" class="swiper-slide"><img :src="cdnbase+item"></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+            <!-- 如果需要导航按钮 -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+    <div class="details">
+        <h2 class="timettle">{{lang('限时秒杀',detail.language)}}</h2>
+        <div class="sales_wrap">
+            <div class="sales" style="padding: 2.5% 0;">
+                <div class="price">
+                    [[detail.money]]<ins>[[detail.price]]</ins>
+                </div>
+                <div class="sales_info">
+                    <div style="float:left;">
+                        <del>[[detail.money]][[detail.oldprice]]</del>
+                    </div>
+                    <div class="sales_num" style="float:left;position: relative;left: 15%;">
+                        {{lang('销量',detail.language)}}[[detail.saleno]]{{lang('件',detail.language)}}!
+                    </div>
+                </div>
+            </div>
+            <div class="time_wrapper">
+                <div class="timeWrap">
+                    <h1>{{lang('正在折扣期间',detail.language)}}<br>{{lang('建议抢先下单',detail.language)}}</h1>
+                    <div id="countdown" style="color: #333;">
+                        <span>[[d]]</span>{{lang('天',detail.language)}}<span>[[h]]</span>{{lang('时',detail.language)}}<span>[[m]]</span>{{lang('分',detail.language)}}<span>[[s]]</span>{{lang('秒',detail.language)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="title" style="width:100%;">
+            <h1 class="lf" style="font-weight:bold;">[[detail.sitename]]</h1>
+            <!-- 分享 -->
+            <div style="float:right;line-height:40px;">
+                <div class="fb-like" data-href="http://{{detail.domain+'/'+detail.sitedir}}" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+            </div>
+        </div>
+        <div class="service" style="clear:both;">
+            <span>{{lang('免邮',detail.language)}}</span>
+            <span>{{lang('货到付款',detail.language)}}</span>
+            <span>{{lang('购物无忧',detail.language)}}</span>
+            <span>{{lang('7天鉴赏期',detail.language)}}</span>
+        </div>
+        <div class="buy_now">
+            <a :href="'/buy/'+detail.sitedir" style="display:block;">{{lang('立即购买',detail.language)}}</a>
+        </div>
+    </div>
+    <div class="product_info">
+        <h2>{{lang('商品介绍',detail.language)}}</h2>
+        <div class="m-img" v-html="detail.GoodsContent.content"></div>
+    </div>
+    <!--评价-->
+    <div class="user_notes" id="detail_tab3">
+        <h2 style="border-bottom: 1px solid #ccc;">{{lang('商品评价',detail.language)}}</h2>
+        <div id="pingjia" class="pingjia">
+            <ul v-show="!commentList.length">
+                <li  class="le" style="display:list-item;color:#fff;">{{lang('暂无评价',detail.language)}}</li>
+            </ul>
+            <ul class="allpj" id="allpj">
+                <li class="le" style="display:list-item;" v-for="(item,index) in commentList">
+                    <span class="touxiang">
+                        <span class="username" style="position:relative;top:41px;font-size:13px;left:4px;">[[item.name]]</span>
+                    </span>
+                    <img class="lj" style="transform:rotate(180deg);-ms-transform:rotate(180deg); -moz-transform:rotate(180deg);-webkit-transform:rotate(180deg); -o-transform:rotate(180deg);" :src="'/theme/'+detail.template+'/images/r.png'">
+                    <section class="l" style="max-width:75%;width:75%;height:auto;background:rgb(188,227,249);">
+                        [[item.body]]
+                        <br>
+                        <img style="width:150px;" v-if="item.imgs" v-for="itemImg in (item.imgs.split(';'))" :src="cdnbase+[[itemImg]]">
+                    </section>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="user_notes">
+        <h2 style="border-bottom: 1px solid #ccc;">{{lang('客户须知',detail.language)}}</h2>
+        <div class="note_title" v-if="about">{{lang('关于我们',detail.language)}}</div>
+        <div class="note_text" v-html="about"></div>
+        <div class="note_title" v-if="contact">{{lang('联系我们',detail.language)}}</div>
+        <div class="note_text" v-html="contact"></div>
+        <div class="note_title"  v-if="privacy">{{lang('隐私协议',detail.language)}}</div>
+        <div class="note_text" v-html="privacy"></div>
+        <div class="note_title" v-if="terms">{{lang('服务条例',detail.language)}}</div>
+        <div class="note_text" v-html="terms"></div>
+        <div class="note_title" v-if="service">{{lang('退换货政策',detail.language)}}</div>
+        <div class="note_text" v-html="service"></div>
+
+    </div>
+    <footer>
+        <div class="top" @click="window.scrollTo(0,0);"><span></span>top</div>
+        <div class="inquiry"><a :href="'/ordersearch/'+detail.sitedir">{{lang('查询订单信息',detail.language)}}</a></div>
+        <div><a :href="'/buy/'+detail.sitedir">{{lang('立即下单',detail.language)}}</a></div>
+    </footer>
+    <!--客服-->
+    <div class="home_zixun_fixed">
+        <div class="kf_list">
+            <a v-if="fblink" class="facebook_btn" :href="fblink"  target="_blank">
+                <span>Facebook</span>
+            </a>
+            <a v-if="linelink" class="line_btn" :href="linelink" target="_blank">
+                <span>Line</span>
+            </a>
+            <a v-if="whatsapplink" class="whatsapp_btn" :href="whatsapplink"  target="_blank">
+                <span>WhatsApp</span>
+            </a>
+        </div>
+        <div class="kf_btn" onclick="show_kflist();">{{lang('客服',detail.language)}}</div>
+    </div>
+</div>
+<div id="fb-root"></div>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/{{detail.languagecode}}/sdk.js#xfbml=1&version=v3.0';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<script>
+    var appData = {
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        chaport_id:"{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+        chaport_switch:"{{detail.chaport_switch}}",  is_domain:"{{detail.is_domain}}"
+    };
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var orderError="{{lang('订单不存在',detail.language)}}";
+    var submitComment="{{lang('提交评论中',detail.language)}}";
+    var selectOos="{{lang('商品',detail.language)}}";
+    var selectOos1="{{lang('缺货中，请选择其他商品',detail.language)}}";
+    var oos="{{lang('[缺货中]',detail.language)}}"
+</script>
+<script type="text/javascript">
+    if(appData.chaport_switch==="1"&&appData.chaport_id){
+        (function(w,d,v3){
+            w.chaportConfig = { appId:appData.chaport_id };
+            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    }
+</script>
+<script src="/theme/{{detail.template}}/js/index.js"></script>
+<div style="display: none;">
+    {{{detail.GoodsCode.kfcode}}}
+    {{{detail.GoodsCode.tjcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.code}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.code}}}
+    {{/each}}
+</div>
+</body>
+</html>

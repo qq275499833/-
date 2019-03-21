@@ -1,0 +1,105 @@
+.main_header .menu_div{
+    background: #fc790f;
+}
+@media (max-width:768px){
+    .main_header{
+        background: #fc790f;
+    }
+    .cart-box-fixed div {
+        background: #fc790f;
+    }
+}
+.goods_price {
+    color: #fc790f;
+}
+.sales{
+    color: #fc790f;
+}
+.details_panel_hd{
+    color: #fc790f;
+    border-bottom: 1px solid #fc790f;
+}
+.btn-danger {
+    color: #fff;
+    border-color: #fc790f;
+    background: #fc790f;
+}
+.btn-danger:active, .btn-danger:hover {
+    border-color: #fc790f;
+    background: #fff;
+    color: #fc790f;
+}
+.home_panel_hd {
+    color: #fc790f;
+    border-bottom-color: #fc790f;
+}
+.home_goods_buy_btn {
+    background: #fc790f;
+}
+.main_footer {
+    border-top: 3px solid #fc790f;
+}
+.footer_tabs li>a, .footer_tabs li>a:hover, .footer_tabs li>a:active {
+    color: #fc790f;
+}
+.details_pricebar .subleft.avil, .details_pricebar .subleft.soldout {
+    background: #fc790f;
+}
+.comment_title{
+    color: #fc790f;
+}
+hr {
+    border-top: 1px solid #fc790f;
+}
+.prod_Desc>.spec_price{
+    color: #fc790f;
+}
+.prod_Desc>.spec_price>.price{
+    color: #fc790f;
+}
+.spec_List>.spec_Item.active, .spec_List>.option_Item.active {
+    border: 1px solid #fc790f;
+    box-shadow: 0 0 8px #fc790f;
+}
+.spec_List>.spec_Item.active>span, .spec_List>.option_Item.active>span{
+    color: #fc790f;
+}
+.spec_List>.active>div.sticky{
+    border-top: 10px solid #fc790f;
+}
+.btn-warning {
+    color: #fc790f;
+    border-color: #fc790f;
+    background: #ffffff;
+}
+.btn-warning:active, .btn-warning:hover {
+    border-color: #fc790f;
+    background: #fc790f;
+    color: #fff;
+}
+.goods_info .title{
+    color: #fc790f;
+}
+.am-text-danger{
+    color: #fc790f;
+}
+.am-form input:focus, .am-form textarea:focus, .am-form select:focus{
+    border: 1px solid #fc790f;
+}
+#info-popup a.btn{
+    color: #fc790f;
+    border: 1px solid #fc790f;
+}
+#info-popup a.btn:hover{
+    background: #fc790f;
+}
+.kf_btn{
+    background: #fc790f;
+}
+/*首页*/
+div.spring-title{
+    background-color: #fc790f;
+}
+.price span{
+    color:#fc790f;
+}

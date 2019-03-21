@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<!-- {{appid}} -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 header">
+            {{#if(detail.home_id)}}
+            <a href="../home/{{detail.home_select}}/{{detail.username}}">
+                <img class="logo_img" alt="logo" src="{{cdnbase+(logo?logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}" id="img3E51x0">
+            </a>
+            {{else}}
+            <a href="../home/{{detail.sitedir}}">
+                <img class="logo_img" alt="logo" src="{{cdnbase+(logo?logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}" id="img3E51x0">
+            </a>
+            {{/if}}
+        </div>
+    </div>
+    <hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" SIZE="10">
+    <div class="container" id="detail">
+        <div class="row" style="padding-top: 0;">
+            <div style="background-color: white;position: relative; top: 650px; text-align: center; width: 80%; margin-left: auto; margin-right: auto;z-index:100;">
+                <p id="note" style="font-size: 36px;  color: red; display:none;" >
+                    {{lang('限时优惠',detail.language)}}：
+                    <span class="num" id="day"></span>
+                    <span class="dot">{{lang('天',detail.language)}}</span>
+                    <span class="num" id="timeHour"></span>
+                    <span class="dot">{{lang('时',detail.language)}}</span>
+                    <span class="num" id="timeMin"></span>
+                    <span class="dot">{{lang('分',detail.language)}}</span>
+                    <span class="num" id="timeSec"></span>
+                    <span class="dot">{{lang('秒',detail.language)}}</span>
+                </p>
+                <p id="buyPersion" style="font-size: 36px; color: red;">{{lang('销量',detail.language)}}：{{detail.saleno}}</p>
+            </div>
+            <div class="describe" style=" text-align: center;margin-top:-80px;">
+                <p>{{{detail.GoodsContent.content}}}</p>
+            </div>
+        </div>
+        <!--<div class="row center" style="margin-top: 50px;">-->
+            <!--<hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" SIZE="10">-->
+        <!--</div>-->
+        <!--评价-->
+        <div class="row comment" id="commentContainer1">
+            <div style="margin-left: 30px; margin-top: 25px;">
+                <img alt="comment" src="/theme/{{detail.template}}/images/pad.png" style="margin-bottom: 20px;" id="imgyE50YU">&nbsp;&nbsp;
+                <span style="font-size: 32px;">{{lang('评价',detail.language)}}</span>
+            </div>
+            <div style="background-color: #ffffff; height: 350px; overflow:scroll; ">
+                <ul class="roll commentContainer" id="commentContainer">
+                </ul>
+            </div>
+        </div>
+        <!--<div class="row center" style="margin-top: 50px;">-->
+            <!--<hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" SIZE="10">-->
+        <!--</div>-->
+        <div class="row" style="margin-top: 50px;">
+            <div class="pc" id="pc">
+                <div class="col-md-12 col-sm-12 prod_buy_msg">
+                    <input type="hidden" value="114" id="prod_id">
+                    <div class="col-sm-12">
+                        <span class="font-mobile-screen" style="font-size: 20px;" id="discount_content">{{detail.sitename}}</span>
+                    </div>
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="font-mobile-screen" style="font-size: 16px; color: #333333; margin-left: -12px;">{{lang('价格',detail.language)}}</label>：&nbsp;
+                            <span class="font-mobile-screen" style="font-size: 23px; color: #FF0000;" id="currency">{{detail.money}}</span>&nbsp;
+                            <span class="font-mobile-screen" style="font-size: 23px; color: #FF0000;" id="prod_price">{{detail.price}}</span>
+                        </div>
+                        <div class="col-sm-7">
+                            <span class="font-mobile-screen" style="text-decoration:line-through; font-size: 18px; color: #999999;margin-left: 50px;" id="prod_oprice">{{detail.money}}{{detail.oldprice}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" SIZE="10">
+                    </div>
+                    <div class="col-sm-12  font-mobile-screen" id="addressTable">
+                        <div class="col-sm-12">
+                            <div style="padding:5px 70px;color:#f86161;">{{detail.order_prompt_info}}</div>
+                        </div>
+                        <div class="font-mobile-screen" style="padding-left: 0px;">
+                            <label style="float: left;margin-top: 5px;">{{lang('配送资料',detail.language)}}：</label>
+                        </div>
+                        <div class="col-md-6 col-sm-12 ">
+                            <div style="width: 50%; float: left; ">
+
+                                <input class="mobile-add-border" id="clientname" type="text" placeholder="{{lang('收货人',detail.language)}}{{lang('必填',detail.language)}}" style="min-width: 98%;min-height: 98%;">
+                                {{#if(detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円')}}
+                                <select class="mobile-add-border" id="city" onchange="select_change(this,'#area')" style="margin-top: 14px; max-width: 98%; min-width: 98%;background-color: #fff;"></select>
+                                {{/if}}
+                                {{#if(detail.money==='円')}}
+                                <select class="mobile-add-border" id="city" style="margin-top: 14px; max-width: 98%; min-width: 98%;background-color: #fff;"></select>
+                                {{/if}}
+                                {{#if(detail.money==='S$'||detail.money==='RM'||detail.money==='฿'||detail.money==='円')}}
+                                {{#if(detail.money==='RM'||detail.money==='฿')}}
+                                <select  class="mobile-add-border" id="clientzipcode" style="margin-top: 14px; max-width: 98%; min-width: 98%;background-color: #fff;" onchange="mark && changeCode()"></select>
+                                {{/if}}
+                                {{#if(detail.money==='S$'||detail.money==='円')}}
+                                <input type="tel" class="mobile-add-border" id="clientzipcode" onchange="mark && changeCode()" placeholder="{{lang('邮编',detail.language)}}{{lang('必填',detail.language)}}" style="margin-top: 14px; max-width: 98%; min-width: 98%;background-color: #fff;"/>
+                                {{/if}}
+                                {{/if}}
+                                <input class="mobile-add-border" type="text" placeholder="{{lang('备注',detail.language)}}" id="clientotherinfo" style=" margin-top: 14px; max-width: 98%; min-width: 98%;">
+                            </div>
+                            <div style="width: 50%; float: left;">
+                                <input class="mobile-add-border" id="clientphone" type="text" placeholder="{{lang('联系电话',detail.language)}}{{lang('必填',detail.language)}}" style="margin-left: 14px;max-width: 98%; min-width: 98%;">
+                                {{#if(detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円')}}
+                                <select class="mobile-add-border" id="area"  onchange="select_change(this, null)" style="margin-left: 14px; margin-top: 14px; max-width: 98%; min-width: 98%;background-color: #fff;"></select>
+                                {{/if}}
+                                {{#if(detail.money==='円')}}
+                                <input class="mobile-add-border" id="area" style="margin-left: 14px; margin-top: 14px; max-width: 98%; min-width: 98%;background-color: #fff;" placeholder="{{lang('区县',detail.language)}}{{lang('必填',detail.language)}}">
+                                {{/if}}
+                                <input class="mobile-add-border" type="text" placeholder="{{lang('E-Mail',detail.language)}}" id="clientemail" style="margin-left: 14px; margin-top: 14px; max-width: 98%; min-width: 98%;">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12" id="address_screen" style="float: right;">
+                            <div style="float: left; width: 101%;">
+                                <textarea class="mobile-add-border address_check_border" name="address" id="clientaddress" placeholder="{{lang('地址',detail.language)}}" rows="3" style="color:#000000;width:100%;"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12"  style="float: right;">
+                            <div style="float: left; width: 101%;">
+                                <input class="radio" type="radio" checked="checked">
+                                <span class="ch-custom-radio"></span>
+                                <span class="ch-custom-label">{{lang('货到付款',detail.language)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12"  style="float: right;" >
+                            <div style="float: left; width: 101%;" id="pianyuan">
+                                <label ></label>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <hr style=" FILTER: alpha(opacity=100,finishopacity=0,style=2);" width="100%" color="#987cb9" SIZE="10">
+                    </div>
+                    <div id="product-spec">
+                        <div class="item product_item">
+                            <div class="rm_color col-md-12 prodColorDiv">
+                                <ul class="produc_color font-mobile-screen user-name" id="spec_names_1">
+                                    <li class="kuanshi spec_Title" style="margin-left: 0px;"><span>1</span><label>{{lang('件',detail.language)}}{{detail.option1_name}}<i style="font-style:normal;margin-left:10px;"></i>:</label></li>
+                                    {{#each(detail.specs.name_list)}}
+                                    <li class="shopimg  opt1" onclick="select_specitem_nocart(this,1)" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}"
+                                        data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{this.price}}">
+                                        {{#if(this.img)}}
+                                        <img src="{{this.img?cdnbase+this.img+'-101':''}}"/>
+                                        {{/if}}
+                                        <span>{{this.name}}</span>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            {{#if(detail.specs.option1_list.length>0)}}
+                            <div style="margin-top: 20px;" class="rm_style col-md-12 prodStyleDiv">
+                                <ul class="produc_color font-mobile-screen option1" id="spec_option1_1">
+                                    <li class="kuanshi spec_Title" style="margin-left: 0px;"><span>1</span><label>{{lang('件',detail.language)}}{{detail.option2_name}}:</label></li>
+                                    {{#each(detail.specs.option1_list)}}
+                                    <li class="shopimg opt2 disable" data-name="{{this.option1}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}"
+                                        onclick="select_option1_nocart(this,1);">{{this.option1}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            {{/if}}
+                            {{#if(detail.specs.option2_list.length>0)}}
+                            <div style="margin-top: 20px;" class="rm_size col-xs-12 prodSizeDiv">
+                                <ul class="produc_color font-mobile-screen option2" id="spec_option2_1">
+                                    <li class="kuanshi spec_Title" style="margin-left: 0px;"><span>1</span><label>{{lang('件',detail.language)}}{{detail.option3_name}}:</label></li>
+                                    {{#each(detail.specs.option2_list)}}
+                                    <li class="shopimg opt3 disable"  data-name="{{this.option2}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}"
+                                        onclick="select_option2_nocart(this,1);">{{this.option2}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+	                <!--赠品-->
+	                <div id="giftArea" style="padding:0 0 5px 5px; margin: 10px 0 ;display:none;">{{lang('赠品区域',detail.language)}}</div>
+	                <div id="gifts" style="display:none;">
+		                <div class="gifts clear">
+			                {{#each(detail.giftGoods)}}
+			                <div class="gifts_item model">
+				                <div class="model-name" style="border-bottom:1px dashed #ddd;padding: 10px 0;"><strong>{{this.sitename}}</strong></div>
+				                <ul class="spec_List user-name produc_color clear" id="gift_names_{{xindex}}_1">
+					                <li class="spec_Title sub-title" style="font-weight: 700;"><span>1</span>{{lang('件',detail.language)}}{{this.option1_name}}:</li>
+					                {{#each(detail.giftGoodsSpecs[xindex].giftName_list)}}
+					                <li class="spec_Item opt1 shopimg" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{this.price}}"
+					                    onclick="select_giftspec(this,0,1)">
+						                <div class="sticky"></div>
+						                {{#if(this.img)}}
+						                <img src="{{this.img?cdnbase+this.img+'-101':''}}">
+						                {{/if}}
+						                <span>{{this.name}}</span>
+					                </li>
+					                {{/each}}
+				                </ul>
+				                {{#if(detail.giftGoodsSpecs[xindex].giftOption1_list.length>0)}}
+
+				                <ul class="spec_List option1 produc_color clear" id="gift_option1_{{xindex}}_1">
+					                <li class="spec_Title sub-title clear" style="padding: 6px 10px;margin: 6px;
+font-weight: 700;"><span>1</span>{{lang('件',detail.language)}}{{this.option2_name}}:</li>
+					                {{#each(detail.giftGoodsSpecs[xindex].giftOption1_list)}}
+					                <li class="option_Item disable opt2 shopimg" data-name="{{this.option1}}" data-sku="{{this.id}}" data-price="{{this.price}}"
+					                    onclick="select_giftoption1(this,0,1);">{{this.option1}}</li>
+					                {{/each}}
+				                </ul>
+				                {{/if}}
+				                {{#if(detail.giftGoodsSpecs[xindex].giftOption2_list.length>0)}}
+
+				                <ul class="spec_List option2 produc_color clear" id="gift_option2_{{xindex}}_1">
+					                <li class="spec_Title sub-title clear" style="padding: 6px 10px;margin: 6px;
+font-weight: 700;"><span>1</span>{{lang('件',detail.language)}}{{this.option3_name}}:</li>
+					                {{#each(detail.giftGoodsSpecs[xindex].giftOption2_list)}}
+					                <li class="option_Item disable opt3 shopimg" data-name="{{this.option2}}" data-sku="{{this.id}}" data-price="{{this.price}}"
+					                    onclick="select_giftoption2(this,0,1);">{{this.option2}}</li>
+					                {{/each}}
+				                </ul>
+				                {{/if}}
+			                </div>
+			                {{/each}}
+		                </div>
+	                </div>
+	                <!--赠品结束-->
+                    <div class="add-spec">
+                        <button onclick="add_one()">+<span>{{#if(detail.add_info)}}{{detail.add_info}}{{else}}{{lang('再选一件',detail.language)}}{{/if}}</span></button>
+                    </div>
+                    <div class="col-sm-12" style="margin: 20px 0;">
+                        <div class="allprice">
+                            <span id="yunName"></span>
+                            <span id="yunMoney"></span>
+                        </div>
+                        <div class="allprice">
+                            {{lang('金额',detail.language)}}：
+                            <span id="allprice">{{detail.money}} {{detail.price}}</span>
+                        </div>
+                        <div class="allprice" id="many_discount" style="display:none;">
+                            {{lang('多件优惠',detail.language)}}：
+                            <span id="manyoff">{{detail.money}} -0</span>
+                        </div>
+                        <div class="allprice" id="price_off"  style="display:none;">
+                            {{lang('满减优惠',detail.language)}}：
+                            <span id="offprice">{{detail.money}} -0</span>
+                        </div>
+                        <div class="allprice" id="moneyprice"  style="display:none;">
+                            {{lang('价格满减',detail.language)}}：
+                            <span id="price_money">{{detail.money}} -0</span>
+                        </div>
+                        <div class="allprice">
+                            {{lang('实付金额',detail.language)}}：
+                            <span id="realprice">{{detail.money}} {{detail.price}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <button class="font-mobile-screen" type="button" onclick="submit_order_nocart()" id="tijiao" style="height: 88px; width: 98%; background-color: #ff455f; color: #ffffff; border: 0;">
+                            {{lang('立即购买',detail.language)}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row center" style="margin-top: 50px;">
+            <hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" SIZE="10">
+        </div>
+        <!--猜你喜欢-->
+        {{#if(detail.body_ads)}}
+        <div class="recommendContainor row" style="margin-top: 50px;">
+            {{#each(detail.body_ads)}}
+            <div class="recommend col-md-3 col-xs-6">
+                <div class="panel">
+                    <a class="recommendProdHref" href="/{{this.sitedir}}">
+                        {{set (imgs = this.head_imgs.split(';'))}}
+                        <img class="recommendProdCoverImg" style="width: 260px; height: 260px;" src="{{imgs[0]?cdnbase+imgs[0]+'-300':''}}">
+                    </a>
+                    <div class="subfeature-txt" style="text-align: center;height: 100%;width: 100%"><br>
+                        <span>
+                            <a href="/{{this.sitedir}}" style="font-size: 28px; color: #333333; margin-top: 5px;" class="recommendProdTitle">
+                               {{this.sitename}}
+                            </a>
+                        </span>
+                        <br>
+                        <span style="font-size: 28px; color: #ff1f0e;margin-bottom: 8px;" class="recommendProdMenoy">{{this.money}} {{this.price}}</span>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+        {{/if}}
+        <div class="footer" style="margin-top: 30px;padding-bottom:20px;background-color:#fff;">
+            <ul class="aboutUs">
+                <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+                <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+                <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+                <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+                <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+            </ul>
+            <div class="copyright">Copyright ©2018 All Rights Reserved</div>
+        </div>
+    </div>
+    <!--下单成功-->
+    <div class="container" id="success" style="background-color: #ffffff;display:none;">
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md-6 col-sm-12">
+                <span style="font-size: 40px; color: #ff7e00; margin-top: 72px;" class="mobile-screen-success">{{lang('下单成功',detail.language)}}</span>
+                <br>
+                <span style="font-size: 18px; color: #666666; margin-top: 92px;" class="mobile-screen-sm">{{lang('下单成功，我们将尽快为您配送！',detail.language)}}</span>
+            </div>
+            <div class="col-md-6 col-sm-12" style="font-size: 24px; color: #666666;">
+                <span class="mobile-screen-ordinary-text mobile-screen-orderNo" style="margin-right: 80px;" id="order_no">
+                    {{lang('订单号',detail.language)}}：<span id="orderid"></span>
+                </span>
+            </div>
+        </div>
+        <!--<hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" size="10">-->
+        <!--<div class="row">-->
+            <!--<div class="col-sm-12">-->
+                <!--<span class="title-style" style="font-size: 24px; color: #333333;">{{lang('商品清单',detail.language)}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div id="order_goodslist">-->
+
+        <!--</div>-->
+
+        <hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" size="10">
+        <div class="row mobile-screen-ordinary-text emailInfo">
+            <div class="col-sm-12">
+                <span style="font-size: 28px; color: #333333;">{{lang('收货信息',detail.language)}}</span>
+            </div>
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <span style="color: #666666;">{{lang('收货人',detail.language)}}：<span id="order_clientname"></span></span>
+            </div>
+            <div class="col-sm-12">
+                <span style="color: #666666; margin-top: 14px;">{{lang('联系电话',detail.language)}}：<span id="order_clientphone"></span></span>
+            </div>
+            <div class="col-sm-12">
+                <span style="color: #666666; margin-top: 14px;">{{lang('地址',detail.language)}}：<span id="order_clientaddress"></span></span>
+            </div>
+            <div class="col-sm-12">
+                <span style=" margin-top: 14px;font-size:28px;color: #e23939;">{{lang('合计',detail.language)}}：<span id="orderprice"></span></span>
+            </div>
+            <div class="col-sm-12" style="margin-top: 20px;">
+                {{#if(detail.home_id)}}
+                <a href="../home/{{detail.home_select}}/{{detail.username}}">
+                    <button class="title-style-btn"  style="height: 54px; width: 40%; background-color: #ff455f; color: #000000; border: 0; font-size: 24px;">
+                        {{lang('继续浏览',detail.language)}}
+                    </button>
+                </a>
+                {{else}}
+                <a href="/{{detail.sitedir}}">
+                    <button class="title-style-btn"  style="height: 54px; width: 40%; background-color: #ff455f; color: #000000; border: 0; font-size: 24px;">
+                        {{lang('继续浏览',detail.language)}}
+                    </button>
+                </a>
+                {{/if}}
+            </div>
+        </div>
+        <hr style="FILTER: alpha(opacity=100,finishopacity=0,style=2)" width="100%" color="#987cb9" size="10">
+        {{#if(detail.order_ads)}}
+        <div class="recommendContainor row" style="margin-top: 50px;" id="displaycssbelt">
+
+            {{#each(detail.order_ads)}}
+            <div class="recommend col-md-3 col-xs-6">
+                <div class="panel">
+                    <a class="recommendProdHref" href="/{{this.sitedir}}">
+                        {{set (imgs = this.head_imgs.split(';'))}}
+                        <img class="recommendProdCoverImg" style="width: 260px; height: 260px;" src="{{imgs[0]?cdnbase+imgs[0]+'-300':''}}">
+                    </a>
+                    <div class="subfeature-txt" style="text-align: center;height: 100%;width: 100%"><br>
+                        <span>
+                            <a href="/{{this.sitedir}}" style="font-size: 28px; color: #333333; margin-top: 5px;" class="recommendProdTitle">
+                               {{this.sitename}}
+                            </a>
+                        </span>
+                        <br>
+                        <span style="font-size: 28px; color: #ff1f0e;margin-bottom: 8px;" class="recommendProdMenoy">{{this.money}} {{this.price}}</span>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</div>
+<!--客服-->
+<div class="home_zixun_fixed">
+    <div class="kf_list">
+        {{set(fblink=detail.fblink?detail.fblink:detail.User.fblink)}}
+        {{set(linelink=detail.linelink?detail.linelink:detail.User.linelink)}}
+        {{set(whatsapplink=detail.whatsapplink?detail.whatsapplink:detail.User.whatsapplink)}}
+        {{#if(fblink)}}
+        <a class="facebook_btn" href="{{fblink}}" target="_blank">
+            <span>Facebook</span>
+        </a>
+        {{/if}}
+        {{#if(linelink)}}
+        <a class="line_btn" href="{{linelink}}" target="_blank">
+            <span>Line</span>
+        </a>
+        {{/if}}
+        {{#if(whatsapplink)}}
+        <a class="whatsapp_btn" href="{{whatsapplink}}" target="_blank">
+            <span>WhatsApp</span>
+        </a>
+        {{/if}}
+    </div>
+    <div  class="kf_btn" onclick="show_kflist();">
+        {{lang('客服',detail.language)}}
+    </div>
+</div>
+</body>
+
+<script>
+    var appData = {
+        goods: {
+            id: '{{detail.id}}',
+            sourceid: '{{detail.source}}',
+            name: '{{detail.name}}',
+            userkey: '{{detail.userkey}}'
+        },
+        selectProd: {name: '', price: '', img: '', option1: '', option2: '', sku: ""},
+        prods: [],
+        addnum: 1,
+        imgpath: '{{cdnbase}}',
+        sitedir: '{{detail.sitedir}}',
+        redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}",
+        apiserver: "{{apiserver}}",
+        countdown:"{{detail.countdown}}",
+	    clientId:"{{detail.Paypal.paycode}}",
+        chaport_id:"{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+        chaport_switch:"{{detail.chaport_switch}}",  is_domain:"{{detail.is_domain}}"
+    };
+    appData.giftGoodsIds={{{detail.giftGoodsIds?detail.giftGoodsIds:'[]'}}};
+    appData.gifts={{{detail.giftGoodsSpecsStr?detail.giftGoodsSpecsStr:'[]'}}};
+    appData.goods.specs = {{{detail.GoodsSpecsStr ? detail.GoodsSpecsStr : '[]'}}};
+    appData.goods.saleoff = {{{detail.saleoff ? detail.saleoff : '[]'}}};
+    appData.goods.manyoff = {{{detail.manyoff ? detail.manyoff : '[]'}}};
+    appData.goods.manyoff_new = {{{detail.manyoff_new ? detail.manyoff_new : '[]'}}};
+    appData.goods.count_info={{{detail.count_info?detail.count_info:'[]'}}};
+    appData.goods.priceoff={{{detail.priceoff?detail.priceoff:'[]'}}};
+    var deleteStr = '{{lang("删除",detail.language)}}';
+    var selectStr = '{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent = "{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var priceStr="{{lang('价格',detail.language)}}";
+    var selectOos="{{lang('商品',detail.language)}}";
+    var selectOos1="{{lang('缺货中，请选择其他商品',detail.language)}}";
+    var oos="{{lang('[缺货中]',detail.language)}}";
+    var selectGiftStr='{{lang("请您先选择赠品",detail.language)}}';
+    var remoteMess1="{{lang('此地区为快递无法送达区域，请选择其他区域收件',detail.language)}}";
+    var remoteMess2 = "{{lang('此地区为快递偏远地区，需由快递公司另外加收快递费送达，快递费：',detail.language)}}";
+    var messMoney = "{{lang('偏远快递费',detail.language)}}"
+</script>
+<script type="text/javascript">
+    if(appData.chaport_switch==="1"&&appData.chaport_id){
+        (function(w,d,v3){
+            w.chaportConfig = { appId:appData.chaport_id };
+            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    }
+</script>
+<script src="/js/common.js"></script>
+<script src="/js/spec.js"></script>
+<script src="/theme/{{detail.template}}/js/index.js"></script>
+<script>
+    init_Select(appData.money,'','#city');
+    comments(appData.goods.id);
+</script>
+<div style="display: none;">
+    {{{detail.GoodsCode.kfcode}}}
+    {{{detail.GoodsCode.tjcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.code}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.code}}}
+    {{/each}}
+</div>
+</html>

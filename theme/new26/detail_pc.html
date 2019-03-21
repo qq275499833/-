@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>{{detail.sitename}}</title>
+    <base href="/{{detail.sitedir}}">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link href="/theme/{{detail.template}}/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/A.C.js"></script>
+    <script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="/theme/{{detail.template}}/js/jquery.min.js"></script>
+
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<div id="app" v-cloak>
+    <!--首页模块-->
+        <div class="home_page">
+            <!--图片模块-->
+            <div class="home_page1">
+                <div class="home_photo"  v-html="detail.GoodsContent.content" id="introduce"></div>
+            </div>
+            <!--选择商品模块-->
+            <div class="container index" id="shop">
+                <h2>《{{lang('立即抢购',detail.language)}}》</h2>
+                <!--选购-->
+                <ul class="choose_buy" v-for="(man,index) in manyoff" v-if="detail.manyoff">
+                    <li style="color: #333;font-size: 19px">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a class="btn btn-danger" :data-id="[[index]]" @click="add_order($event)" style="padding: 6px 8px;margin-right: 8px"><i :data-id="[[index]]" class="shopping_cart"></i>{{lang('选购',detail.language)}}</a><span style="color: #686464">[[man.name]]</span>
+                                <div class="pricing">
+                                    <span style="color: rgb(250, 81, 62);margin-left: 5px">{{lang('现在特价只要',detail.language)}}:&nbsp;&nbsp;&nbsp;[[detail.money]][[man.price]]</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3" >
+                                <img v-if="man.img" :src="[[man.img]]" alt="">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!--选购模态框-->
+                <div class="shop_model" >
+                    <div class="choose_buy_bounced choose_buy_bounced1">
+                        <div class="model_header clear">
+                            <h4>{{lang('选择',detail.language)}}-{{detail.sitename}}</h4><span @click="close_page()">X</span>
+                        </div>
+                        <div class="model_content" v-for="(item,index1) in manyoff" v-if="index1==choose_id" style="margin-top:0 ">
+                            <!--提示信息-->
+                            <div class="hint">{{lang('请混搭购买',detail.language)}}<mark style="color: red;">[[item.salecount]]</mark>{{lang('件商品',detail.language)}}，{{lang('折扣后金额为',detail.language)}}<mark style="color: red;">[[detail.money]][[item.price]]</mark></div>
+                            <!--下拉（ drop-down）内容-->
+                            <div class="drop-down" style="max-height: 500px;">
+                                <form v-for="(item1,index) in detail.specs.name_list">
+                                    <p style="margin-top: 10px">[[item1.name]]</p>
+                                    <div v-if="item1.inventory==0" class="lack">[[selectOos1]]</div>
+                                    <select name="cars" style="width: 100%" id="select" :data-id="[[index]]" @change="choose_buy($event,item1,item,index)" @click="(option1_show||item.inventory!==0)&&select_specitem_nocart(item1,index+1)"   v-if="item1.inventory!==0">
+                                        <option value="0" > {{lang('请选择商品',detail.language)}}</option>
+                                        <option  v-for="(sale,index2) in item.salecount" :value='[[sale]]'>[[sale]]{{lang('组',detail.language)}}</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="row" style="margin-left: 30px;margin-top: 20px">
+                                <div class="col-md-10 col-xs-10 btn add_cart " @click="add_cart(item)" style="margin-left: 30px;">{{lang('加入购物车',detail.language)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!--限量选购模块-->
+                <ul class="choose_buy"  v-for="(item,index) in detail.specs.name_list" >
+                    <li>
+                        <div class="row">
+                            <div class="col-md-9" style="font-weight: bolder">
+                                <a class="btn btn-danger"  :data-id="[[index]]" @click="choose($event)">{{lang('限量选购',detail.language)}}</a><span style="font-weight: bolder;color: #333;margin:0 10px;font-size: 19px">[[item.name]]</span>{{lang('满减优惠',detail.language)}}<span style="color: #686464">[[detail.sale_num]]</span>
+                                <div class="pricing">
+                                    <!--[[detail.money]][[detail.oldprice]]-->
+                                    {{lang('原价',detail.language)}}:&nbsp;&nbsp;&nbsp;<del >[[detail.money]][[detail.oldprice]]</del>&nbsp;&nbsp;&nbsp;<span style="color: rgb(250, 81, 62);margin-left: 5px">{{lang('现在特价只要',detail.language)}}:&nbsp;[[detail.money]][[item.price]]</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3" >
+                                <img v-if="item.img"  :src="[[cdnbase+item.img]]" alt="">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <!--限量选购模态框-->
+                <div class="limited">
+                    <div class="choose_buy_bounced">
+                        <div class="model_header clear">
+                            <h4>[[detail.sitename]]</h4><span @click="close_page()">X</span>
+                        </div>
+                        <div class="model_content row" v-for="(item,index) in detail.specs.name_list" v-if="index==limited_id">
+                            <!--提示信息-->
+                            <div class="col-md-12"><img v-if="item.img" :src="[[cdnbase+item.img]]" alt="" style="width: 100%"></div>
+                            <!--下拉（ drop-down）内容-->
+                            <div class="drop-down col-md-12" >
+                                <form>
+                                    <p style="margin-top: 10px">[[item.name]]</p>
+                                    <div v-if="item.inventory==0" class="lack">[[selectOos1]]</div>
+                                    <select name="cars" style="width: 100%" id="select1" @click="(option1_show||item.inventory!==0)&&select_specitem_nocart(item,index+1)"  @change="limited_buy($event,item,index)" v-model="selection" v-if="item.inventory!=0">
+                                        <option value="0" disabled>{{lang('请选择商品',detail.language)}}</option>
+                                        <option  :value='[[item2]]' v-for="(item2,index2) in detail.specs.name_list.length">[[item2]]{{lang('组',detail.language)}} - [[detail.money]][[item2*item.price]]</option>
+                                    </select>
+                                    <select id="select2" :class="{disable:check_option1_disable(detail.specs.option1_list[opt1],index+1)||stockout1(detail.specs.option1_list[opt1],index+1)}"  name="cars" style="width: 100%"  :data-id="[[index]]"  v-if="item.inventory!==0&&detail.specs.option1_list.length>0" v-model="opt1" @click="(option1_show||item.inventory!==0)&&select_option1_nocart( detail.specs.option1_list[opt1],index+1)" @change="limited_opt1($event,index)">
+                                        <option value="0" disabled>{{lang('请选择商品',detail.language)}}[[detail.option2_name]]</option>
+                                        <option v-for="(opt1,index2) in detail.specs.option1_list"  :value='[[index2]]'  :disabled="check_option1_disable(opt1,index)||stockout1(item,index+1)">[[opt1.option1]]</option>
+                                    </select>
+                                    <select :class="{disable:check_option2_disable(detail.specs.option2_list[opt2],index+1)||stockout2(detail.specs.option2_list[opt2],index+1)}"  id="select3"  name="cars" style="width: 100%"  v-model="opt2"  :data-id="[[index]]" v-if="item.inventory!==0&&detail.specs.option2_list.length>0"  @click="select_option2_nocart( detail.specs.option2_list[opt2],index+1);" >
+                                        <option value="0" disabled> {{lang('请选择商品',detail.language)}}[[detail.option3_name]]</option>
+                                        <option  v-for="(opt2,index3) in detail.specs.option2_list" :value="[[index3]]" :disabled="check_option2_disable(opt2,index)||stockout2(opt2,index+1)">[[opt2.option2]]</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="row" style="margin-left: 30px;margin-top: 20px">
+                                <div class="col-md-10 col-xs-10 btn add_cart " @click="limited_add_buy(item)" style="margin-left: 25px">{{lang('加入购物车',detail.language)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!--已选（selected）购的商品-->
+                <div class="container">
+                    <div class="row">
+                        <div>
+                            <h2>{{lang('已选商品',detail.language)}}</h2>
+                            <div class="prompt" v-if="arr.length==0 && limited_arr.length==0">{{lang('温馨提示',detail.language)}}:{{lang('购物车是空的',detail.language)}}</div>
+                            <!--已加入购物车商品列表-->
+                            <div class="shopList" v-if="arr.length>0 || limited_arr.length>0">
+                                <table >
+                                    <tr class="table_title" >
+                                        <th width="50"></th>
+                                        <th>{{lang('商品',detail.language)}}</th>
+                                        <th width="100" class="right">{{lang('单价',detail.language)}}</th>
+                                        <th width="100" class="right">{{lang('数量',detail.language)}}</th>
+                                        <th width="100" class="right">{{lang('合计',detail.language)}}</th>
+                                    </tr>
+                                    <tr  v-for="(item,index) in  arr"  v-if="arr.length>0" class="border">
+                                        <td>
+                                            <a class="btn close_cart" @click="close_spec(index)">x</a>
+                                        </td>
+                                        <td width="300">
+                                            <!--<img :src="cdnbase+detail.head_imgs[0]" alt="" class="shop_img">-->
+                                            <strong>[[item.name]]</strong>
+                                            <ul >
+                                                <li  v-for="(item1,index1) in item.selected">[[item1.number]]{{lang('组',detail.language)}},[[item1.specname]]</li>
+                                            </ul>
+                                        </td>
+                                        <td class="right center">--</td>
+                                        <td class="right center">--</td>
+                                        <td class="right center">[[detail.money]][[item.price]]</td>
+                                    </tr>
+                                    <tr v-for="(lim,index) of limited_arr" v-if="limited_arr.length>0" class="border">
+                                        <td>
+                                            <a class="btn close_cart" @click="limited_close_spec(index)">x</a>
+                                        </td>
+                                        <td>
+                                            <img v-if="lim.img" :src="[[cdnbase+lim.img]]" alt="" class="shop_img">
+                                            <strong>[[lim.specname]]&nbsp;&nbsp;[[lim.option1]]&nbsp;&nbsp;[[lim.option2]]</strong>
+                                        </td>
+                                        <td class="right center">[[detail.money]][[lim.price]]</td>
+                                        <td class="right center">[[lim.number]]</td>
+                                        <td class="right center">[[detail.money]][[lim.number * lim.price]]</td>
+                                    </tr>
+                                    <tr class="border">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="right center"></td>
+                                        <td class="right center">{{lang('运费',detail.language)}}</td>
+                                        <!--<td class="right center" style="color: red;">{{lang('免运',detail.language)}}</td>-->
+                                        <td class="right center" style="color: red;" v-show="flag2!==1">{{lang('免运',detail.language)}}</td>
+                                        <td v-show="flag2===1" class="right center" style="color: red;">[[detail.money]][[extrapay]]</td>
+                                    </tr>
+                                    <tr class="border">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="right center"></td>
+                                        <td class="right center">{{lang('合计',detail.language)}}</td>
+                                        <td class="right center" v-show="flag2!==1">[[detail.money]][[all_money]]</td>
+                                        <td class="right center" v-show="flag2===1">[[detail.money]][[all_money+parseInt(extrapay)]]</td>
+                                        <!--
+                                        <span class="price" id="realprice" v-show="flag2!==1" >[[detail.money]] [[realPrice]]</span>
+                    <span class="price" id="realprice" v-show="flag2===1" style="color: #ff5a5f;font-weight: 700;padding-right: 0">[[detail.money]] [[realPrice+parseInt(extrapay)]]</span>-->
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="pay btn btn-danger" @click="immediately_Buy()"><i></i>{{lang('立即结算',detail.language)}}</div>
+                            <h2>{{lang('联系我们',detail.language)}}</h2>
+                            <a v-if="fblink" class="kf_face pay" :href="fblink"  target="_blank"><i></i>Facebook</a>
+                            <a  v-if="whatsapplink" class="kf_f pay" :href="whatsapplink"  target="_blank"><i></i>WhatsApp</a>
+                            <a  v-if="linelink" class=" pay  btn kf_line" :href="linelink" target="_blank"><i></i>Line</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右侧客服-->
+            <div class="home_zixun_fixed">
+                <div class="kf_list">
+                    <a v-if="fblink" class="facebook_btn" :href="fblink"  target="_blank">
+                        <span>Facebook</span>
+                    </a>
+                    <a v-if="linelink" class="line_btn" :href="linelink" target="_blank">
+                        <span>Line</span>
+                    </a>
+                    <a v-if="whatsapplink" class="whatsapp_btn" :href="whatsapplink"  target="_blank">
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+                <div class="kf_btn" onclick="show_kflist();">{{lang('客服',detail.language)}}</div>
+            </div>
+            <!--右侧购物车-->
+            <div class="home_zixun_fixed cart_fixed" >
+                <div class="kf_btn cars_btn" @click="cart_order()"> <i></i></div>
+            </div>
+            <!--购物车模态框-->
+            <div class="cart_modal">
+                <div class="choose_buy_bounced ">
+                    <div class="model_header clear">
+                        <h4>{{lang('已选商品',detail.language)}}</h4><span @click="close_page()">X</span>
+                    </div>
+                    <div class="model_content row" v-for="(item,index) in detail.specs.name_list" v-if="index==limited_id">
+                        <div class="prompt" v-if="arr.length==0 && limited_arr.length==0">{{lang('温馨提示',detail.language)}}:{{lang('购物车是空的',detail.language)}}</div>
+                        <!--已加入购物车商品列表-->
+                        <div class="shopList" v-if="arr.length>0 || limited_arr.length>0" style="max-height: 800px;overflow: scroll">
+                            <table >
+                                <tr class="table_title" >
+                                    <th width="50"></th>
+                                    <th>{{lang('商品',detail.language)}}</th>
+                                    <th width="100" class="right">{{lang('单价',detail.language)}}</th>
+                                    <th width="100" class="right">{{lang('数量',detail.language)}}</th>
+                                    <th width="100" class="right">{{lang('合计',detail.language)}}</th>
+                                </tr>
+                                <tr  v-for="(item,index) in  arr"  v-if="arr.length>0">
+                                    <td>
+                                        <a class="btn close_cart" @click="close_spec(index)">x</a>
+                                    </td>
+                                    <td>
+                                        <!--<img :src="cdnbase+detail.head_imgs[0]" alt="" class="shop_img">-->
+                                        <strong>[[item.name]]</strong>
+                                        <ul >
+                                            <li  v-for="(item1,index1) in item.selected">[[item1.number]]{{lang('组',detail.language)}},[[item1.specname]]</li>
+                                        </ul>
+                                    </td>
+                                    <td class="right center">--</td>
+                                    <td class="right center">--</td>
+                                    <td class="right center">[[detail.money]][[item.price]]</td>
+                                </tr>
+                                <tr v-for="(lim,index) of limited_arr" v-if="limited_arr.length>0">
+                                    <td>
+                                        <a class="btn close_cart" @click="limited_close_spec(index)">x</a>
+                                    </td>
+                                    <td>
+                                        <img v-if="lim.img" :src="[[cdnbase+lim.img]]" alt="" class="shop_img">
+                                        <strong>[[lim.specname]]&nbsp;&nbsp;[[lim.option1]]&nbsp;&nbsp;[[lim.option2]]</strong>
+                                    </td>
+                                    <td class="right center">[[detail.money]][[lim.price]]</td>
+                                    <td class="right center">[[lim.number]]</td>
+                                    <td class="right center">[[detail.money]][[lim.price * lim.number]]</td>
+                                </tr>
+                                <tr class="border">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="right center"></td>
+                                    <td class="right center">{{lang('运费',detail.language)}}</td>
+                                    <td class="right center" style="color: red;" v-show="flag2!==1">{{lang('免运',detail.language)}}</td>
+                                    <td v-show="flag2===1" class="right center" style="color: red;">[[detail.money]][[extrapay]]</td>
+                                </tr>
+                                <tr class="border">
+                                    <td></td>
+                                    <td></td>
+                                    <td class="right center"></td>
+                                    <td class="right center">{{lang('合计',detail.language)}}</td>
+                                   <!-- <td class="right center">[[detail.money]][[all_money]]</td>-->
+                                    <td class="right center" v-show="flag2!==1">[[detail.money]][[all_money]]</td>
+                                    <td class="right center" v-show="flag2===1">[[detail.money]][[all_money+parseInt(extrapay)]]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-10 col-xs-10 btn listing " @click="immediately_Buy()">{{lang('立即结算',detail.language)}}</div>
+                    </div>
+                </div>
+            </div>
+            <!--订单明细页面-->
+            <div class="order_details">
+                <h3>{{lang('订单号',detail.language)}}：[[orderid]]<br><mark style="text-align: center">{{lang('邮费全免，配送时间5-7個工作日',detail.language)}}</mark></h3>
+                <hr>
+                <!--提示-->
+                <div class="suggest">
+                    <p><mark style="color:red">*</mark>{{lang('1.我们采用专业配送！如果配送时您临时不在，请等待配送员打电话给您，改约收件时间即可。',detail.language)}}</p>
+                    <p><mark style="color: red">*</mark>{{lang('2.在您收到货品后若有任何疑问，请FB、Line联络或者email联络我们，我们将立即为您处理哦！',detail.language)}}</p>
+                </div>
+                <hr>
+                <!--发票资讯-->
+                <div class="invoice">
+                    <div class="invoice_title">{{lang('发票资讯',detail.language)}}</div>
+                    <div class="invoice_content">
+                        {{lang('客服人员正在处理您订单的出货流程中',detail.language)}}
+                    </div>
+                </div>
+                <!--已加入购物车商品列表-->
+                <div class="shopList" v-if="arr.length>0 || limited_arr.length>0" style="margin-bottom: 20px">
+                    <table style="border: 1px solid #d6e9c6;">
+                        <tr class="table_title border" >
+                            <th width="300" style="padding-left: 15px">{{lang('订单信息',detail.language)}}</th>
+                            <th width="100" class="right"></th>
+                            <th width="100" class="right"></th>
+                            <th width="100" class="right"></th>
+                            <th width="100" class="right"></th>
+                        </tr>
+                        <tr class="table_title border" >
+                            <td width="300" style="padding-left: 15px;border-bottom: 1px solid #ddd">{{lang('商品',detail.language)}}</td>
+                            <td width="100" style="border-bottom: 1px solid #ddd"></td>
+                            <td width="100" class="right" style="border-bottom: 1px solid #ddd">{{lang('单价',detail.language)}}</td>
+                            <td width="100" class="right" style="border-bottom: 1px solid #ddd">{{lang('数量',detail.language)}}</td>
+                            <td width="100" class="right" style="border-bottom: 1px solid #ddd;padding-right: 15px">{{lang('合计',detail.language)}}</td>
+                        </tr>
+                        <tr class="border border" v-for="(item,index) in  arr"  v-if="arr.length>0">
+                            <td width="300" style="padding-left: 15px">
+                                <!--<img v-if="arr[index].img" :src="cdnbase+arr[index].img alt=''" class="shop_img">-->
+                                <strong>[[item.name]]</strong>
+                                <ul >
+                                    <li  v-for="(item1,index1) in item.selected">[[item1.number]]{{lang('组',detail.language)}},[[item1.specname]]</li>
+                                </ul>
+                            </td>
+                            <td width="100" class="right"></td>
+                            <td class="right center">--</td>
+                            <td class="right center">--</td>
+                            <td class="right center">[[detail.money]][[item.price]]</td>
+                        </tr>
+                        <tr class="border" v-for="(lim,index) of limited_arr" v-if="limited_arr.length>0">
+                            <td style="padding-left: 15px">
+                                <img v-if="lim.img" :src="[[cdnbase+lim.img]]" alt="" class="shop_img">
+                                <strong>[[lim.specname]]&nbsp;&nbsp;[[lim.option1]]&nbsp;&nbsp;[[lim.option2]]&nbsp;&nbsp;</strong>
+                            </td>
+                            <td width="100" class="right"></td>
+                            <td class="right center">[[detail.money]][[lim.price]]</td>
+                            <td class="right center">[[lim.number]]</td>
+                            <td class="right center">[[detail.money]][[lim.price * lim.number]]</td>
+                        </tr>
+                        <tr class="border">
+                            <td></td>
+                            <td></td>
+                            <td class="right center"></td>
+                            <td class="right center">{{lang('运费',detail.language)}}</td>
+                            <!--<td class="right center" style="color: red;">{{lang('免运',detail.language)}}</td>-->
+                            <td class="right center" style="color: red;" v-show="flag2!==1">{{lang('免运',detail.language)}}</td>
+                            <td v-show="flag2===1" class="right center" style="color: red;">[[detail.money]][[extrapay]]</td>
+                        </tr>
+                        <tr class="border">
+                            <td></td>
+                            <td></td>
+                            <td class="right center"></td>
+                            <td class="right center">{{lang('合计',detail.language)}}</td>
+                            <td class="right center">[[detail.money]][[all_money+parseInt(extrapay)]]</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--收件资讯-->
+                <div class="shopList">
+                    <table style="border: 1px solid #d6e9c6;">
+                        <tr class="table_title" >
+                            <th width="100" style="padding-left: 8px">{{lang('收件资讯',detail.language)}}</th>
+                            <th width="100" class="right"></th>
+                            <th width="100" class="right"></th>
+                            <th width="100" class="right"></th>
+                            <th width="100" class="right"></th>
+                        </tr>
+                        <tr  class="border">
+                            <td style="padding-left: 8px">{{lang('收货人',detail.language)}}：</td>
+                            <td>[[order_clientname]]</td>
+                            <td class="right center"></td>
+                            <td class="right center"></td>
+                            <td class="right center"></td>
+                        </tr>
+                        <tr class="border">
+                            <td style="padding-left: 8px">{{lang('联系电话',detail.language)}}：</td>
+                            <td>[[order_clientphone]]</td>
+                            <td class="right center"></td>
+                            <td class="right center"></td>
+                            <td class="right center"></td>
+                        </tr>
+                        <tr class="border">
+                            <td style="padding-left: 8px">{{lang('地　址',detail.language)}}：</td>
+                            <td>[[order_clientaddress]]</td>
+                            <td class="right center"></td>
+                            <td class="right center"></td>
+                            <td class="right center"></td>
+                        </tr>
+                    </table>
+                </div>
+                <!--已选（selected）购的商品-->
+                <div class="container">
+                    <div class="row">
+                        <div>
+                            <h2>{{lang('联系我们',detail.language)}}</h2>
+                            <a v-if="fblink" class="kf_face pay" :href="fblink"  target="_blank"><i></i>Facebook</a>
+                            <a  v-if="whatsapplink" class="kf_f pay" :href="whatsapplink"  target="_blank"><i></i>WhatsApp</a>
+                            <a  v-if="linelink" class=" btn pay kf_line" :href="linelink" target="_blank"><i></i>Line</a>
+                            <hr style="width: 80%">
+                        </div>
+                        <div class="continue">
+                            <a v-if="detail.home_id" :href="'../home/'+detail.home_select+'/'+detail.username">{{lang('返回首页',detail.language)}}</a>
+                            <a v-else href="javascript:void(0)">{{lang('返回首页',detail.language)}}</a>
+                            <a @click="go_index()" style="background: #3F60A5">{{lang('继续浏览',detail.language)}}</a>
+                        </div>
+                        <div v-if="detail.body_ads">
+                            <div class="view_panel_hd">{{lang('猜你喜欢',detail.language)}}</div>
+                            <div class="view_panel_bd">
+                                <ul id="like_goods_body_ul">
+                                    <li v-for="item in detail.body_ads">
+                                        <a :href="'/'+item.sitedir">
+                                            <div><img :src="item.head_imgs?cdnbase+item.head_imgs.split(';')[0]+'-300':''"></div>
+                                            <div class="site_price">[[item.money]] [[item.price]]<del>[[item.money]] [[item.oldprice]]</del></div>
+                                            <div class="site_name">[[item.sitename]]</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--立即结账模态框-->
+            <div class="model">
+                <!--步骤一-->
+                <div class="steps" v-if="steps1">
+                    <div class="model_header clear">
+                        <h4>{{lang('只要3步骤 - 1 / 3',detail.language)}}</h4><span @click="close_page()">x</span>
+                    </div>
+                    <div class="model_content" style="border-bottom: 1px solid #ddd">
+                        <p>{{lang('配送资料',detail.language)}}</p>
+                        <div class="distribution"><i></i>{{lang('邮费全免，配送时间5-7個工作日',detail.language)}}</div>
+                        <p>{{lang('付款方式',detail.language)}}</p>
+                        <div class="distribution"><i></i>{{lang('货到付款',detail.language)}}</div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-5 col-xs-10 btn listing " @click="shop_show()">{{lang('商品清单',detail.language)}}</div>
+                        <div class="col-md-5 col-xs-10   next btn" @click="steps1_next()">{{lang('下一步',detail.language)}}</div>
+                    </div>
+                </div>
+                <!--步骤二：收貨信息-->
+                <div class="address col-md-5"  v-if="steps2">
+                    <div class="model_header clear">
+                        <h4>{{lang('只要3步骤 - 2 / 3',detail.language)}}</h4><span @click="close_page()">x</span>
+                    </div>
+                    <!--姓名-->
+                    <div class="add_type" style="display: inline-block;margin-right: 20px;width: 40%;margin-top: 50px" >
+                        <label for="clientname"><mark class="require">[{{lang('必填',detail.language)}}]</mark>{{lang('收货人',detail.language)}}</label>
+                        <label>{{lang('请输入收货人姓名',detail.language)}}</label>
+                        <input type="text" placeholder="{{lang('收货人',detail.language)+lang('必填',detail.language)}}" name="firstname" v-model="clientinfo.clientname" id="clientname" style="width: 100%">
+                    </div>
+                    <div class="time" style="margin-top: 60px">
+                        <span style="font-weight: bolder;margin-bottom: 10px">{{lang('商品标签',detail.language)}}</span><br>
+                        <ul class="sex"  @click="test($event)">
+                            <li style="padding: 1px 5px" :data-index="1" :class="{sex_ck:1 == chang_label}">{{lang('品质保航',detail.language)}}</li>
+                            <li style="padding: 1px 5px" :data-index="2" :class="{sex_ck:2 == chang_label}">{{lang('优惠',detail.language)}}</li>
+                            <li style="padding: 1px 5px" :data-index="3" :class="{sex_ck:3 == chang_label}">{{lang('热卖',detail.language)}}</li>
+                        </ul>
+                    </div>
+                    <!--手機-->
+                    <div class="add_type">
+                        <label for="clientphone"><mark class="require">[{{lang('必填',detail.language)}}]</mark>{{lang('联系电话',detail.language)}}</label>
+                        <label for="">{{lang('请填写正确的电话号码',detail.language)}}</label>
+                        <input type="text"  placeholder="{{lang('联系电话',detail.language)+lang('必填',detail.language)}}" name="telephone"  v-model="clientinfo.clientphone" id="clientphone">
+                    </div>
+                    <!--所在地-->
+                    <div class="add_type" id="provinceDiv" v-if="detail.money!=='￥'&&detail.money!=='S$'&&detail.money!=='円'">
+                        <label for="city" class="province"><mark class="require">[{{lang('必填',detail.language)}}]</mark>{{lang('地址',detail.language)}}</label>
+                        <p style="margin: 6px 0;font-size: 12px;font-weight: bolder">{{lang('请填写收货地址',detail.language)}}</p>
+                        <div class="ad">
+                            <select class="select" id="city" v-model="city" @change="init_Select_City(detail.money,city,'area')" id="city">
+                                <option :value="item" :data-id="item.id" v-for="item in cityData">[[item.name]]</option>
+                            </select>
+                            <select class="select" id="area" v-model="area" @change="init_Select_City(detail.money, area,'code')" id="area">
+                                <option :value="item" :data-id="item.id" v-for="item in areaData">[[item.name]]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="add_type" v-if="detail.money==='円'">
+                        <label for="city" class="province"><mark class="require">[{{lang('必填',detail.language)}}]</mark>{{lang('地址',detail.language)}}</label>
+                        <div class="ad">
+                            <select class="select" v-model="clientinfo.city" style="width: 40%">
+                                <option :value="item.name" :data-id="item.id" v-for="item in cityData" >[[item.name]]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="add_type" v-if="detail.money==='円'">
+                        <label for="city" class="province"><mark class="require">[{{lang('必填',detail.language)}}]</mark>{{lang('区县',detail.language)}}</label>
+                        <input type="text" class="necessary  text-left" v-model="clientinfo.area"
+                               placeholder="{{lang('必填',detail.language)}}" required>
+                    </div>
+                    <!--詳細地址-->
+                    <div class="add_type">
+                        <input type="text" placeholder="{{lang('地址',detail.language)+lang('必填',detail.language)}}" name="address1" v-model="clientinfo.clientaddress" id="clientaddress">
+                    </div>
+                    <!--邮编-->
+                    <div class="add_type"  v-if="detail.money==='S$'||detail.money==='RM'||detail.money==='฿'||detail.money==='円'">
+                        <label  class="clientzipcode">{{lang('请填写邮编',detail.language)}}</label>
+                        <div>
+                            <select  v-if="detail.money==='RM'||detail.money==='฿'" v-model="clientinfo.clientzipcode" id="clientzipcode" style="width: 40%;height: 34px;border-radius: 8px;border: 1px solid #ddd"  @change="mark && changeCode(detail.money);">
+                                <option :value="item.displayName"  v-for="item in codeData">[[item.displayName]]</option>
+                            </select>
+                            <input type="tel" v-if="detail.money==='S$'||detail.money==='円'" placeholder="{{lang('必填',detail.language)}}" v-model="clientinfo.clientzipcode" id="clientzipcode"  @change="mark && changeCode(detail.money);"/>
+                        </div>
+                    </div>
+                    <div class="add_type" id="pianyuan">
+                        <label ></label>
+                        <div>
+                        </div>
+                    </div>
+                    <div v-if="flag2===1" style="text-align:center;">
+                        <input type="checkbox" value="1" id="remote" v-modal="check" checked="checked" @click="getValue()"  data-am-ucheck style="-webkit-appearance: checkbox;">
+                        <span style="color: #F86161;" >{{lang('此地区为快递偏远地区，需由快递公司另外加收快递费送达，快递费：',detail.language)}}<u>[[detail.money]][[extrapay]]</u></span><!--'//data1.cityMess.cityinfo.extrapay-->
+                    </div>
+                    <div v-if="flag2===0"  style="text-align:center;">
+                        <span style="color: #F86161;" >{{lang('此地区为快递无法送达区域，请选择其他区域收件',detail.language)}}</span><!--'//data1.cityMess.cityinfo.extrapay-->
+                    </div>
+                    <hr>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-5 col-xs-10 btn listing " @click="steps2_back()" style="margin-left: 45px">{{lang('上一步',detail.language)}}</div>
+                        <div class="col-md-5 col-xs-10   next btn" @click="flag1 && steps2_next()">{{lang('下一步',detail.language)}}</div>
+                    </div>
+                </div>
+                <!--步骤三：备注与email-->
+                <div class="other clear"  v-if="steps3">
+                    <div class="model_header clear">
+                        <h4>{{lang('只要3步骤 - 3 / 3',detail.language)}}</h4><span @click="close_page()">x</span>
+                    </div>
+                    <div class="other_content" style="padding-top: 55px">
+                        <span style="font-weight: bolder;margin-bottom: 10px">{{lang('热卖',detail.language)}}</span><br>
+                        <ul class="sex"  @click="test($event)">
+                            <li style="padding: 1px 5px" data-index="1" :data-index="1" :class="{sex_ck:1 == chang_label}">{{lang('购物无忧',detail.language)}}</li>
+                            <li style="padding: 1px 5px;" :data-index="2" :class="{sex_ck:2 == chang_label}">{{lang('货到付款',detail.language)}}</li>
+                        </ul>
+                        <!--email-->
+                        <div class="add_type" style="display: inline-block;float: right">
+                            <label>{{lang('Email:',detail.language)}}</label>
+                            <input type="text"  placeholder="{{lang('E-Mail',detail.language)}}" name="email" v-model="clientinfo.clientemail" id="clientemail" style="width: 100%">
+                            <label>{{lang('请填写正确的电邮地址',detail.language)}}</label>
+                        </div>
+                        <!--留言-->
+                        <div class="add_type">
+                            <label>{{lang('备注',detail.language)}}</label>
+                            <textarea placeholder="{{lang('备注',detail.language)+':'+lang('其他要求请备注',detail.language)}}" name="notes" style="height: 150px;width: 88%;border-radius: 3px" v-model="clientinfo.clientotherinfo"></textarea>
+                            <!--<textarea  placeholder="選填，如備用電話、產品規格或配送時間等" name="notes">-->
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-md-5 col-xs-10 btn listing " @click="steps3_back()">{{lang('上一步',detail.language)}}</div>
+                        <div class="col-md-5 col-xs-10   next btn" @click="steps3_next()">{{lang('下一步',detail.language)}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="main_footer" style="background: #fff">
+        <ul class="footer_tabs">
+            <li><a :href="'/about?id='+detail.about_id">{{lang('关于我们',detail.language)}}</a></li>
+            <li><a :href="'/contact?id='+detail.contact_id">{{lang('联系我们',detail.language)}}</a></li>
+            <li><a :href="'/privacy?id='+detail.privacy_id">{{lang('隐私协议',detail.language)}}</a></li>
+            <li><a :href="'/terms?id='+detail.terms_id">{{lang('服务条例',detail.language)}}</a></li>
+            <li><a :href="'/service?id='+detail.service_id">{{lang('退换货政策',detail.language)}}</a></li>
+        </ul>
+    </div>
+</div>
+<script>
+    var a = $('#select  option:selected').val();
+    var appData = {
+        sitedir: '{{detail.sitedir}}', redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language:'{{detail.language}}',
+        chaport_id:"{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+        chaport_switch:"{{detail.chaport_switch}}",  is_domain:"{{detail.is_domain}}"
+    };
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var selectSize='{{lang("请您先选择商品规格",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var findStr = "{{lang('请输入您的订单号，收货电话或收货人姓名',detail.language)}}";
+    var findbtnStr = "{{lang('查询',detail.language)}}";
+    var orderError="{{lang('订单不存在',detail.language)}}";
+    var submitComment="{{lang('提交评论中',detail.language)}}";
+    var delete_success="{{lang('删除成功',detail.language)}}";
+    var Please_choose_buy="{{lang('请选购',detail.language)}}";
+    var shop="{{lang('件商品,您目前选了',detail.language)}}";
+    var piece="{{lang('件商品',detail.language)}}";
+    var least="{{lang('请至少选购',detail.language)}}";
+    var Add_cart="{{lang('加入购物车成功',detail.language)}}";
+    var selectOos1="{{lang('缺货中，请选择其他商品',detail.language)}}";
+</script>
+<script type="text/javascript">
+    if(appData.chaport_switch==="1"&&appData.chaport_id){
+        (function(w,d,v3){
+            w.chaportConfig = { appId:appData.chaport_id };
+            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    }
+</script>
+<script src="/theme/{{detail.template}}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="/theme/{{detail.template}}/js/vue_spec.js"></script>
+<script src="/theme/{{detail.template}}/js/showpopup.js"></script>
+</body>
+</html>

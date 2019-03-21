@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+global.config = require("../config.debug");
+const http = require('http');
+const server = http.createServer(require('../app'));
+require('../help/comm/global_tools');
+const redis_pool = require("../help/redis/redis_pool");
+const address_tools = require("../help/comm/address_tools");
+const viewcount_tools = require("../help/comm/viewcount_tools");
+const port = 8087;
+(async () => {
+    await global.Lang();
+    redis_pool.init();
+    address_tools.init();
+    viewcount_tools.update();
+    server.listen(port);
+})();
+server.on('listening', function () {
+    console.error('监听于端口：' + port)
+});
+process.on('uncaughtException', function (err) {
+    console.log("未处理的异常：" + err);
+});

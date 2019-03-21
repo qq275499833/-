@@ -1,0 +1,114 @@
+.main_header .menu_div {
+    background: #4b7598;
+}
+@media (max-width:768px){
+    .main_header{
+        background: #4b7598;
+    }
+    .cart-box-fixed div {
+        background: #4b7598;
+    }
+}
+.goods_price {
+    color: #4b7598;
+}
+.sales{
+    color: #4b7598;
+}
+.details_panel_hd{
+    color: #4b7598;
+    border-bottom: 1px solid #4b7598;
+}
+.goods_price{
+    color: #4b7598;
+}
+.sales{
+    color: #4b7598;
+}
+.details_panel_hd{
+    color:#4b7598;
+}
+.btn-danger {
+    color: #fff;
+    border-color: #4b7598;
+    background: #4b7598;
+}
+.btn-danger:active, .btn-danger:hover {
+    border-color: #4b7598;
+    background: #fff;
+    color: #4b7598;
+}
+.home_panel_hd {
+    color: #4b7598;
+    border-bottom-color: #4b7598;
+}
+.home_goods_buy_btn {
+    background: #4b7598;
+}
+.main_footer {
+    border-top: 3px solid #4b7598;
+}
+.footer_tabs li>a, .footer_tabs li>a:hover, .footer_tabs li>a:active {
+    color: #4b7598;
+}
+.details_pricebar .subleft.avil, .details_pricebar .subleft.soldout {
+    background: #4b7598;
+}
+.comment_title{
+    color: #4b7598;
+}
+hr {
+    border-top: 1px solid #4b7598;
+}
+.prod_Desc>.spec_price{
+    color: #4b7598;
+}
+.prod_Desc>.spec_price>.price{
+    color: #4b7598;
+}
+.spec_List>.spec_Item.active, .spec_List>.option_Item.active {
+    border: 1px solid #4b7598;
+    box-shadow: 0 0 8px #4b7598;
+}
+.spec_List>.spec_Item.active>span, .spec_List>.option_Item.active>span{
+    color: #4b7598;
+}
+.spec_List>.active>div.sticky{
+    border-top: 10px solid #4b7598;
+}
+.btn-warning {
+    color: #4b7598;
+    border-color: #4b7598;
+    background: #ffffff;
+}
+.btn-warning:active, .btn-warning:hover {
+    border-color: #4b7598;
+    background: #4b7598;
+    color: #fff;
+}
+.goods_info .title{
+    color: #4b7598;
+}
+.am-text-danger{
+    color: #4b7598;
+}
+.am-form input:focus, .am-form textarea:focus, .am-form select:focus{
+    border: 1px solid #4b7598;
+}
+#info-popup a.btn{
+    color: #4b7598;
+    border: 1px solid #4b7598;
+}
+#info-popup a.btn:hover{
+    background: #4b7598;
+}
+.kf_btn{
+    background: #4b7598;
+}
+/*首页*/
+div.spring-title{
+    background-color: #4b7598;
+}
+.price span{
+    color:#4b7598;
+}

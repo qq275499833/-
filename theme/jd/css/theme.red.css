@@ -1,0 +1,106 @@
+.main_header .menu_div{
+    background: #f23030;
+}
+@media (max-width:768px){
+    .main_header{
+        background: #f23030;
+    }
+    .cart-box-fixed div {
+        background: #f23030;
+    }
+}
+.goods_price {
+    color: #f23030;
+}
+.sales{
+    color: #f23030;
+}
+.details_panel_hd{
+    color: #f23030;
+    border-bottom: 1px solid #f23030;
+}
+.btn-danger {
+    color: #fff;
+    border-color: #f23030;
+    background: #f23030;
+}
+.btn-danger:active, .btn-danger:hover {
+    border-color: #f23030;
+    background: #fff;
+    color: #f23030;
+}
+
+.home_panel_hd {
+    color: #f23030;
+    border-bottom-color: #f23030;
+}
+.home_goods_buy_btn {
+    background: #f23030;
+}
+.main_footer {
+    border-top: 3px solid #f23030;
+}
+.footer_tabs li>a, .footer_tabs li>a:hover, .footer_tabs li>a:active {
+    color: #f23030;
+}
+.details_pricebar .subleft.avil, .details_pricebar .subleft.soldout {
+    background: #f23030;
+}
+.comment_title{
+    color: #f23030;
+}
+hr {
+    border-top: 1px solid #f23030;
+}
+.prod_Desc>.spec_price{
+    color: #f23030;
+}
+.prod_Desc>.spec_price>.price{
+    color: #f23030;
+}
+.spec_List>.spec_Item.active, .spec_List>.option_Item.active {
+    border: 1px solid #f23030;
+    box-shadow: 0 0 8px #f23030;
+}
+.spec_List>.spec_Item.active>span, .spec_List>.option_Item.active>active{
+    color: #f23030;
+}
+.spec_List>.active>div.sticky{
+    border-top: 10px solid #f23030;
+}
+.btn-warning {
+    color: #f23030;
+    border-color: #f23030;
+    background: #ffffff;
+}
+.btn-warning:active, .btn-warning:hover {
+     border-color: #f23030;
+     background: #f23030;
+     color: #fff;
+}
+.goods_info .title{
+    color: #f23030;
+}
+.am-text-danger{
+    color: #f23030;
+}
+.am-form input:focus, .am-form textarea:focus, .am-form select:focus{
+    border: 1px solid #f23030;
+}
+#info-popup a.btn{
+    color: #f23030;
+    border: 1px solid #f23030;
+}
+#info-popup a.btn:hover{
+    background: #f23030;
+}
+.kf_btn{
+    background: #f23030;
+}
+/*首页*/
+div.spring-title{
+    background-color: #f23030;
+}
+.price span{
+    color:#f23030;
+}

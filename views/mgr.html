@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>[{{id}}]前台运行监控</title>
+    <link href="//cdn.bootcss.com/mdui/0.4.1/css/mdui.min.css" rel="stylesheet">
+</head>
+<body class="mdui-theme-accent-red mdui-theme-primary-red">
+<div class="mdui-container-fluid" style="max-width: 414px;margin: 0 auto;">
+    <div class="mdui-toolbar mdui-color-theme">
+        <a href="javascript:;" class="mdui-typo-headline">前台运行监控</a>
+        <span class="mdui-typo-title">[{{id}}]</span>
+    </div>
+    <table class="mdui-table mdui-table-hoverable">
+        <tr>
+            <td>名称</td>
+            <td>{{name}}</td>
+        </tr>
+        <tr>
+            <td>介绍</td>
+            <td>{{desc}}</td>
+        </tr>
+        <tr>
+            <td>运行数据</td>
+            <td>
+                <div>累计运行：{{runtime}}分钟</div>
+                <div>今日浏览次数：{{today_views}}</div>
+                <div>今日独立IP访客：{{today_users}}</div>
+                <div>今日尝试下单次数：{{today_query_orders}}</div>
+                <div>今日成功下单次数：{{today_orders}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>CDN地址</td>
+            <td>
+                <div>{{cdnserver}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>下单地址</td>
+            <td>
+                <div>{{orderserver}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>汇率信息</td>
+            <td>
+                <div>NT：{{hlconfig.NT}}</div>
+                <div>HK：{{hlconfig.HK}}</div>
+                <div>$S：{{hlconfig.SS}}</div>
+                <div>Rp：{{hlconfig.Rp}}</div>
+                <div>RM：{{hlconfig.RM}}</div>
+                <div>฿：{{hlconfig.TH}}</div>
+                <div>$：{{hlconfig.$}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>模版列表</td>
+            <td>
+                {{#each(templates)}}
+                <div>{{this.name}}【{{this.state}}】</div>
+                {{/each}}
+            </td>
+        </tr>
+        <tr>
+            <td>操作</td>
+            <td><button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" onclick="update()">更新基本信息</button></td>
+        </tr>
+    </table>
+</div>
+<script src="//cdn.bootcss.com/mdui/0.4.1/js/mdui.min.js"></script>
+<script>
+    var updateing=false;
+    var $$ = mdui.JQ;
+    function update() {
+        if(updateing)return;
+        updateing=true;
+        $$.ajax({
+            method: 'GET',
+            dataType:'json',
+            url: '/mgr/update',
+            success: function (data) {
+                mdui.alert(data.msg);
+                updateing=false;
+            }
+        });
+    }
+</script>
+</body>
+</html>

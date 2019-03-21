@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!-- {{appid}} -->
+<head>
+    <meta charset="UTF-8">
+    <title>{{detail.sitename}}</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="http://static.seezt.cc/shop/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/theme/{{detail.template}}/css/index.css">
+    <script src="http://static.seezt.cc/shop/js/jquery.1.8.3.min.js"></script>
+    <script type="text/javascript">
+        !window.jQuery && document.write('<script src="/js/jquery.1.8.3.min.js"><\/script>');
+    </script>
+    <script src="http://static.seezt.cc/shop/js/layer.and.lazyload.js"></script>
+    <script src="http://static.seezt.cc/shop/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="/js/cartmain.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/showpopup.js"></script>
+    <script src="/js/sentry.js"></script>
+    <script>
+        init_sentry('{{version}}','{{env}}','{{appid}}');
+    </script>
+    {{{detail.GoodsCode.ggcode}}}
+    {{#each(detail.adcode)}}
+    {{{this.headcode}}}
+    {{/each}}
+    {{#each(detail.othercode)}}
+    {{{this.headcode}}}
+    {{/each}}
+</head>
+<body>
+<header class="site-header" role="banner">
+    <div class="wrapper">
+        <div class="grid--full">
+            <div class="grid-item large--one-half">
+                <div class="header-logo">
+                    {{#if(detail.home_id)}}
+                    <a href="../home/{{detail.home_select}}/{{detail.username}}" itemprop="url"><img src="{{cdnbase+(logo?logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}"></a>
+                    {{else}}
+                    <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" itemprop="url"><img src="{{cdnbase+(logo?logo:'201711/YCtMJ_JWnMBom8530MaFLn9f.gif')}}"></a>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="grid-item large--one-half text-center large--text-right" onclick="show_cartwin();">
+
+                <span id="header-cart-btn" class="header-cart-btn cart-toggle">
+                    <span class="icon icon-cart"></span>
+                    {{lang('购物车',detail.language)}}
+                    <span class="cart-count cart-badge--desktop  hidden-count"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</header>
+<nav class="nav-bar" role="navigation">
+    <div class="wrapper">
+
+        <ul class="site-nav" id="accessibleNav">
+            <li>
+                {{#if(detail.home_id)}}
+                <a href="../home/{{detail.home_select}}/{{detail.username}}" tabindex="1">{{lang('首页',detail.language)}}</a>
+                {{else}}
+                <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" tabindex="1">{{lang('首页',detail.language)}}</a>
+                {{/if}}
+            </li>
+            <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+            <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+            <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+            <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+            <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+            <li>
+                <a href="/ordersearch/{{detail.sitedir}}">{{lang('查询订单信息',detail.language)}}</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div id="mobileNavBar">
+    <div class="display-table-cell" id="mobile_menu">
+        <a class="menu-toggle mobileNavBar-link" ><span class="icon icon-hamburger"></span>Menu</a>
+    </div>
+    <div class="display-table-cell" onclick="show_cartwin();">
+        <span id="header-cart-btn-mobile" class="cart-toggle mobileNavBar-link">
+            <span class="icon icon-cart"></span>
+            {{lang('购物车',detail.language)}}
+            <span class="cart-count  hidden-count"></span>
+        </span>
+    </div>
+</div>
+<main class="wrapper main-content" role="main">
+    <div class="grid-item large--two-fifths">
+        <div class="grid">
+            <div class="container">
+                <!-- Swiper -->
+                <div class="swiper-container gallery-top">
+                    <div class="swiper-wrapper">
+                        {{#if(detail.head_video)}}
+                        <div class="swiper-slide">{{{detail.head_video}}}</div>
+                        {{/if}}
+                        {{#each(detail.head_imgs)}}
+                        <div class="swiper-slide">
+                            <img src="{{cdnbase+this}}">
+                        </div>
+                        {{/each}}
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                </div>
+                <div class="swiper-container gallery-thumbs">
+                    <div class="swiper-wrapper">
+                        {{#each(detail.head_imgs)}}
+                        <div class="swiper-slide">
+                            <img src="{{cdnbase+this}}">
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="large--three-fifths">
+            <h1 class="h2" itemprop="name">{{detail.sitename}}</h1>
+            <div itemprop="offers" itemscope="">
+                <ul class="inline-list product-meta">
+                    <li>
+                        <span id="productPrice" class="h1">
+                            <span aria-hidden="true"><span class="money"><span class="lowprice" id="goods_price">{{detail.price}}</span></span>
+                            </span>
+                            <span aria-hidden="true"><s><span class="money market_price">{{detail.money}}{{detail.oldprice}}</span></s></span>
+
+                        </span>
+                    </li>
+                </ul>
+                <hr id="variantBreak" class="hr--small">
+                <div class="attr-items" data-pid="25074" id="buy">
+                    <div class="select-spec" id="product-spec">
+                        <div class="model">
+                            <div class="model-name">{{detail.option1_name}}</div>
+                            <div class="model-btn" id="spec_names">
+                                {{#each(detail.specs.name_list)}}
+                                <button onclick="select_specitem(this)" class="opt1" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{this.price}}">
+                                    {{#if(this.img)}}
+                                    <img src="{{this.img?cdnbase+this.img+'-101':''}}" />
+                                    {{/if}}
+                                    <span>{{this.name}}</span>
+                                </button>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{#if(detail.specs.option1_list.length>0)}}
+                        <div class="model">
+                            <div class="model-name">{{detail.option2_name}}</div>
+                            <div class="model-btn option1" id="spec_option1">
+                                {{#each(detail.specs.option1_list)}}
+                                <button onclick="select_option1(this);" class="disable opt2" data-name="{{this.option1}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}">{{this.option1}}</button>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{/if}}
+                        {{#if(detail.specs.option2_list.length>0)}}
+                        <div class="model">
+                            <div class="model-name">{{detail.option3_name}}</div>
+                            <div class="model-btn option2" id="spec_option2">
+                                {{#each(detail.specs.option2_list)}}
+                                <button onclick="select_option2(this);" class="disable opt3" data-name="{{this.option2}}" data-sku="{{this.id}}" data-father="{{this.father}}" data-price="{{this.price}}">{{this.option2}}</button>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                <label class="quantity-selector"></label>
+                <div class="js-qty">
+                    <input class="js--num" type="tel" value="1" name="num" id="addnum">
+                    <span class="js--qty-adjuster js--add" onclick="addNum()">+</span>
+                    <span class="js--qty-adjuster js--minus" onclick="decNum()">-</span>
+                </div>
+                <!--赠品区域-->
+                <div class="attr-items" data-attr="" data-pid="25074">
+                    {{#if(detail.giftGoods)}}
+                    <div style="padding-bottom:5px;font-size:14px;">{{lang('赠品区域',detail.language)}}</div>
+                    <div class="select-spec" id="gifts">
+                        <div class="gifts">
+                            {{#each(detail.giftGoods)}}
+                            <div class="gifts_item">
+                                <div style="border-bottom:1px dashed #ddd;padding:10px 0;"><strong>{{this.sitename}}</strong></div>
+                                <div class="model">
+                                    <div class="model-name">*<span>1</span>{{lang('件',detail.language)}}{{this.option1_name}}</div>
+                                    <div class="model-btn user-name" id="gift_names_{{xindex}}_1">
+                                        {{#each(detail.giftGoodsSpecs[xindex].giftName_list)}}
+                                        <button onclick="select_giftspec(this,0,1)" class="opt1" data-index="{{xindex}}" data-id="{{this.id}}" data-sku="{{this.id}}" data-name="{{this.name}}" data-img="{{this.img}}" data-price="{{this.price}}">
+                                            {{#if(this.img)}}
+                                            <img src="{{this.img?cdnbase+this.img+'-101':''}}" />
+                                            {{/if}}
+                                            <span>{{this.name}}</span>
+                                        </button>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                {{#if(detail.giftGoodsSpecs[xindex].giftOption1_list.length>0)}}
+                                <div class="model">
+                                    <div class="model-name">*<span>1</span>{{lang('件',detail.language)}}{{this.option2_name}}</div>
+                                    <div class="model-btn option1" id="gift_option1_{{xindex}}_1">
+                                        {{#each(detail.giftGoodsSpecs[xindex].giftOption1_list)}}
+                                        <button onclick="select_giftoption1(this,0,1);" class="disable opt2" data-name="{{this.option1}}" data-sku="{{this.id}}"  data-price="{{this.price}}">{{this.option1}}</button>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{#if(detail.giftGoodsSpecs[xindex].giftOption2_list.length>0)}}
+                                <div class="model">
+                                    <div class="model-name">*<span>1</span>{{lang('件',detail.language)}}{{this.option3_name}}</div>
+                                    <div class="model-btn option2" id="gift_option2_{{xindex}}_1">
+                                        {{#each(detail.giftGoodsSpecs[xindex].giftOption2_list)}}
+                                        <button onclick="select_giftoption2(this,0,1);" class="disable opt3" data-name="{{this.option2}}" data-sku="{{this.id}}" data-price="{{this.price}}">{{this.option2}}</button>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                {{/if}}
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+                <button type="button" name="add" id="addToCart" onclick="add_cart(1)" class="btn">
+                    <span class="icon icon-cart"></span>
+                    <span id="addToCartText">{{lang('加入购物车',detail.language)}}</span>
+                </button>
+                <hr>
+            </div>
+            <div class="product-description rte" itemprop="description">
+                <p><img src="/theme/{{detail.template}}/images/safe.png"></p>
+                <p>{{{detail.sitedesc}}}</p>
+                <p>{{{detail.GoodsContent.content}}}</p>
+            </div>
+        <!--添加猜你喜欢-->
+        <div class="RecommendGoods">
+            {{#if(detail.body_ads)}}
+            <div class="titleName" style="text-align:center;">{{lang('猜你喜欢',detail.language)}}</div>
+            <ul>
+                {{#each(detail.body_ads)}}
+                <li>
+                    <a href="/{{this.sitedir}}">
+                        {{set (imgs = this.head_imgs.split(';'))}}
+                        <img src="{{imgs[0]?cdnbase+imgs[0]+'-300':''}}" />
+                        <span>{{this.sitename}}</span>
+                        <div class="RecommendGoodsPrice">
+                            <span class="nowPrice">{{this.money}} {{this.price}}</span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </li>
+                {{/each}}
+            </ul>
+            {{/if}}
+        </div>
+    </div>
+    <div class="home_zixun_fixed">
+        <div class="kf_list">
+            {{set(fblink=detail.fblink?detail.fblink:detail.User.fblink)}}
+            {{set(linelink=detail.linelink?detail.linelink:detail.User.linelink)}}
+            {{set(whatsapplink=detail.whatsapplink?detail.whatsapplink:detail.User.whatsapplink)}}
+            {{#if(fblink)}}
+            <a class="facebook_btn" href="{{fblink}}" target="_blank">
+                <span>Facebook</span>
+            </a>
+            {{/if}}
+            {{#if(linelink)}}
+            <a class="line_btn" href="{{linelink}}" target="_blank">
+                <span>Line</span>
+            </a>
+            {{/if}}
+            {{#if(whatsapplink)}}
+            <a class="whatsapp_btn" href="{{whatsapplink}}" target="_blank">
+                <span>WhatsApp</span>
+            </a>
+            {{/if}}
+        </div>
+        <div class="kf_btn" onclick="show_kflist();">{{lang('客服',detail.language)}}</div>
+    </div>
+</main>
+<footer class="site-footer small--text-center" role="contentinfo">
+    <div class="wrapper">
+        <div class="grid">
+            <div class="grid-item medium--one-half large--three-twelfths">
+                <h3>{{lang('快速链接',detail.language)}}</h3>
+                <ul>
+                    <li>
+                        {{#if(detail.home_id)}}
+                        <a href="../home/{{detail.home_select}}/{{detail.username}}" tabindex="1">{{lang('首页',detail.language)}}</a>
+                        {{else}}
+                        <a href="javascript:void(0)" onclick="location.href=localStorage.getItem('url');" tabindex="1">{{lang('首页',detail.language)}}</a>
+                        {{/if}}
+                    </li>
+                    <li><a href="/about?id={{detail.about_id}}">{{lang('关于我们',detail.language)}}</a></li>
+                    <li><a href="/contact?id={{detail.contact_id}}">{{lang('联系我们',detail.language)}}</a></li>
+                    <li><a href="/privacy?id={{detail.privacy_id}}">{{lang('隐私协议',detail.language)}}</a></li>
+                    <li><a href="/terms?id={{detail.terms_id}}">{{lang('服务条例',detail.language)}}</a></li>
+                    <li><a href="/service?id={{detail.service_id}}">{{lang('退换货政策',detail.language)}}</a></li>
+                    <li>
+                        <a href="/ordersearch/{{detail.sitedir}}">{{lang('查询订单信息',detail.language)}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="grid-item medium--one-half large--five-twelfths">
+                <h3>{{lang('联系我们',detail.language)}}</h3>
+                <p>
+                    <a href="http://{{detail.domain+'/'+detail.sitedir}}">http://{{detail.domain+'/'+detail.sitedir}}</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div id="qab_placeholder"></div>
+</footer>
+<a id="btn-top" href="javascript:window.scrollTo( 0, 0 );" style="display: block;">
+    <img src="/theme/{{detail.template}}/images/gotop.png" alt="" width="40px" height="40px">
+</a>
+<div class="fixed"><a href="#buy">{{lang('立即购买',detail.language)}}</a></div>
+<!--购物车-->
+<div id="cartWin" class="ajaxify-modal is-visible" style="margin-left: -380px; opacity: 1;display:none;">
+    <button class="ajaxifyCart--close" title="Close Cart" onclick="hide_cartwin();">Close Cart</button>
+    <div id="ajaxifyCart" class="ajaxifyCart--content">
+        <h1 class="h2">{{lang('购物车',detail.language)}}</h1>
+        <h2 class="empty" id="empty" style="display: none">{{lang('您尚未选择商品',detail.language)}}</h2>
+        <div id="cart_content">
+        </div>
+        <div class="cart-row more" id="price">
+            <div class="grid">
+                <div class="grid-item text-right ">
+                    <input type="hidden" name="lijian_price" id="lijian_price" value="">
+                    <input type="hidden" name="lijian_price_se" id="lijian_price_se" value="0">
+                    <div class="cart-subtotal">
+                        <h6 class="lijian_row" id="allCount">
+                            {{lang('数量',detail.language)}}
+                            <span class="value lijianmoney"></span>
+                        </h6>
+                    </div>
+                    <div class="cart-subtotal">
+                        <h6 class="lijian_row" id="allprice">
+                            {{lang('价格',detail.language)}}
+                            <span class="value lijianmoney"></span>
+                        </h6>
+                    </div>
+                    <div class="cart-subtotal" id="many_discount" style="display:none;">
+                        <h6 class="lijian_row" >
+                            {{lang('多件优惠',detail.language)}}
+                            <span class="value lijianmoney" id="manyoff"></span>
+                        </h6>
+                    </div>
+                    <div class="cart-subtotal" id="saleoffprice_div" style="display:none;">
+                        <h6 class="lijian_row" id="saleoffprice">
+                            {{lang('满减优惠',detail.language)}}
+                            <span class="value lijianmoney"></span>
+                        </h6>
+                    </div>
+                    <div class="cart-subtotal" id="moneyprice" style="display:none;">
+                        <h6 class="lijian_row">
+                            {{lang('价格满减',detail.language)}}
+                            <span class="value lijianmoney"  id="price_money"></span>
+                        </h6>
+                    </div>
+                    <div class=" cart-subtotal">
+                        <h2 style="display:inline;">{{lang('合计',detail.language)}}</h2>
+                        <span class="h1 cart-subtotal--price">
+                                <small aria-hidden="true" id="realprice"><span class="money" doubly-currency-usd="390" doubly-currency="HKD"></span></small>
+                        </span>
+                    </div>
+                    <input name="update" class="btn-secondary update-cart" value="Update cart" type="button">
+                    <button type="submit" name="checkout" class="btn" onclick="gotoCheckout()">
+                        <span class="icon icon-cart"></span>
+                        {{lang('立即购买',detail.language)}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rf-recommendations rf-default" data-name="default"></div>
+</div>
+</body>
+<script>
+    var appData = {
+        goods: {id: '{{detail.id}}',sourceid: '{{detail.source}}',name: '{{detail.name}}',userkey: '{{detail.userkey}}'},
+        selectProd: {name: '',price: '',img: '',option1: '', option2: '',sku: ""},
+        prods: [],
+        addnum: 1,
+        imgpath: '{{cdnbase}}',
+        sitedir: '{{detail.sitedir}}',
+        redirect_sitedir:'{{detail.redirect_sitedir}}',
+        language: '{{detail.language}}',
+        money: '{{detail.money}}',
+        option1: "{{detail.option1_name}}",
+        option2: "{{detail.option2_name}}",
+        option3: "{{detail.option3_name}}",
+        apiserver:"{{apiserver}}",
+        chaport_id:"{{detail.chaport_id?detail.chaport_id:detail.User.chaport_id}}",
+        chaport_switch:"{{detail.chaport_switch}}",  is_domain:"{{detail.is_domain}}"
+    };
+    appData.giftGoodsIds={{{detail.giftGoodsIds?detail.giftGoodsIds:'[]'}}};
+    appData.gifts={{{detail.giftGoodsSpecsStr?detail.giftGoodsSpecsStr:'[]'}}};
+    appData.goods.specs={{{detail.GoodsSpecsStr?detail.GoodsSpecsStr:'[]'}}};
+    appData.goods.saleoff={{{detail.saleoff?detail.saleoff:'[]'}}};
+    appData.goods.manyoff={{{detail.manyoff?detail.manyoff:'[]'}}};
+    appData.goods.manyoff_new={{{detail.manyoff_new?detail.manyoff_new:'[]'}}};
+    appData.goods.priceoff={{{detail.priceoff?detail.priceoff:'[]'}}};
+    var deleteStr='{{lang("删除",detail.language)}}';
+    var selectStr='{{lang("请您先选择商品",detail.language)}}';
+    var confirmContent="{{lang('请选择去下单还是继续浏览',detail.language)}}";
+    var btn1 = "{{lang('立即结算',detail.language)}}";
+    var btn2 = "{{lang('继续浏览',detail.language)}}";
+    var nameStr = "{{lang('请输入收货人姓名',detail.language)}}";
+    var PhoneStr = "{{lang('请填写正确的电话号码',detail.language)}}";
+    var cityStr = "{{lang('请选择您所在的城市',detail.language)}}";
+    var areaStr = "{{lang('请选择您的所在的区县',detail.language)}}";
+    var addressStr = "{{lang('请填写收货地址',detail.language)}}";
+    var postcodeStr = "{{lang('请填写邮编',detail.language)}}";
+    var emailStr = "{{lang('请填写正确的电邮地址',detail.language)}}";
+    var submitingStr = "{{lang('提交订单中，请稍侯',detail.language)}}";
+    var submiterrorStr = "{{lang('提交失败，请重新尝试或联系客服',detail.language)}}";
+    var selectGiftStr='{{lang("请您先选择赠品",detail.language)}}';
+    var giftStr='{{lang("赠品",detail.language)}}';
+    var selectOos="{{lang('此商品缺货中，请选择其他商品',detail.language)}}";
+    var oos="{{lang('[缺货中]',detail.language)}}";
+    var remoteMess1="{{lang('此地区为快递无法送达区域，请选择其他区域收件',detail.language)}}";
+    var remoteMess2 = "{{lang('此地区为快递偏远地区，需由快递公司另外加收快递费送达，快递费：',detail.language)}}";
+</script>
+<script type="text/javascript">
+    if(appData.chaport_switch==="1"&&appData.chaport_id){
+        (function(w,d,v3){
+            w.chaportConfig = { appId:appData.chaport_id };
+            if(w.chaport)return;v3=w.chaport={};v3._q=[];v3._l={};v3.q=function(){v3._q.push(arguments)};v3.on=function(e,fn){if(!v3._l[e])v3._l[e]=[];v3._l[e].push(fn)};var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://app.chaport.com/javascripts/insert.js';var ss=d.getElementsByTagName('script')[0];ss.parentNode.insertBefore(s,ss)})(window, document);
+    }
+</script>
+<script src="/js/spec.js"></script>
+<script src="/theme/{{detail.template}}/js/index.js"></script>
+<script>
+    init_cart();
+    init_Select(appData.money,'','#city');
+    swiper();
+</script>
+</html>
